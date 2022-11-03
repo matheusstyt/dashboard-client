@@ -1,0 +1,39 @@
+{% extends 'based.html' %}
+{% block title  %}DADOS DO DASHBOARD MAP INTELLIGENCE{% endblock  %}
+
+{% block content %}
+<div class="dados-faturamento"> 
+    <h2>META R$ 200000.00</h2>
+    <h2>REALIZADO R$ 160000.00</h2>
+    <h2>PROJETADO R$ 270000.00</h2>
+    <h2>% REAL 90%</h2>
+    <h2>% PROJETADO 110%</h2>
+
+</div>
+
+<div class="box-btn">
+    <button class="btn-p" id="btn-comercial">COMERCIAL</button>
+    <button class="btn-p" id="btn-implantacao">IMPLANTAÇÃO</button>
+    <button class="btn-p" id="btn-pipeline">PIPELINE DE VENDAS</button>
+    <button class="btn-p" id="btn-suporte">SUPORTE</button>
+</div>
+
+<style>
+    h2{
+        text-align: center;
+    }
+    .box-btn{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: space-around;
+        gap: 1%
+    }
+    .btn-p{
+        width: 20%;
+        height: 80px
+    }
+
+    
+</style>
+{% endblock  %}

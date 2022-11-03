@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+
+}
+.foo{
+    background-color: rgba(90, 90, 90, 0.9);
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-flow: row ;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+.foo p{
+    color: aliceblue;
+}
+.entrar{
+    background-color: rgba(93, 40, 172, 0.353);
+    position: absolute;
+    right: 0;
+    top: 0;
+}

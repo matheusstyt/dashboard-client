@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+}
+.description{
+    background-color: rgb(0, 0, 0, 0.1);
+    padding: 2em 5em;
+}
+.description p{
+    font-size: 2em;
+    text-align: justify;
+}
+.foo{
+    background-color: rgba(0, 0, 0, 0.9);
+    height: 200px;
+    width: 100vw;
+    text-align: center;
+    display: flex;
+    flex-flow: row ;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.foo p{
+    color: aliceblue;
+}
