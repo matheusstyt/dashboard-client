@@ -1,4 +1,30 @@
-h1{
+/* CABEÇALHO */
+.nav-pa{
+    background-color: rgba(222, 222, 222, 0.4);
+}
+.nav-p{
+    padding: 1em ;
+    font-size: 1.2vmax;
+    color:#1f1f1f
+
+  }
+  .nav-p:hover{
+    background-color: rgba(0, 0, 0, 0.1); 
+  }
+  .entrar, .sair{
+    background-color: rgba(0, 0, 0, 0.0); 
+    position: absolute;
+    right: 0;
+    top: 5px;
+    font-size: 20px
+  
+  }
+  .entrar:hover, .sair:hover{
+    background-color: rgba(0, 0, 0, 0.1);     
+  }
+
+/* FIM CABEÇALHO */
+h1, h3{
     text-align: center;
 }
 .description{
@@ -52,12 +78,9 @@ h1{
 
 /* COMERCIAL */
 .container-g{
-    width: 98%;
+    width: 100%;
     height: 80vh;
     margin: 0 auto;
-    border: 2px solid rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-    padding: 1em;
     display: flex;
     justify-content: space-around;
     position: relative;
@@ -65,34 +88,79 @@ h1{
 }
 .caixa-metade{
     border: 2px solid rgba(0, 0, 0, 0.4);
+    
     border-radius: 10px;
-    width: 50%;
+    width: 48%;
     padding: 1em;
 }
 .caixa-faturamento{
-    border: 2px solid rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
+    box-shadow: 0px 9px 20px rgb(0 0 0 / 12%);
+    
     width: 50%;
-    padding: 1em;
+    padding: 0;
     overflow-y:scroll; 
     overflow-x:hidden;
     position: relative;
 
 }
-.container-f{
+.container-flex{
     width: 100%;
-    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0px 3px 9px rgb(0 0 0 / 12%);
+    padding: 1em 0;
 }
 
+/* META DADOS */
 .caixa-meta{
     border-radius: 10px;
     border: 2px solid rgba(0, 0, 0, 0.4);
-    padding: 1em;
+    padding: 1em 0 0;
     width: 40%;
     margin: 0 auto;
     text-align: center ;
+    margin-bottom: 1em;
 }
-
+.caixa-meta-valor{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    padding-bottom: 1em;
+}
+.caixa-meta-valor:hover{
+    transition: 0.5s ease;
+    background-color: rgba(6, 4, 36, 0.1);
+}
+.caixa-licencas{
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    padding: 1em 0 0;
+    width: 34%;
+    margin: 0 auto;
+    text-align: center ;
+}
+.caixa-licencas h3{ 
+    font-size: 1.3vmax;
+}
+.caixa-licencas-valor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-bottom: 1em;
+    gap:1em
+}
+.caixa-licencas-valor:hover{
+    transition: 0.5s ease;
+    background-color: rgba(6, 4, 36, 0.1);
+}
+/* FIM META DADOS */
+.row{
+    display: flex;
+    justify-content: flex-end;
+}
 .add-div{
     background-color: #3476e2;
     cursor: pointer;
@@ -101,7 +169,8 @@ h1{
     padding: 7px;
     width: 90%;
     border-radius: 6px;
-    margin-right: 25px;
+    
+    margin-left: 25px;
 }
 .fas.fa-plus{
     color: #fff;
@@ -111,7 +180,6 @@ h1{
 }
 .fas.fa-search{
     position: relative;
-    float: right;
     top: -27px;
     right: 20px;
 }
@@ -133,14 +201,17 @@ h1{
     font-size: 20px;
     height: 50px;
     padding-top: 10px;
-    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     border-bottom: 1px dashed #ccc;
     color: rgb(42, 42, 42);
     padding: 0.5em 2em;
+    overflow: hidden;
 }
 .task-item:hover{
     background-color: rgba(161, 161, 161, 0.2);
-    width: 100%;
+
 }
 .task-item p{ 
     display: inline-block;
@@ -211,4 +282,52 @@ input#id_data_faturamento{
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+
+/* IMPLANTAÇÃO  */
+
+.caixa-implantacao{
+    box-shadow: 0px 9px 20px rgb(0 0 0 / 12%);
+    width: 33.33%;
+    padding: 0;
+    overflow-y:scroll; 
+    overflow-x:hidden;
+    position: relative;
+
+}
+
+.list-div{
+    padding: 0;
+}
+.implantacao-list{
+    padding-left: 0;
+}
+.implantacao-item{
+    list-style: none;
+    font-size: 20px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #ccc;
+    color: rgb(42, 42, 42);
+    padding: 0.5em 2em;
+    overflow: hidden;
+    text-align: justify;
+}
+.implantacao-item:hover{
+    background-color: rgba(161, 161, 161, 0.2);
+    transition: 0.5S ease;
+}
+.implantacao-item p{ 
+    display: inline-block;
+    padding: 0 1em;
+
+}
+label{
+    font-size: 1.1vmax;
+}
+textarea {
+    width: 100%;
 }

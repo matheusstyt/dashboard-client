@@ -9,4 +9,22 @@ class Faturamento(models.Model):
     def __str__(self):
         titulo = f"R$ {float(self.faturamento_dia):.2f}"
         return titulo
+class Planejado(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    descricao_planejado = models.TextField()
+    def __str__(self):
+        return self.descricao_planejado
     
+class Curso(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    descricao_curso = models.TextField()
+    def __str__(self):
+        return self.descricao_curso
+class Concluido(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    descricao_concluido = models.TextField()
+    def __str__(self):
+        return self.descricao_concluido   

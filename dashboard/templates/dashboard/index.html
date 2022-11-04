@@ -2,6 +2,7 @@
 {% block title  %}DADOS DO DASHBOARD MAP INTELLIGENCE{% endblock  %}
 
 {% block content %}
+<h1> DASHBOARD MAP INTELLIGENCE - DADOS </h1>
 <div class="dados-faturamento"> 
     <h2>META R$ 200000.00</h2>
     <h2>REALIZADO R$ 160000.00</h2>
@@ -12,17 +13,21 @@
 </div>
 
 <div class="box-btn">
-    <button class="btn-p" id="btn-comercial">COMERCIAL</button>
-    <button class="btn-p" id="btn-implantacao">IMPLANTAÇÃO</button>
-    <button class="btn-p" id="btn-pipeline">PIPELINE DE VENDAS</button>
-    <button class="btn-p" id="btn-suporte">SUPORTE</button>
+    <form action="/dashboard/comercial">
+        <button type="submit" class="btn-p" id="btn-comercial">COMERCIAL</button>
+        <button type="submit" class="btn-p" id="btn-implantacao">IMPLANTAÇÃO</button>
+        <button type="submit" class="btn-p" id="btn-pipeline">PIPELINE DE VENDAS</button>
+        <button type="submit" class="btn-p" id="btn-suporte">SUPORTE</button>
+    </form>
+    
+    
 </div>
 
 <style>
     h2{
         text-align: center;
     }
-    .box-btn{
+    .box-btn form{
         display: flex;
         flex-flow: row wrap;
         justify-content: center;

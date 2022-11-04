@@ -25,22 +25,55 @@
     <div class="caixa-metade">
         <div class="caixa-meta">
             <h3>META ATUAL</h3>
-            <h3>R$ 200000.00</h3>
+            <div class=caixa-meta-valor>
+                <h3 class="meta-sigla">R$</h3>
+                <h3 class="meta-valor">200000.00</h3>
+                <i class="fas fa-edit"></i>
+            </div>
+            
         </div>
+        <div class="row">
+            <div class="caixa-licencas">
+                <h3>PLACAR DE  LICENÇAS</h3>
+                <div class=caixa-licencas-valor>
+                    {% comment %} <h3 class="meta-sigla">R$</h3> {% endcomment %}
+                    <h3 class="meta-valor">21</h3>
+                    <i class="fas fa-edit"></i>
+                </div>
+                
+            </div>
+            <div class="caixa-licencas">
+                <h3>LICENÇAS FALTANDO</h3>
+                <div class=caixa-licencas-valor>
+                    {% comment %} <h3 class="meta-sigla">R$</h3> {% endcomment %}
+                    <h3 class="licencas-valor">36</h3>
+                    <i class="fas fa-edit"></i>
+                </div>
+                
+            </div>
+
+        </div>
+        
 
     </div>  
 
 <div class="caixa-faturamento">
     <div class="container-f">
-        <h1>Faturamento por Data</h1>
-        <div class="col-4 add-div" onclick=abrir()>
-            <i class="fas fa-plus"> </i> Adicionar faturamento
+        <div class="container-flex">
+            <h3 id="h3_fd">Faturamento por Data</h3>
+            
+            <div class="col-3 add-div text-center"  onclick=abrir()>
+                <i class="fas fa-plus"> </i> Adicionar 
+            </div>
+       
+        
         </div>
+        
 
-        <div class="col-12 search-div">   
+        {% comment %} <div class="col-12 search-div">   
             <input class="form-control" type="text" id="search" placeholder="Digita o faturamento">
             <i class="fas fa-search"></i>
-        </div>
+        </div> {% endcomment %}
         
         {% if messages %}
             <ul class="messages">
@@ -56,8 +89,9 @@
         {% for faturamento in faturamentos %}
             <li class="task-item">
                 <p>R$ {{faturamento.faturamento_dia}}</p><p>|</p><p>{{faturamento.data_faturamento}}</p>  
-                <a href="/list/delete/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a>
-                <a href="/list/edit/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>
+                <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>
+               
             </li>
         {% endfor %}
         
@@ -65,5 +99,6 @@
              
     </ul>
 </div>
+
 </div>
 {% endblock  %}

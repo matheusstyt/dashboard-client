@@ -1,0 +1,165 @@
+{% extends 'based.html' %}
+
+{% block title  %}DASHBOARD - COMERCIAL{% endblock  %}
+
+
+{% block content %}
+
+<div class="modal-g" id="modal1">
+    
+    <div class="container-adicionar">
+        <button class="btn-x" onclick=sair1()>X</button>
+        <h2>Adicionar novo planejamento</h2>
+        <form class="form-add-f" method="post">
+            {% csrf_token %}
+            {{ formPlanejado.as_p}}
+            <div class="flex-btn">
+                <input type="submit" class="btn btn-success text-center" value="Salvar">
+            </div>
+           
+        </form>
+    </div>
+</div>
+<div class="modal-g" id="modal2">
+    
+    <div class="container-adicionar">
+        <button class="btn-x" onclick=sair2()>X</button>
+        <h2>Adicionar novo 'em curso'</h2>
+        <form class="form-add-f" method="post">
+            {% csrf_token %}
+            {{ formCurso.as_p}}
+            <div class="flex-btn">
+                <input type="submit" class="btn btn-success text-center" value="Salvar">
+            </div>
+           
+        </form>
+    </div>
+</div>
+<div class="modal-g" id="modal3">
+    
+    <div class="container-adicionar">
+        <button class="btn-x" onclick=sair3()>X</button>
+        <h2>Adicionar novo concluído</h2>
+        <form class="form-add-f" method="post">
+            {% csrf_token %}
+            {{ formConcluido.as_p}}
+            <div class="flex-btn">
+                <input type="submit" class="btn btn-success text-center" value="Salvar">
+            </div>
+           
+        </form>
+    </div>
+</div> 
+
+<div class="container-g">
+
+<div class="caixa-implantacao">
+    <div class="container-f">  
+        <div class="container-flex">
+            <h3 id="h3_fd">PLANEJADO</h3>
+            
+            <div class="col-3 add-div text-center"  onclick=abrir1()>
+                <i class="fas fa-plus"> </i> Adicionar 
+            </div>
+       
+        
+        </div>    
+        {% if messages %}
+            <ul class="messages">
+                {%  for message in messages %}
+                {% comment %} //tags sao infos {% endcomment %}
+                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}    
+    </div>
+    
+    <ul class="implantacao-list">
+        {% for planejado in planejados %}
+            <li class="implantacao-item">
+                <p>{{planejado.descricao_planejado}}</p>  
+                <div style="display:flex">
+                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>
+                </div>
+                
+            </li>
+        {% endfor %}
+
+             
+    </ul>
+</div>
+<div class="caixa-implantacao">
+    <div class="container-f"> 
+        <div class="container-flex">
+            <h3 id="h3_fd">EM CURSO</h3>
+            
+            <div class="col-3 add-div text-center"  onclick=abrir2()>
+                <i class="fas fa-plus"> </i> Adicionar 
+            </div>
+       
+        
+        </div>     
+        {% if messages %}
+            <ul class="messages">
+                {%  for message in messages %}
+                {% comment %} //tags sao infos {% endcomment %}
+                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}    
+    </div>
+    
+    <ul class="task-list">
+        {% for curso in cursos %}
+            <li class="implantacao-item">
+                <p>{{curso.descricao_curso}}</p>
+                <div style="display:flex">
+                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>    
+                </div>
+               </li>
+        {% endfor %}
+
+             
+    </ul>
+</div>
+<div class="caixa-implantacao">
+    <div class="container-f">      
+        <div class="container-flex">
+            <h3 id="h3_fd">CONCLUÍDO</h3>
+            
+            <div class="col-3 add-div text-center"  onclick=abrir3()>
+                <i class="fas fa-plus"> </i> Adicionar 
+            </div>
+       
+        
+        </div>
+        {% if messages %}
+            <ul class="messages">
+                {%  for message in messages %}
+                {% comment %} //tags sao infos {% endcomment %}
+                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}    
+    </div>
+    
+    <ul class="implantacao-list">
+        {% for concluido in concluidos %}
+            <li class="implantacao-item">
+                <p>{{concluido.descricao_concluido}}</p>
+                <div style="display:flex">
+                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>              
+                </div>
+                
+            </li>
+        {% endfor %}
+
+             
+    </ul>
+</div>
+
+</div>
+{% endblock  %}
