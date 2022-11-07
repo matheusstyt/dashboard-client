@@ -1,0 +1,35 @@
+{% extends 'based.html' %}
+{% block title %}Editando..{% endblock  %}
+
+{% block content %}
+<div class="modal-ge" id="modalEdit">
+    
+    <div class="container-editar">
+        {% comment %} <button class="btn-x" onclick=sair()>X</button> {% endcomment %}
+        <h2>Editar descrição de "planejado" </h2>
+        <h2>Ultima modificação: {{formP.created_at.value}}</h2>
+        <form class="form-add-f" method="post">
+            {% csrf_token %}
+            {{ formP.as_p}}
+            <div class="flex-btn">
+                <input type="submit" class="btn btn-success text-center" value="Salvar">
+            </div>
+           
+        </form>
+    </div>
+    <style>
+        .container-editar{
+            max-width: 45vw;
+            margin: 2em auto;
+            border: 1px solid rgba(0, 0,0, 0.3);
+            box-shadow: 0px 9px 20px rgb(0 0 0 / 12%);
+            padding: 3em
+
+        }
+        .foo{
+            bottom: 0;
+            position: absolute
+        }
+    </style>
+</div>
+{% endblock  %}

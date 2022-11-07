@@ -42,7 +42,6 @@ def comercial(request):
         formOkay.save()
         return redirect('/dashboard/comercial')
 
-
     return render(request, 'comercial/index.html', {'faturamentos':faturamentos, 'form': form})
 def editarFaturamento(request, id):
     faturamentoEdit = get_object_or_404(Faturamento, pk=id)
@@ -61,35 +60,93 @@ def editarFaturamento(request, id):
 def deleteFaturamento(request, id):
     faturamento = get_object_or_404(Faturamento, pk=id)
     faturamento.delete()
-    return redirect('/dashboard/comercial')
-
-
+    return redirect('/dashboard/comercial') 
 
 def implantacao(request):
     planejados = Planejado.objects.all()
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
 
-    formPlanejado = PlanejadoForm(self.request.POST or None)
-    formCurso = CursoForm(self.request.POST or None)
-    formConcluido = ConcluidoForm(self.request.POST or None)
+    formPlanejado = PlanejadoForm()
+    formCurso = CursoForm()
+    formConcluido = ConcluidoForm()
     
     # tratamento para enviar para o banco
     if request.method == 'POST':
         formP = PlanejadoForm(request.POST)
-        planejado = formP.save(commit=False)
-        # MEIO TEMPO PRA MODIFICAÇÃO
-        formP.save()
+        # planejado = formP.save(commit=False)
+        # MEIO TEMPO PRA MODIFICAÇÃO     
 
-        # formEC = CursoForm(request.POST)
+        formEC = CursoForm(request.POST)
         # curso = formP.save(commit=False)
-        # # MEIO TEMPO PRA MODIFICAÇÃO
-        # formEC.save()
+        # MEIO TEMPO PRA MODIFICAÇÃO
 
-        # formC = ConcluidoForm(request.POST)
+        formC = ConcluidoForm(request.POST)
         # concluido = formC.save(commit=False)
-        # # MEIO TEMPO PRA MODIFICAÇÃO
-        # formC.save()
-               
+        # MEIO TEMPO PRA ;MODIFICAÇÃO
+        if formP.is_valid():
+            formP.save()
+        if formEC.is_valid():
+            formEC.save()
+        if formC.is_valid(): 
+            formC.save()   
+                
         return redirect('/dashboard/implantacao')
     return render(request, 'implantacao/index.html', {'planejados':planejados, 'cursos':cursos, 'concluidos':concluidos, 'formConcluido': formConcluido, 'formCurso': formCurso, 'formPlanejado':formPlanejado})
+
+def implantacao_planejado_edit(request, id):
+    planejado = get_object_or_404(Planejado, pk=id)
+    formP = PlanejadoForm(instance=planejado)
+
+    if(request.method == 'POST'):
+        formP = PlanejadoForm(request.POST, instance=planejado)
+        if(formP.is_valid()):
+            formP.save()
+            return redirect('/dashboard/implantacao')
+        else:
+            return render(request, 'implantacao/planejado.html', {'formP': formP})
+    else:
+        return render(request, 'implantacao/planejado.html', {'formP': formP})
+
+def implantacao_curso_edit(request, id):
+    curso = get_object_or_404(Curso, pk=id)
+    formC = CursoForm(instance=curso)
+
+    if(request.method == 'POST'):
+        formC = CursoForm(request.POST, instance=curso)
+        
+        if(formC.is_valid()):
+            formC.save()
+            return redirect('/dashboard/implantacao')
+        else:
+            return render(request, 'implantacao/curso.html', {'formC': formC})
+    else:
+        return render(request, 'implantacao/curso.html', {'formC': formC})
+
+def implantacao_concluido_edit(request, id):
+    concluido = get_object_or_404(Concluido, pk=id)
+    formCO = ConcluidoForm(instance=concluido)
+
+    if(request.method == 'POST'):
+        formCO = ConcluidoForm(request.POST, instance=concluido)
+        
+        if(formCO.is_valid()):
+            formCO.save()
+            return redirect('/dashboard/implantacao')
+        else:
+            return render(request, 'implantacao/concluido.html', {'formCO': formCO})
+    else:
+        return render(request, 'implantacao/concluido.html', {'formCO': formCO})
+
+def implantacao_planejado_delete(request, id):
+    planejado = get_object_or_404(Planejado, pk=id)
+    planejado.delete()
+    return redirect('/dashboard/implantacao') 
+def implantacao_curso_delete(request, id):
+    curso = get_object_or_404(Curso, pk=id)
+    curso.delete()
+    return redirect('/dashboard/implantacao') 
+def implantacao_concluido_delete(request, id):
+    concluido = get_object_or_404(Concluido, pk=id)
+    concluido.delete()
+    return redirect('/dashboard/implantacao') 

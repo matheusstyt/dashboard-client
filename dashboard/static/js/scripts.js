@@ -55,4 +55,7 @@ myObject.addEventListener('keydown', function (evt) {
 // your code goes here 
  console.log(myObject.value);
 });
-myObject.value = 'testea'
+function goImplantacao(){
+    alert('asd')
+    window.location.href = 'dashboard/implantacao';
+}

@@ -79,8 +79,8 @@
             <li class="implantacao-item">
                 <p>{{planejado.descricao_planejado}}</p>  
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>
+                    <a id="delete" href="/dashboard/implantacao/planejadoDel/{{planejado.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/implantacao/planejado/{{planejado.id}}"><span><i class="fas fa-edit"></i></span></a>
                 </div>
                 
             </li>
@@ -115,8 +115,8 @@
             <li class="implantacao-item">
                 <p>{{curso.descricao_curso}}</p>
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>    
+                    <a id="delete" href="/dashboard/implantacao/cursoDel/{{curso.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/implantacao/curso/{{curso.id}}"><span><i class="fas fa-edit"></i></span></a>    
                 </div>
                </li>
         {% endfor %}
@@ -150,14 +150,11 @@
             <li class="implantacao-item">
                 <p>{{concluido.descricao_concluido}}</p>
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/comercial/deleteFaturamento/{{faturamento.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/comercial/editarFaturamento/{{faturamento.id}}"><span><i class="fas fa-edit"></i></span></a>              
+                    <a id="delete" href="/dashboard/implantacao/concluidoDel/{{concluido.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/implantacao/concluido/{{concluido.id}}"><span><i class="fas fa-edit"></i></span></a>              
                 </div>
-                
             </li>
         {% endfor %}
-
-             
     </ul>
 </div>
 
