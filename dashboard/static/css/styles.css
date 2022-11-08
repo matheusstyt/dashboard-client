@@ -37,16 +37,16 @@ h1, h3{
 }
 .foo{
     background-color: rgba(0, 0, 0, 0.9);
-    height: auto;
-    width: 100vw;
+    height: 4vmax;
+    width: 100%;
     text-align: center;
     display: flex;
     flex-flow: row ;
-    align-items:flex-end;
+    align-items:center;
     justify-content: center;
-    position: relative;
+    position: absolute;
     bottom: 0;
-    margin-top: 0.1em;
+    margin-top: 0.5em; 
 }
 
 .foo p{

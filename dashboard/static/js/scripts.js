@@ -18,15 +18,28 @@ function sair(){
 function abrir(){
     modal.style.display = 'flex';
 }
-// // modal de edição
-// let modalEdit = document.getElementById('modalEdit')
-// function sairEdit(){
-//     modalEdit.style.display = 'none';
-// }
-// function abrirEdit(){
-//     modalEdit.style.display = 'flex';
-// }
+// MODAL DE EDIÇÃO DE META E LICENSAS
+function sair_modal_meta(){
+    document.getElementById('modalMeta').style.display = 'none';
+}
+function abrir_modal_meta(){
+    document.getElementById('modalMeta').style.display = 'flex';
 
+}
+function sair_modal_placar(){
+    document.getElementById('modalPlacar').style.display = 'none';
+}
+function abrir_modal_placar(){
+    document.getElementById('modalPlacar').style.display = 'flex';
+
+}
+function sair_licensas_f(){
+    document.getElementById('modalLicensas').style.display = 'none';
+}
+function abrir_licensas_f(){
+    document.getElementById('modalLicensas').style.display = 'flex';
+
+}
 // MODAL DE IMPLATAÇÃO 
 
 function sair1(){

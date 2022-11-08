@@ -28,3 +28,19 @@ class Concluido(models.Model):
     descricao_concluido = models.TextField()
     def __str__(self):
         return self.descricao_concluido   
+
+class Meta_Valor(models.Model):
+    updated_at = models.DateField(auto_now_add=True)
+    meta =  models.IntegerField()
+    def __str__(self):
+        return str(self.meta)   
+class Licencas_Faltando(models.Model):
+    updated_at = models.DateField(auto_now_add=True)
+    lincencas_faltando =  models.IntegerField()
+    def __str__(self):
+        return str(self.lincencas_faltando)   
+class Placar_Licensas(models.Model):
+    updated_at = models.DateField(auto_now_add=True)
+    placar_licensas =  models.IntegerField()
+    def __str__(self):
+        return str(self.placar_licensas)   

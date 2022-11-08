@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'maquinas',
     'dashboard',
     'crispy_forms',
+    'relatorios',
 ]
 
 MIDDLEWARE = [

@@ -11,11 +11,17 @@ from .models import Faturamento
 from .models import Planejado
 from .models import Curso
 from .models import Concluido
+from .models import Meta_Valor
+from .models import Placar_Licensas
+from .models import Licencas_Faltando
 
 from .forms import FaturamentoForm
 from .forms import PlanejadoForm
 from .forms import CursoForm
 from .forms import ConcluidoForm
+from .forms import MetaForm
+from .forms import Placar_LicensasForm
+from .forms import Licencas_FaltandoForm
 # DATA ATUAL 
 today = date.today()
 # DIAS TOTAIS DO MÊS
@@ -28,21 +34,69 @@ mes = np.arange(inicio_mes, dias_totais_mes, 1).tolist()
 # print(mes)
 # Create your views here.
 def dashboard(request):
-    return render(request, 'dashboard/index.html')
+    
+    
+    from dash import Dash, html, dcc
+    import plotly.express as px
+    from plotly.offline import plot
+    import pandas as pd
+
+
+    # assume you have a "long-form" data frame
+    # see https://plotly.com/python/px-arguments/ for more options
+    df = pd.DataFrame({
+        "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+        "Amount": [4, 1, 2, 2, 4, 5],
+        "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+    })
+
+    fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+
+    gantt_ploty = plot(fig, output_type="div")
+    context = {'gantt_ploty': gantt_ploty}
+    return render(request, 'dashboard/index.html', context)
 
 def comercial(request):
-    faturamentos = Faturamento.objects.all()
+    faturamentos = Faturamento.objects.all().order_by('-data_faturamento')
     form = FaturamentoForm()
+    # editar meta
+    meta = get_object_or_404(Meta_Valor, pk=2)
+    lincencas_faltando = get_object_or_404(Licencas_Faltando, pk=1)
+    placar_licensas = get_object_or_404(Placar_Licensas, pk=1)
+
+    formMeta = MetaForm(instance=meta)
+    formLicensas = Licencas_FaltandoForm(instance=lincencas_faltando)
+    formPlacar = Placar_LicensasForm(instance=placar_licensas)
+
     # tratamento para enviar para o banco
     if request.method == 'POST':
+        # SALVAMENTO DO FORMULÁRIO FATURAMENTO ADIÇÃO
         formOkay = FaturamentoForm(request.POST)
-        faturamento = formOkay.save(commit=False)
-        # MEIO TEMPO PRA MODIFICAÇÃO
+        if(formOkay.is_valid()):
+            formOkay.save()
+            return redirect('/dashboard/comercial')
+            
+        # SALVAMENTO DO FORMULÁRIO META EDITAR
+        formMeta = MetaForm(request.POST, instance=meta)
+        if(formMeta.is_valid()):
+            formMeta.save()
+            return redirect('/dashboard/comercial')
+        
+        # SALVAMENTO DO FORMULÁRIO LICENSAS EDITAR
+        formLicensas = Licencas_FaltandoForm(request.POST, instance=lincencas_faltando)
+        if(formLicensas.is_valid()):
+            formLicensas.save()
+            return redirect('/dashboard/comercial')
 
-        formOkay.save()
-        return redirect('/dashboard/comercial')
+        # SALVAMENTO DO FORMULÁRIO PLACAR EDITAR
+        formPlacar = Placar_LicensasForm(request.POST, instance=placar_licensas)
+        if(formPlacar.is_valid()):
+            formPlacar.save()
+            return redirect('/dashboard/comercial')
 
-    return render(request, 'comercial/index.html', {'faturamentos':faturamentos, 'form': form})
+
+    return render(request, 'comercial/index.html', {'faturamentos':faturamentos, 'form': form, 'formMeta':formMeta, 'formLicensas': formLicensas, 'formPlacar': formPlacar})
+
 def editarFaturamento(request, id):
     faturamentoEdit = get_object_or_404(Faturamento, pk=id)
     formEdit = FaturamentoForm(instance=faturamentoEdit)
@@ -150,3 +204,17 @@ def implantacao_concluido_delete(request, id):
     concluido = get_object_or_404(Concluido, pk=id)
     concluido.delete()
     return redirect('/dashboard/implantacao') 
+def editarMeta(request, id):
+    meta = get_object_or_404(Meta_Valor, pk=2)
+    formMeta = MetaForm(instance=meta)
+
+    if(request.method == 'POST'):
+        formMeta = MetaForm(request.POST, instance=meta)
+        
+        if(formMeta.is_valid()):
+            formMeta.save()
+            return redirect('/dashboard/implantacao')
+        else:
+            return render(request, 'implantacao/concluido.html', {'formCO': formCO})
+    else:
+        return render(request, 'implantacao/concluido.html', {'formCO': formCO})
