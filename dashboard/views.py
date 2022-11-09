@@ -6,6 +6,8 @@ from workadays import workdays as wd
 import calendar
 import numpy as np
 import pandas as pd
+import plotly.express as px
+from plotly.offline import plot
 
 from .models import Faturamento
 from .models import Planejado
@@ -22,39 +24,15 @@ from .forms import ConcluidoForm
 from .forms import MetaForm
 from .forms import Placar_LicensasForm
 from .forms import Licencas_FaltandoForm
-# DATA ATUAL 
-today = date.today()
-# DIAS TOTAIS DO MÊS
-dias_semana =  [ "Seg" , "Ter" , "Qua" , "Qui" , "Sex" , "Sab" , "Dom" ]
-monthRange = calendar.monthrange(today.year,10)
-dias_totais_mes = int(monthRange[1])
-inicio_mes = int(monthRange[0])
-mes = np.arange(inicio_mes, dias_totais_mes, 1).tolist()
-#df = pd.DataFrame(dias_semana, mes)
-# print(mes)
-# Create your views here.
+from .graphic import plt
+def trial(request):
+    return render(request, 'my_first_dash_plotly_app/trial.html')
 def dashboard(request):
     
-    
-    from dash import Dash, html, dcc
-    import plotly.express as px
-    from plotly.offline import plot
-    import pandas as pd
+   
+    return render(request, 'dashboard/index.html', plt.grafico_1())
 
 
-    # assume you have a "long-form" data frame
-    # see https://plotly.com/python/px-arguments/ for more options
-    df = pd.DataFrame({
-        "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-        "Amount": [4, 1, 2, 2, 4, 5],
-        "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-    })
-
-    fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-
-    gantt_ploty = plot(fig, output_type="div")
-    context = {'gantt_ploty': gantt_ploty}
-    return render(request, 'dashboard/index.html', context)
 
 def comercial(request):
     faturamentos = Faturamento.objects.all().order_by('-data_faturamento')
