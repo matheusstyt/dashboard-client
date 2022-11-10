@@ -1,0 +1,618 @@
+div.fixed { position: fixed; top: 0; left: 0; width: 100vw;}
+body{
+    background-color: rgb(80, 80, 182);
+    
+}
+p{
+    margin: 0;
+    
+}
+h2{
+    margin-bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    color: rgb(11, 6, 59);
+    position: relative;
+    background-color: rgb   (195, 190, 255);
+    font-size:1.2vmax;
+    text-align: center;
+}
+.banner{
+    height: 3.3vmax;
+    margin: 0;
+    background-color: rgb(57, 182, 232);
+    display: flex;
+    gap: 30px;
+    flex-flow: wrap row;
+    align-items:center;
+    justify-content:space-around;
+    border-radius: 2px;
+}
+.banner h2{
+    color: white;
+    background-color: transparent;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 2%;
+    display: inline-block;
+}
+.imgDash{
+    position: relative;
+    float: left;
+    right: 5%;
+    top: 2%;
+    height: 3vmax;
+}
+
+
+/* footer  */
+
+.modalP{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: none;
+    z-index: 2;
+}
+
+/* 
+novo layout */
+.container{
+    background-color: rgba(0, 0, 0, 0.0 );
+    height:100vh;
+    width: 100vw;
+    padding: 0 10px;
+    display: flex;
+    flex-flow: wrap row;        
+    gap: 10px;
+}
+/* DEFININDO ESPAÇOS */
+.box-geral{
+    width: 100vw;
+    height: 93vh;
+    background-color: rgb(193, 234, 184);  
+    display: flex;  
+    position: relative;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(153, 77, 203);
+}
+.caixa_metade1{
+    width: 60%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: wrap row;
+    background-color: rgba(43, 29, 151, 0.5);
+    border-right: 0.15em solid rgba(11, 85, 203, 0.2);
+
+}
+.caixa_metade2{
+    width: 40%;
+    height: 100%;
+    position: relative;
+    background-color: rgba(216, 157, 157, 0.5);
+    display: flex;
+    flex-flow: wrap row;
+}
+.quadrante1{
+    width: 100%;
+    height: 60%;
+    background-color: rgb(137, 208, 232);
+    display: flex;
+    flex-flow: wrap row;
+    align-items: center;
+    justify-content: center;
+    border-bottom:0.15em solid rgba(101, 158, 250, 0.2);
+}
+.quadrante2{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    background-color: rgb(215, 219, 225);
+}
+.comercial-q{
+    width: 60%;
+    height: 100%;
+    
+    background-color: rgb(185, 185, 222);}
+.meio-q{
+    width: 40%;
+    height: 100%;
+    background-color: rgb(245, 252, 254);
+    border-left: 00.15em solid rgba(101, 158, 250, 0.2);
+}
+.implantacao-m{
+    height: 50%;
+    width: 100%;
+    background-color: rgb(244, 247, 253);
+
+}
+.modulo{
+    padding-top: 0;
+    height: 50%;
+    overflow: hidden;
+}
+.modulo h2{
+    font-size:1.2vmax;
+    text-align: center; 
+    color: rgb(11, 6, 59);
+    background-color: rgb(190, 212, 255);
+    border-bottom:0.15em solid rgba(11, 85, 203, 0.2);
+}
+
+
+/* COMERCIAL BLOCO */
+
+.comercial-q{
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    border-right: 1px solid rgb(192, 192, 192);
+}
+.comercial-q h2{
+    position: relative; 
+    top: 0;
+    z-index: 2;
+    right: 0;
+    left:0;
+    background-color: rgb(190, 212, 255);
+    border-bottom:0.15em solid rgba(11, 85, 203, 0.2);
+}
+
+.box-graphic{
+    width: 100%; 
+    height: 100%;
+    display: flex;
+    flex-flow:row wrap;
+}
+
+
+.implantacao{
+    position: relative;
+    background-color: rgb(239, 247, 255);
+    width: 55%;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.suporte{
+    border-top: 0.15em solid rgba(101, 158, 250, 0.2);
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.suporte-flex{
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 47%;
+}
+.chamados-categoria{
+    width: 60%;
+    height: 100%;
+    background-color: rgb(109, 209, 175);
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: center;
+    align-items: center;
+}
+.chamados-categoria .metade-a{
+    width: 50%;
+    height: 100%;
+    background-color: rgb(236, 240, 245);
+    border-left: 0.015em solid rgba(101, 158, 250, 0.2); 
+    overflow-y:scroll; 
+    overflow-x:hidden;  
+}   
+.tabela-suporte{
+    background-color: rgba(222, 209, 255, 0.3)
+}
+.tabela-suporte tr td{
+    text-align: left   ;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    font-size: 0.9em;
+    
+}
+
+
+
+
+
+
+
+.desenvolvimento{
+    background-color: rgb(242, 249, 255);
+    width: 100%;
+    height: 33.33%;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+.desenvolvimento h2{
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+
+/* FATURAMENTOS */
+.faturamento{
+    background-color: rgb(227, 248, 235);
+    width: 100%;
+    height: 17%;
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: space-around;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+.faturamento h2{
+    width: 100%;
+    font-size:0.9vmax;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.box-p{
+    text-align: center;
+    padding: 0;
+    width: 35%;
+    height: 40%;
+    background-color: rgba(215, 130, 130, 0.0);
+    display: block;
+
+}
+
+.box-p p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 65%;
+    background-color: rgba(30, 23, 155, 0.7);
+    font-size:0.9vmax;
+    border-radius: 5px;
+    color: aliceblue;   
+}
+.box-p h3{
+    font-size:0.8vmax;
+    z-index: 3;
+    color: rgb(45, 45, 45);
+    margin: 0;
+      
+}
+/* FIM FATURAMENTOS */
+/* NEGOCIOS */
+.negocios{
+    background-color: rgb(157, 241, 193, 0.0);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-right: 1px solid rgb(192, 192, 192);
+
+    display: block;
+    /* overflow-y:scroll; 
+    overflow-x:hidden;  */
+} 
+
+.pipeline-detalhes{
+    display: inline-block;
+    background-color: rgb(228, 230, 240);
+    width: 50%;
+    height: 100%;
+    flex-flow: wrap row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* PIPELINE FEITO EM CSS HEHE */
+
+.caixa-grafico-pipeline{
+    background-color: rgb(145, 209, 226, 0.0);
+    display: block;
+    width: 50%;
+    height: 87%;
+    margin: 0;
+    padding: 0;
+}
+.pipeline-a, .pipeline-b, .pipeline-c{
+    background-color: transparent;
+    display: flex;
+    flex-flow: wrap row;
+    align-items: center;
+    justify-content:center;
+    margin: 0.2vmax auto;
+    padding: 0;
+    position: relative;
+}
+.pipeline-a{
+    border-top: 5vmax solid transparent;
+    border-left: 4.7vmax solid transparent;
+    border-right: 4.7vmax solid transparent;
+    width: 86%;
+}
+.pipeline-b{
+    border-top: 5vmax solid transparent;
+    border-left: 3.3vmax solid transparent;
+    border-right: 3.3vmax solid transparent;
+    width: 56%;
+}
+.pipeline-c{
+    border-top: 7vmax solid transparent;
+    border-left: 4.9vmax solid transparent;
+    border-right: 4.9vmax solid transparent;
+    width: 30%;
+}
+.pipeline-a .lado-direito,.pipeline-a .lado-esquerdo {
+    width: 67.7%;
+}
+.pipeline-b .lado-direito,.pipeline-b .lado-esquerdo {
+    width: 78.5%;
+}
+.pipeline-c .lado-direito,.pipeline-c .lado-esquerdo {
+    width: 20.5%;
+}
+
+.pipeline-a .lado-esquerdo{
+    top: -5vmax;
+    left: -3vmax;
+    border-left: 3vmax solid transparent;
+    border-top: 5vmax solid rgb(97, 165, 217);
+}
+.pipeline-a .lado-direito{
+    top: -5vmax;
+    right: -3vmax;
+    border-right: 3vmax solid transparent;
+    border-top: 5vmax solid rgb(230, 115, 115);
+}
+
+.pipeline-c .lado-esquerdo{
+    top: -7vmax;
+    left: -4.6vmax;
+    border-left: 4.5vmax solid transparent;
+    border-top: 7vmax solid rgb(41, 64, 191);
+}
+.pipeline-c .lado-direito{
+    top: -7vmax;
+    right: -4.6vmax;
+    border-right: 4.5vmax solid transparent;
+    border-top: 7vmax solid rgb(203, 65, 65);
+}
+
+.lado-esquerdo{
+    position: absolute;
+    width: 50%;
+    top: -5vmax;
+    left: -3vmax;
+    border-left: 3.3vmax solid transparent;
+    border-top: 5vmax solid rgb(72, 96, 228);
+}
+.lado-direito{
+    position: absolute;
+    top: -5vmax;
+    right: -3vmax;
+    border-right: 3.3vmax solid transparent;
+    border-top: 5vmax solid rgb(240, 85, 85);
+}
+
+.lado-p h2{
+    margin-top: -2.8vmax;
+    font-family: 'Consolas';
+    font-size: 1vmax;
+    background-color: transparent;
+    color: #fff;
+    text-shadow: 2px 1px black;
+    border: none;
+}
+.pipeline-c .lado-p h2{
+    margin-top: -5.5vmax;
+    z-index: 3;
+}
+
+.pipeline-c .lado-direito h2{
+margin-left: 0.7vmax;
+}
+.pipeline-c .lado-esquerdo h2{
+    margin-left: -5vmax;
+}
+.pipeline-b .lado-direito h2, .pipeline-a .lado-direito h2{
+    text-align: left;
+    margin-left: 0.7vmax;
+    }
+.pipeline-a .lado-esquerdo h2{
+    text-align: right;
+    margin-right: 0.7vmax;
+    }
+/* FIM PIPELINE FEITO EM CSS  */
+.caixa-flex-pipeline{
+    display: flex;
+    flex-flow: wrap row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+}
+.container-header{
+    width: 100%;
+    height: 8%;
+
+}
+.container-header ul{
+    background-color:rgb(205, 205, 227);
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-flow: wrap row;
+    align-items:flex-start;
+    justify-content:space-around;
+    
+}
+.container-header ul li{
+    width: 33.33%;
+    border-right: 1px solid  rgb(159, 159, 159);
+    text-align: center;
+}
+.container-p{
+    width: 100%;
+    height: 27.1%;
+    margin-bottom: 3px;
+    overflow-y:scroll; 
+    overflow-x:hidden;
+    border-top: 2px solid  rgb(149, 153, 214);
+    border-bottom: 2px solid  rgb(149, 153, 214);
+    border-left: 1px solid  rgb(149, 153, 214);
+    text-align: center;
+    
+}
+
+table{
+    background-color: rgba(255, 255, 255, 0.0);
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    font-size: 1vmax;
+    text-align: center;
+    list-style: armenian;
+    
+
+}
+td{
+    
+}
+th{
+    background-color: rgba(0, 0, 0, 0.2)
+}
+table tr{
+    padding: 10px 0;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    
+}
+tr:hover{
+   background-color: rgba(4, 0, 72, 0.2)
+}
+
+
+/* DESENVOLVIMENTO MODULO */
+.container-desenvolvimento{
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content:space-around;
+    height: 100%;
+}
+.devendo, .fazendo, .entregue{
+    background-color: rgba(210, 210, 210, 0.1);
+    width: 33.33%;
+    height: 100%;
+    text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+.devendo h3, .fazendo h3, .entregue h3{
+    font-size: 1vmax;
+}
+.devendo ul, .fazendo ul, .entregue ul{
+    text-align: left;
+    width: 100%;
+
+}
+
+
+/* IMPLANTAÇÃO */
+.implantacao h2{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    color: rgb(11, 6, 59);
+    background-color: rgb(195, 190, 255);
+    
+    
+}
+.implantacao-p{
+    height: 32%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(235, 234, 255, 0.0);
+    border-bottom: 1px dashed rgb(161, 161, 161) ;
+}
+.implantacao-p h3{
+    text-align: left;
+    padding-left: 20px;
+    color: rgb(11, 6, 59);
+    background-color: rgb(231, 239, 255);
+    font-size: 1.2vmax; 
+    border-bottom: 2px solid rgba(101, 158, 250, 0.2);  
+}
+
+.planejado, .curso, .concluido{
+    overflow-y:scroll; 
+    overflow-x:hidden; 
+    height:80%;
+    
+}
+
+.planejado ul li, .curso ul li, .concluido ul li{
+    margin: 0;
+    padding: 0.2em 0;
+    font-size: 1vmax;
+    list-style:square;
+}
+
+.planejado ul li:hover, .curso ul li:hover, .concluido ul li:hover{
+    background-color: rgba(43, 132, 210, 0.4);
+    transition: 0.5s ease;
+}
+/* COLETORES */
+.coletores{ 
+    grid-area: coletores;
+    background-color: rgb(255, 255, 255, 0.0);
+    width: 100%;
+    height: 33.33%;
+    position: relative;
+    display: block;
+}
+.coletores h2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+ .coletores-p{
+     width: 100%;
+     height: 25%;
+     display: flex;
+     flex-flow: wrap row;
+     align-items: center;
+     justify-content:space-around;
+ }
+ .coletores-p:hover{
+     background-color: rgb(238, 174, 137);}
+     .coletores-p h3{
+        font-size: 1.2vmax;
+     }
+.estoque-1, .devendo-1, .insumo-1, .manuntencao-1{
+    width: 20%;
+    height: 80%;
+    border-radius: 5px;
+}
+.estoque-1{
+    background-color: rgb(171, 196, 239);
+}
+.devendo-1{
+    background-color: rgb(171, 239, 236);
+}
+.insumo-1{
+    background-color: rgb(239, 239, 171);
+}
+.manuntencao-1{
+    background-color: rgb(239, 171, 230);
+}

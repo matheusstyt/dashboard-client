@@ -78,27 +78,27 @@ WSGI_APPLICATION = 'django_ficha.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'dashboard',
-        'USER': 'sa',
-        'PASSWORD': '7410',
-        'HOST' : '170.10.0.41',
-        'PORT' : '1433',
-        'OPTION':{
-            'driver': 'ODBC Driver 17 for SQL Server',
-            'isolation_level':'READ UNCOMMITTED'
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'sql_server.pyodbc',
+#         'NAME': 'dashboard',
+#         'USER': 'sa',
+#         'PASSWORD': '7410',
+#         'HOST' : '170.10.0.41',
+#         'PORT' : '1433',
+#         'OPTION':{
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#             'isolation_level':'READ UNCOMMITTED'
+#         }
+#     }
+# }
 
 
 # Password validation

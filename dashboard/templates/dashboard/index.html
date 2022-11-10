@@ -1,50 +1,56 @@
-{% extends 'based.html' %}
-{% block title  %}DADOS DO DASHBOARD MAP INTELLIGENCE{% endblock  %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {% static 'css/dash.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="banner">
+        <h2>DASHBOARD MAP INTELLIGENCE</h2>
+        <h2>DATA : 22/10/2022</h2>
+    </div>
+    <div class="box-geral">
+        <div class="caixa_metade1">
+            <div class="quadrante1">
+                <div class="faturamento">
+                    <div class="box-p box-meta">
+                        <h3>META EM R$</h3>
+                        <p>R$ 100000.00</p>
+                    </div>
+                    <div class="box-p box-realizado">
+                        <h3>REALIZADO EM R$</h3>
+                        <p>R$ 100000.00</p>
+                    </div>
+                    <div class="box-p box-despesas">
+                        <h3>PROJETADO EM R$</h3>
+                        <p>R$ 100000.00</p>
+                    </div>
+                    <div class="box-p box-total" style="display:block;">
+                        <h3>% REALIZADO / % PROJETADO</h3>
+                        <p style="width: 48%; display: inline-block;" >100 %</p>
+                        <p style="width: 48%; display: inline-block;">100 %</p>
+                    </div>
 
-{% block content %}
-<h1> DASHBOARD MAP INTELLIGENCE - DADOS </h1>
-<div class="dados-faturamento"> 
-    <h2>META R$ 200000.00</h2>
-    <h2>REALIZADO R$ 160000.00</h2>
-    <h2>PROJETADO R$ 270000.00</h2>
-    <h2>% REAL 90%</h2>
-    <h2>% PROJETADO 110%</h2>
+                </div>
+            </div>
+            <div class="quadrante2">
+                
+            </div>
+        </div>
+        <div class="caixa_metade2">
+            <div class="modulo implantacao-m">
 
-</div>
+            </div>
+            <div class="modulo suporte">
+                
+            </div>
+        </div>
 
-{% autoescape off %}
-{{gantt_ploty}}
-{% endautoescape %}
+    </div>
+</body>
+</html>
 
-
-
-<div class="box-btn">
-   
-        <button type="submit" class="btn-p" id="btn-comercial">COMERCIAL</button>
-        <button type="submit" class="btn-p" id="btn-implantacao" onclick="goImplantacao()">IMPLANTAÇÃO</button>
-        <button type="submit" class="btn-p" id="btn-pipeline">PIPELINE DE VENDAS</button>
-        <button type="submit" class="btn-p" id="btn-suporte">SUPORTE</button>
-  
-    
-    
-</div>
-
-<style>
-    h2{
-        text-align: center;
-    }
-    .box-btn form{
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-        align-items: space-around;
-        gap: 1%
-    }
-    .btn-p{
-        width: 20%;
-        height: 80px
-    }
-
-    
-</style>
-{% endblock  %}
