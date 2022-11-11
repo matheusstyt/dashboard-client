@@ -28,8 +28,11 @@ from .graphic import plt
 def trial(request):
     return render(request, 'my_first_dash_plotly_app/trial.html')
 def dashboard(request):
-
-    context = {'fig1' : plt.grafico_1(), 'fig2': plt.grafico_2(), 'fig3' : plt.grafico_3(), 'fig4' : plt.grafico_4(), 'df1': plt.glpi_suporte(), 'df2': plt.suporte()}
+    planejados = Planejado.objects.all()
+    cursos = Curso.objects.all()
+    concluidos = Concluido.objects.all()
+   
+    context = {'planejados': planejados, 'cursos' : cursos, 'concluidos' : concluidos, 'fig1' : plt.grafico_1(), 'fig2': plt.grafico_2(), 'fig3' : plt.grafico_3(), 'fig4' : plt.grafico_4(), 'df1': plt.glpi_suporte(), 'df2': plt.suporte()}
    
     return render(request, 'dashboard/index.html', context)
 

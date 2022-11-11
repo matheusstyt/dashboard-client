@@ -3,7 +3,7 @@ body{
     background-color: rgb(80, 80, 182);
     
 }
-p{
+p, h3{
     margin: 0;
 
 }
@@ -125,14 +125,13 @@ novo layout */
     border-left: 00.15em solid rgba(101, 158, 250, 0.2);
 }
 .implantacao-m{
-    height: 50%;
+    height: 55%;
     width: 100%;
     background-color: rgb(244, 247, 253);
-
 }
 .modulo{
     padding-top: 0;
-    height: 50%;
+    
     overflow: hidden;
 }
 .modulo h2{
@@ -181,7 +180,7 @@ novo layout */
 .suporte{
     border-top: 0.15em solid rgba(101, 158, 250, 0.2);
     width: 100%;
-    height: 100%;
+    height: 45%;
     display: block;
 }
 .suporte-flex{

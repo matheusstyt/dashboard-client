@@ -68,28 +68,28 @@
                         <div class="caixa-grafico-pipeline">
                             <div class="pipe pipeline-a">
                                 <div class="lado-e">
-
+                                    <h2>1.000.000</h2>
                                 </div>
                                 <div class="lado-d">
-                                    
+                                    <h2>240</h2>
                                 </div>
                          
                             </div>
                             <div class="pipe pipeline-b">
                                 <div class="lado-e">
-
+                                    <h2>600.000</h2>
                                 </div>
                                 <div class="lado-d">
-                                    
+                                    <h2>57</h2>
                                 </div>
                   
                             </div>        
                             <div class="pipe pipeline-c">
                                 <div class="lado-e">
-
+                                    <h2>100.000</h2>
                                 </div>
                                 <div class="lado-d">
-                                    
+                                    <h2>2</h2>
                                 </div>
               
                             </div>
@@ -106,6 +106,38 @@
         </div>
         <div class="caixa_metade2">
             <div class="modulo implantacao-m">
+                <h2>IMPLANTAÇÃO</h2>
+                <div class="implantacao-p">
+                    <h3>Planejado do mês</h3>
+                    <div class="planejado">
+                        <ul>
+                            {% for item in planejados %}
+                                <li>{{item.descricao_planejado}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="implantacao-p">
+                    <h3>Em curso</h3>
+                    <div class="curso">
+                        <ul>
+                            {% for item in cursos %}
+                                <li>{{item.descricao_curso}}</li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="implantacao-p">
+                    <h3>Concluído</h3>
+                    <div class="concluido">
+                        <ul>
+                            {% for item in concluidos %}
+                                <li>{{item.descricao_concluido}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
 
             </div>
             <div class="modulo suporte">
@@ -135,6 +167,40 @@
         </div>
 
     </div>
+    <style>
+        body { position: fixed; top: 0; left: 0; width: 100vw;}
+        body{
+            margin:0;
+            padding: 0;
+        }
+        p, h3{
+            margin: 0;
+        
+        }
+        p, h3, h2, h1, tr, td, th, li{
+            
+            font-family: 'Arial'
+        
+        }
+        .lado-e h2, .lado-d h2{
+            z-index: 3;
+            margin-top: -3.7vmax;
+            font-family: 'Arial';
+            text-shadow: 0px 1px #fff;
+            background-color: transparent;
+            border: none;
+        }
+        .pipeline-c .lado-e h2{
+            margin-left: -3.3vmax;
+        }
+        .pipeline-c .lado-d h2{
+            margin-left: 1vmax;
+            
+        }
+    </style>
+    <script>
+
+    </script>
 </body>
 </html>
 
