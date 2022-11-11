@@ -16,7 +16,7 @@ from .models import Concluido
 from .models import Meta_Valor
 from .models import Placar_Licensas
 from .models import Licencas_Faltando
-
+from . import plotly_app
 from .forms import FaturamentoForm
 from .forms import PlanejadoForm
 from .forms import CursoForm
@@ -28,9 +28,10 @@ from .graphic import plt
 def trial(request):
     return render(request, 'my_first_dash_plotly_app/trial.html')
 def dashboard(request):
-    
+
+    context = {'fig1' : plt.grafico_1(), 'fig2': plt.grafico_2(), 'fig3' : plt.grafico_3(), 'fig4' : plt.grafico_4(), 'df1': plt.glpi_suporte(), 'df2': plt.suporte()}
    
-    return render(request, 'dashboard/index.html', plt.grafico_1())
+    return render(request, 'dashboard/index.html', context)
 
 
 

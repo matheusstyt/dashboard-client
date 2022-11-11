@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from . import views
-
+from . import plotly_app
 urlpatterns = [
     path('', views.dashboard, name="dashboard"),
     path('implantacao/', views.implantacao, name="implantacao"),

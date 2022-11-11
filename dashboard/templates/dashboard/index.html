@@ -16,28 +16,91 @@
     <div class="box-geral">
         <div class="caixa_metade1">
             <div class="quadrante1">
-                <div class="faturamento">
-                    <div class="box-p box-meta">
-                        <h3>META EM R$</h3>
-                        <p>R$ 100000.00</p>
+                <div class="comercial-q">
+                    <div class="faturamento">
+                        <div class="box-p box-meta">
+                            <h3>META EM R$</h3>
+                            <p>R$ 100000.00</p>
+                        </div>
+                        <div class="box-p box-realizado">
+                            <h3>REALIZADO EM R$</h3>
+                            <p>R$ 100000.00</p>
+                        </div>
+                        <div class="box-p box-despesas">
+                            <h3>PROJETADO EM R$</h3>
+                            <p>R$ 100000.00</p>
+                        </div>
+                        <div class="box-p box-total" style="display:block;">
+                            <h3>% REALIZADO / % PROJETADO</h3>
+                            <p style="width: 48%; display: inline-block;" >100 %</p>
+                            <p style="width: 48%; display: inline-block;">100 %</p>
+                        </div>
+    
                     </div>
-                    <div class="box-p box-realizado">
-                        <h3>REALIZADO EM R$</h3>
-                        <p>R$ 100000.00</p>
-                    </div>
-                    <div class="box-p box-despesas">
-                        <h3>PROJETADO EM R$</h3>
-                        <p>R$ 100000.00</p>
-                    </div>
-                    <div class="box-p box-total" style="display:block;">
-                        <h3>% REALIZADO / % PROJETADO</h3>
-                        <p style="width: 48%; display: inline-block;" >100 %</p>
-                        <p style="width: 48%; display: inline-block;">100 %</p>
+                    <div class="caixa-fig" style="width: 100%; height: 83%;">
+                        <div class="fig1" style="width: 100%; height: 50%; background-color: #a1a1a1;">
+                            {% autoescape off %}
+                            {{fig1}}
+                            {% endautoescape %}
+                        </div>
+                        <div class="fig2" style="display: inline-block; width: 48%; height: 50%; background-color: rgb(57, 182, 232);">
+                            {% autoescape off %}
+                            {{fig2}}
+                            {% endautoescape %}
+                        </div>
+                        <div class="fig3" style="display: inline-block; width: 48%; height: 50%; background-color: rgb(153, 77, 203);">
+                            {% autoescape off %}
+                            {{fig3}}
+                            {% endautoescape %}
+                        </div>
                     </div>
 
                 </div>
+                <div class="meio-q">
+
+                </div>
+                
             </div>
             <div class="quadrante2">
+                <div class="modulo negocios">
+                    <h2>PIPELINE DE VENDAS</h2>
+                    <div class="caixa-flex-pipeline">
+                        <div class="caixa-grafico-pipeline">
+                            <div class="pipe pipeline-a">
+                                <div class="lado-e">
+
+                                </div>
+                                <div class="lado-d">
+                                    
+                                </div>
+                         
+                            </div>
+                            <div class="pipe pipeline-b">
+                                <div class="lado-e">
+
+                                </div>
+                                <div class="lado-d">
+                                    
+                                </div>
+                  
+                            </div>        
+                            <div class="pipe pipeline-c">
+                                <div class="lado-e">
+
+                                </div>
+                                <div class="lado-d">
+                                    
+                                </div>
+              
+                            </div>
+                        </div>
+                        <div class="pipeline-detalhes">
+                            
+                        </div>
+                    </div>
+                    
+
+                </div>
                 
             </div>
         </div>
@@ -46,7 +109,28 @@
 
             </div>
             <div class="modulo suporte">
+                <h2>SUPORTE</h2>
+                <div class="suporte-flex">
+                    <div class="fig4">
+                        {% autoescape off %}
+                            {{fig4}}
+                            {% endautoescape %}
+
+                    </div>
+
+                    <div class="chamados-categoria">
+                        {% autoescape off %}
+                        {{df2}}
+                        {% endautoescape %}
                 
+                    </div>
+                    <div class="problemas">
+                        {% autoescape off %}
+                        {{df1}}
+                        {% endautoescape %}
+                        
+                    </div>
+                </div>
             </div>
         </div>
 

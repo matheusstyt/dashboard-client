@@ -5,10 +5,10 @@ body{
 }
 p{
     margin: 0;
-    
+
 }
 h2{
-    margin-bottom: 0;
+    margin: 0;
     top: 0;
     right: 0;
     left: 0;
@@ -18,6 +18,7 @@ h2{
     font-size:1.2vmax;
     text-align: center;
 }
+.fig1
 .banner{
     height: 3.3vmax;
     margin: 0;
@@ -100,9 +101,9 @@ novo layout */
     width: 100%;
     height: 60%;
     background-color: rgb(137, 208, 232);
-    display: flex;
+    display:block;
     flex-flow: wrap row;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     border-bottom:0.15em solid rgba(101, 158, 250, 0.2);
 }
@@ -192,22 +193,31 @@ novo layout */
     height: 47%;
 }
 .chamados-categoria{
-    width: 60%;
+    width: 33%;
     height: 100%;
     background-color: rgb(109, 209, 175);
     display: flex;
     flex-flow: wrap row;
     justify-content: center;
     align-items: center;
+    overflow-y:scroll; 
+    overflow-x:hidden;  
 }
-.chamados-categoria .metade-a{
-    width: 50%;
+.fig4{
+    width: 33%;
     height: 100%;
-    background-color: rgb(236, 240, 245);
+    background-color: rgb(144, 186, 236);
+    border-left: 0.015em solid rgba(101, 158, 250, 0.2); 
+    
+}   
+.problemas{
+    width: 33%;
+    height: 100%;
+    background-color: rgb(228, 209, 112);
     border-left: 0.015em solid rgba(101, 158, 250, 0.2); 
     overflow-y:scroll; 
     overflow-x:hidden;  
-}   
+}
 .tabela-suporte{
     background-color: rgba(222, 209, 255, 0.3)
 }
@@ -311,91 +321,58 @@ novo layout */
 /* PIPELINE FEITO EM CSS HEHE */
 
 .caixa-grafico-pipeline{
-    background-color: rgb(145, 209, 226, 0.0);
+    background-color: rgba(30, 145, 177, 0.2);
     display: block;
     width: 50%;
-    height: 87%;
+    height: 100%;
     margin: 0;
     padding: 0;
+
 }
-.pipeline-a, .pipeline-b, .pipeline-c{
+ .pipeline-a, .pipeline-b, .pipeline-c{
     background-color: transparent;
     display: flex;
     flex-flow: wrap row;
     align-items: center;
     justify-content:center;
     margin: 0.2vmax auto;
-    padding: 0;
+    gap: 0.3em;
     position: relative;
+} 
+.pipeline-a .lado-e, .pipeline-a .lado-d{
+    
+    height: 1px;
+    background-color: transparent;
 }
-.pipeline-a{
-    border-top: 5vmax solid transparent;
-    border-left: 4.7vmax solid transparent;
-    border-right: 4.7vmax solid transparent;
-    width: 86%;
+.pipeline-a .lado-e{
+    width: 32%;
+    border-left: 3.8vmax solid transparent;
+    border-top: 5vmax solid rgb(244, 72, 72);
 }
-.pipeline-b{
-    border-top: 5vmax solid transparent;
-    border-left: 3.3vmax solid transparent;
-    border-right: 3.3vmax solid transparent;
-    width: 56%;
+.pipeline-a .lado-d{
+    width: 32%;
+    border-right: 3.8vmax solid transparent;
+    border-top: 5vmax solid rgb(81, 179, 249);
 }
-.pipeline-c{
-    border-top: 7vmax solid transparent;
-    border-left: 4.9vmax solid transparent;
-    border-right: 4.9vmax solid transparent;
-    width: 30%;
+.pipeline-b .lado-e{
+    width: 19.2%;
+    border-left: 3.7vmax solid transparent;
+    border-top: 5vmax solid rgb(239, 47, 47);
 }
-.pipeline-a .lado-direito,.pipeline-a .lado-esquerdo {
-    width: 67.7%;
+.pipeline-b .lado-d{
+    width: 19.2%;
+    border-right: 3.7vmax solid transparent;
+    border-top: 5vmax solid rgb(53, 81, 237);
 }
-.pipeline-b .lado-direito,.pipeline-b .lado-esquerdo {
-    width: 78.5%;
+.pipeline-c .lado-e{
+    width: 4%;
+    border-left: 4.3vmax solid transparent;
+    border-top: 6vmax solid rgb(220, 22, 22);
 }
-.pipeline-c .lado-direito,.pipeline-c .lado-esquerdo {
-    width: 20.5%;
-}
-
-.pipeline-a .lado-esquerdo{
-    top: -5vmax;
-    left: -3vmax;
-    border-left: 3vmax solid transparent;
-    border-top: 5vmax solid rgb(97, 165, 217);
-}
-.pipeline-a .lado-direito{
-    top: -5vmax;
-    right: -3vmax;
-    border-right: 3vmax solid transparent;
-    border-top: 5vmax solid rgb(230, 115, 115);
-}
-
-.pipeline-c .lado-esquerdo{
-    top: -7vmax;
-    left: -4.6vmax;
-    border-left: 4.5vmax solid transparent;
-    border-top: 7vmax solid rgb(41, 64, 191);
-}
-.pipeline-c .lado-direito{
-    top: -7vmax;
-    right: -4.6vmax;
-    border-right: 4.5vmax solid transparent;
-    border-top: 7vmax solid rgb(203, 65, 65);
-}
-
-.lado-esquerdo{
-    position: absolute;
-    width: 50%;
-    top: -5vmax;
-    left: -3vmax;
-    border-left: 3.3vmax solid transparent;
-    border-top: 5vmax solid rgb(72, 96, 228);
-}
-.lado-direito{
-    position: absolute;
-    top: -5vmax;
-    right: -3vmax;
-    border-right: 3.3vmax solid transparent;
-    border-top: 5vmax solid rgb(240, 85, 85);
+.pipeline-c .lado-d{
+    width: 4%;
+    border-right: 4.3vmax solid transparent;
+    border-top: 6vmax solid rgb(16, 38, 159);
 }
 
 .lado-p h2{
@@ -432,7 +409,8 @@ margin-left: 0.7vmax;
     flex-flow: wrap row;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    background-color: blueviolet;
+    width: 100%%;
     height: 100%;
 
 }

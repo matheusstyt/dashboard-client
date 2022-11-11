@@ -15,7 +15,7 @@ admin.site.register(Planejado)
 admin.site.register(Curso)
 admin.site.register(Concluido)
 admin.site.register(Meta_Valor)
-# admin.site.register(Placar_Licensas)
-# admin.site.register(Licencas_Faltando)
+admin.site.register(Placar_Licensas)
+admin.site.register(Licencas_Faltando)
 # class EventAdmin(admin.ModelAdmin):
 #     list_display = ['day', 'start_time', 'end_time', 'notes']

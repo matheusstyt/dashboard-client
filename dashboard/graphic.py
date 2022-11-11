@@ -61,7 +61,32 @@ class FaturamentoClasse():
         self.projetado_percent = projetado_percent
 
 class plt:
-
+    def suporte():
+        lista = [
+            ("INJET (1)",21),
+            ("INJET > Erro (3)",15),
+            ("INJET > Duvida (2)",13),
+            ("COLETOR (8)",12),
+            ("Solicitação (16)",6),
+            ("IDW > Erro (7)",5),
+            ("COLETOR > Defeito (9)",4),
+            ("IDW (4)",4),
+            ("COLETOR > Duvida (10)",3),
+            ("ATUALIZAÇÃO (13)",2),
+        ]
+        npLista = np.array(lista)
+        df = pd.DataFrame(npLista, columns=["Categorias", "Chamados"])
+        html = df.to_html(index=False)
+        return html
+    def glpi_suporte():
+        nome_ficheiro = 'C:/Users/simone/Documents/desenvolvimento/dashboard/suporte/LISTA DE CLIENTES GLPI.xlsx'
+        df = pd.read_excel(nome_ficheiro )
+        data = df[['LOCALIAÇÃO', 'Nº DE CHAMADOS COMO REQUERENTE']].loc[df['Nº DE CHAMADOS COMO REQUERENTE'] > 0]
+        data.sort_values(by=['Nº DE CHAMADOS COMO REQUERENTE'], ascending=False, inplace=True)
+        data.columns = ['Empresa', 'N° de Chamados']
+        data['N° de Chamados'] = data['N° de Chamados'].astype('str')
+        html = data.to_html(index=False)
+        return html
     def grafico_1():
         faturamento = FaturamentoClasse()
         df = df_faturamento()
@@ -74,8 +99,8 @@ class plt:
         # CONSTRUÇÃO DO GRÁFICO
         layout = go.Layout(
             autosize=True,
-            # width=1000,
-            # height=1000,
+            # width=550,
+            height=200,
 
             xaxis= go.layout.XAxis(linecolor = 'black',
                                 linewidth = 1,
@@ -86,11 +111,11 @@ class plt:
                                 mirror = True),
 
             margin=go.layout.Margin(
-                l=50,
-                r=50,
-                b=100,
-                t=100,
-                pad = 4
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad = 2
             )
         )
         fig = go.Figure(layout=layout) 
@@ -101,7 +126,7 @@ class plt:
         context = {'gantt_ploty': gantt_ploty}
 
         print(faturamento.meta)
-        return context
+        return gantt_ploty
 
     def grafico_2():
         # TRATAMENTO DO DATAFRAME
@@ -114,19 +139,30 @@ class plt:
                                     values=[placar_atual.placar_licensas,licencas_faltando.lincencas_faltando])])
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
                         marker=dict(colors=colors, line=dict(color='#000000', width=1,)), title='Distribuição de Licenças')
+       
         fig.update_layout( plot_bgcolor = '#212121',
                             font = {'family': 'Arial','size': 12,'color': 'black'},
-                            margin=dict(l=5, r=5, t=15, b=5),)
+                           )
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
             y=1.02,
             xanchor="right",
             x=1
+        ),
+        autosize=True,
+        # width=300,
+        height=200,
+        margin=go.layout.Margin(
+            l=0,
+            r=0,
+            b=2,
+            t=0,
+            pad = 2
         ))
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
-        return context
+        return gantt_ploty
     def grafico_3():
         # TRATAMENTO DO DATAFRAME
         faturamento = FaturamentoClasse()
@@ -136,7 +172,29 @@ class plt:
                         ('Projetado', faturamento.real_projetado)]
         npLista = np.array(faturamentoL)  
         dfFaturamento = pd.DataFrame(npLista, columns=['Categoria', 'Montante'])    
-        fig = go.Figure()
+        
+        layout = go.Layout(
+            autosize=True,
+            # width=265,
+             height=200,
+
+            xaxis= go.layout.XAxis(linecolor = 'black',
+                                linewidth = 1,
+                                mirror = True),
+
+            yaxis= go.layout.YAxis(linecolor = 'black',
+                                linewidth = 1,
+                                mirror = True),
+
+            margin=go.layout.Margin(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad = 2
+            )
+        )
+        fig = go.Figure(layout=layout)
         color_d = ["#DD2525", "#3675D6 ", "#4B4FD6"]
 
         fig.add_trace(
@@ -148,10 +206,12 @@ class plt:
             textfont_size=20))
         fig.update_layout( plot_bgcolor = 'white',
                             font = {'family': 'Arial','size': 12,'color': 'black'},
-                            margin=dict(l=5, r=5, t=15, b=5),)
+                            margin=dict(l=5, r=5, t=15, b=5),
+                            
+                            )
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
-        return context
+        return gantt_ploty
     def grafico_4():
         # TRATAMENTO DO DATAFRAME
         nome_ficheiro = 'C:/Users/simone/Documents/desenvolvimento/dashboard/suporte/chamados-por-status.csv'
@@ -174,10 +234,10 @@ class plt:
                                 mirror = True),
 
             margin=go.layout.Margin(
-                l=50,
-                r=50,
-                b=100,
-                t=100,
+                l=0,
+                r=0,
+                b=0,
+                t=0,
                 pad = 4
             )
         )
@@ -186,7 +246,7 @@ class plt:
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
                         marker=dict(colors=['#F5894F', '#3D37B6', '#DA2631'], line=dict(color='#000000', width=1,)), title='Chamados por Categoria')
         fig.update_layout( plot_bgcolor = '#212121', 
-                            font = {'family': 'Arial','size': 16,'color': 'black'},
+                            font = {'family': 'Arial','size': 12,'color': 'black'},
             
                             margin=dict(l=5, r=5, t=5, b=50),)
         fig.update_layout(legend=dict(
@@ -199,7 +259,7 @@ class plt:
         
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
-        return context
+        return gantt_ploty
 def df_faturamento():
     # TRATAMENTO DO DATAFRAME
     faturamentos = Faturamento.objects.all()
