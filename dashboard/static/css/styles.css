@@ -36,7 +36,7 @@ h1, h3{
     text-align: justify;
 }
 .foo{
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(18, 20, 71, 0.9);
     height: 4vmax;
     width: 100%;
     text-align: center;
@@ -51,6 +51,7 @@ h1, h3{
 
 .foo p{
     color: aliceblue;
+    font-size: 2vmax;
 }
 #btn-comercial:hover {
     background-color: rgba(57, 41, 176, 0.3)

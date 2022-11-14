@@ -6,49 +6,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href=" {% static 'css/dash.css' %}">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href=" {% static 'img/dash.ico' %}">
+    <title>DASHBOARD MAP INTELLIGENCE</title>
+    
 </head>
 <body>
     <div class="banner">
+        <a  href="/dashboard">
+            <img src=" {% static 'img/logo.png' %}" alt="IR PARA O DASHBOARD">
+        </a>
         <h2>DASHBOARD MAP INTELLIGENCE</h2>
         <h2>DATA : 22/10/2022</h2>
+        <img class="ico" id="pdf_print" src=" {% static 'img/baixar-pdf.png' %}" alt="GERAR PDF" >
+
+        <a href="/dashboard/comercial">
+            <img class="ico" src=" {% static 'img/relatorio.png' %}" alt="IR PARA RELATÓRIOS">
+        </a>
     </div>
     <div class="box-geral">
         <div class="caixa_metade1">
             <div class="quadrante1">
                 <div class="comercial-q">
+                    <h2>COMERCIAL</h2>
                     <div class="faturamento">
                         <div class="box-p box-meta">
                             <h3>META EM R$</h3>
-                            <p>R$ 100000.00</p>
+                            <p>R$ {{meta}}</p>
                         </div>
                         <div class="box-p box-realizado">
                             <h3>REALIZADO EM R$</h3>
-                            <p>R$ 100000.00</p>
+                            <p>R$ {{real_acumulado}}</p>
                         </div>
                         <div class="box-p box-despesas">
                             <h3>PROJETADO EM R$</h3>
-                            <p>R$ 100000.00</p>
+                            <p>R$ {{real_projetado}}</p>
                         </div>
                         <div class="box-p box-total" style="display:block;">
                             <h3>% REALIZADO / % PROJETADO</h3>
-                            <p style="width: 48%; display: inline-block;" >100 %</p>
-                            <p style="width: 48%; display: inline-block;">100 %</p>
+                            <p style="width: 48%; display: inline-block;" >{{real_percent}}%</p>
+                            <p style="width: 48%; display: inline-block;">{{projetado_percent}}%</p>
                         </div>
     
                     </div>
-                    <div class="caixa-fig" style="width: 100%; height: 83%;">
-                        <div class="fig1" style="width: 100%; height: 50%; background-color: #a1a1a1;">
+                    <div class="caixa-fig" >
+                        <div class="fig1">
                             {% autoescape off %}
                             {{fig1}}
                             {% endautoescape %}
                         </div>
-                        <div class="fig2" style="display: inline-block; width: 48%; height: 50%; background-color: rgb(57, 182, 232);">
+                        <div class="fig2" >
                             {% autoescape off %}
                             {{fig2}}
                             {% endautoescape %}
                         </div>
-                        <div class="fig3" style="display: inline-block; width: 48%; height: 50%; background-color: rgb(153, 77, 203);">
+                        <div class="fig3" >
                             {% autoescape off %}
                             {{fig3}}
                             {% endautoescape %}
@@ -95,7 +106,54 @@
                             </div>
                         </div>
                         <div class="pipeline-detalhes">
-                            
+                            <div class="container-header">
+                                <ul>
+                                    {% for item in pipeline_header.columns%}
+                                    <li>{{item}}</li>
+                                    {% endfor %}
+                                </ul>
+                                
+    
+                            </div>
+                            <div class="container-p">
+                                <table class="table">
+                                    <tbody>
+                                        {% for i in pipeline_a %}
+                                        <tr>
+                                            <td>{{i.nome_a}}</td>
+                                            <td>{{i.money_a}}</td>
+                                            <td>{{i.uf_a}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>            
+                            </div>
+                            <div class="container-p">
+                                <table class="table ">
+                                    <tbody>
+                                        {% for j in pipeline_b %}
+                                        <tr>
+                                            <td>{{j.nome_b}}</td>
+                                            <td>{{j.money_b}}</td>
+                                            <td>{{j.uf_b}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="container-p">
+                                <table class="table ">
+                                    <tbody>
+                                        {% for k in pipeline_c %}
+                                        <tr>
+                                            <td>{{k.nome_c}}</td>
+                                            <td>{{k.money_c}}</td>
+                                            <td>{{k.uf_c}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     
@@ -167,40 +225,52 @@
         </div>
 
     </div>
-    <style>
-        body { position: fixed; top: 0; left: 0; width: 100vw;}
-        body{
-            margin:0;
-            padding: 0;
-        }
-        p, h3{
-            margin: 0;
-        
-        }
-        p, h3, h2, h1, tr, td, th, li{
-            
-            font-family: 'Arial'
-        
-        }
-        .lado-e h2, .lado-d h2{
-            z-index: 3;
-            margin-top: -3.7vmax;
-            font-family: 'Arial';
-            text-shadow: 0px 1px #fff;
-            background-color: transparent;
-            border: none;
-        }
-        .pipeline-c .lado-e h2{
-            margin-left: -3.3vmax;
-        }
-        .pipeline-c .lado-d h2{
-            margin-left: 1vmax;
-            
-        }
-    </style>
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" ></script>
 
-    </script>
+    <script src=" {% static 'js/jspdf.debug.js' %}"></script>
+    <script src=" {% static 'js/jspdf.min.js' %}"></script>
+    <script src=" {% static 'js/pdf.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function($) 
+        { 
+    
+            $(document).on('click', '#pdf_print', function(event) 
+            {
+                console.log('uai')
+                
+    
+                //credit : https://ekoopmans.github.io/html2pdf.js
+                
+                var element = document.getElementsByClassName('box-geral') 
+    
+                //easy
+                html2pdf().from(element).save();
+    
+                //custom file name
+                //html2pdf().set({filename: 'code_with_mark_'+js.AutoCode()+'.pdf'}).from(element).save();
+    
+    
+                //more custom settings
+                var opt = 
+                {
+                  margin:       1,
+                  filename:     'pageContent_'+'.pdf',
+                  image:        { type: 'jpeg', quality: 0.98 },
+                  html2canvas:  { scale: 2 },
+                  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+    
+                // New Promise-based usage:
+                html2pdf().set(opt).from(element).save();
+    
+                 
+            });
+    
+     
+     
+        });
+        </script>
 </body>
 </html>
 

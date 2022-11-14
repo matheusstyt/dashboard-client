@@ -10,6 +10,10 @@ from .models import Meta_Valor
 from .models import Placar_Licensas
 from .models import Licencas_Faltando
 
+from .models import PipelineA
+from .models import PipelineB
+from .models import PipelineC
+
 admin.site.register(Faturamento)
 admin.site.register(Planejado)
 admin.site.register(Curso)
@@ -17,5 +21,9 @@ admin.site.register(Concluido)
 admin.site.register(Meta_Valor)
 admin.site.register(Placar_Licensas)
 admin.site.register(Licencas_Faltando)
+
+admin.site.register(PipelineA)
+admin.site.register(PipelineB)
+admin.site.register(PipelineC)
 # class EventAdmin(admin.ModelAdmin):
 #     list_display = ['day', 'start_time', 'end_time', 'notes']

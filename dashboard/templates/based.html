@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href=" {% static 'css/bootstrap.css' %}">
+    <link rel="icon" type="image/x-icon" href=" {% static 'img/relatorio.png' %}">
     <title> {% block title %}{% endblock  %}</title>
     
 </head>
@@ -34,15 +35,15 @@
                     <a class="nav-link active nav-p" aria-current="page" href="/dashboard/implantacao">Implantação</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active nav-p" aria-current="page" href="/dashboard/desenvolvimento">Pipeline de Vendas</a>
+                    <a class="nav-link active nav-p" aria-current="page" href="/dashboard/pipeline">Pipeline de Vendas</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active nav-p" aria-current="page" href="/dashboard/suporte">Suporte</a>
                   </li>
 
-                  <li class="nav-item sair">
+                  {% comment %} <li class="nav-item sair">
                     <a class="nav-link active nav-p" aria-current="page" href="/accounts/logout">Sair </a>
-                  </li>
+                  </li> {% endcomment %}
 
                   {% else %}
 
@@ -70,20 +71,7 @@
         padding:0;
         margin:0;
       }
-      .foo{
-        background-color: rgba(0, 0, 0, 0.9);
-        height: 4vmax;
-        width: 100%;
-        text-align: center;
-        display: flex;
-        flex-flow: row ;
-        align-items:center;
-        justify-content: center;
-        position: absolute;
-        bottom: 0;
-        margin-top: 0.5em; 
-    }
-        
+     
       .container-g{
         width: 100%;
         height: 83vh;

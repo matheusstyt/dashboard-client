@@ -17,6 +17,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 class FaturamentoClasse(): 
     meta = 0
+    metaStr = ''
     real_acumulado = 0
     real_projetado = 0
     dias_corridos = 0
@@ -52,13 +53,14 @@ class FaturamentoClasse():
         # PERCENT PROJETADO
         projetado_percent = real_projetado / meta
 
-        self.meta = meta
-        self.real_acumulado = real_acumulado
-        self.real_projetado = real_projetado
+        self.meta = float("{:.2f}".format(meta))
+        self.metaStr = float("{:.2f}".format(meta))
+        self.real_acumulado = float("{:.2f}".format(real_acumulado))
+        self.real_projetado = float("{:.2f}".format(real_projetado)) 
         self.dias_corridos = dias_corridos
         self.dias_totais_mes = dias_totais_mes
-        self.real_percent = real_percent
-        self.projetado_percent = projetado_percent
+        self.real_percent = int(real_percent * 100)
+        self.projetado_percent = int(projetado_percent * 100)
 
 class plt:
     def suporte():
@@ -125,7 +127,6 @@ class plt:
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
 
-        print(faturamento.meta)
         return gantt_ploty
 
     def grafico_2():
@@ -223,7 +224,7 @@ class plt:
         list_chamados = df['Chamados'].values.tolist()
         layout = go.Layout(
             autosize=True,
-      
+            height=400,
 
             xaxis= go.layout.XAxis(linecolor = 'black',
                                 linewidth = 1,
@@ -276,3 +277,51 @@ def df_faturamento():
     df.sort_values(["data_faturamento"], axis=0,ascending=True, inplace=True)
 
     return df
+class Dataframes:
+    def pipeline_header():
+        lista = [
+            ("Cliente A", 70000, 'Amazonas'), 
+            ("Cliente B", 65000, 'Bahia'), 
+            ("Cliente C", 15000, 'Amazonas'), 
+            ("Cliente D", 70060, 'Bahia'),
+            ("Cliente E", 23000, 'Amazonas'),
+        ]
+        npLista = np.array(lista)
+        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
+        return df
+    def pipeline_a():
+        lista = [
+            ("Cliente A", 70000, 'Amazonas'), 
+            ("Cliente B", 65000, 'Bahia'), 
+            ("Cliente C", 15000, 'Amazonas'), 
+            ("Cliente D", 70060, 'Bahia'),
+            ("Cliente E", 23000, 'Amazonas'),
+        ]
+        npLista = np.array(lista)
+        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
+        html = df.to_html(index=False, header=False)
+        return html
+    def pipeline_b():
+        lista = [
+            ("Cliente F", 54000, 'Amazonas'), 
+            ("Cliente G", 60000, 'Amazonas'), 
+            ("Cliente H", 19000, 'São Paulo'), 
+            ("Cliente I", 50000, 'São Paulo'),
+            ("Cliente J", 23000, 'Amazonas'),
+        ]
+        npLista = np.array(lista)
+        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
+        html = df.to_html(index=False, header=False)
+        return html
+    def pipeline_c():
+        lista = [
+            ("Cliente K", 44000, 'Amazonas'), 
+            ("Cliente L", 56000, 'Bahia')
+            # ("Cliente M", 15000, 'São Paulo'), 
+            # ("Cliente N", 12000, 'Bahia'),
+            # ("Cliente O", 23000, 'Amazonas'),
+        ]
+        npLista = np.array(lista)
+        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
+        html = df.to_html(index=False, header=False)
+        return html

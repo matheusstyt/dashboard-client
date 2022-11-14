@@ -1,6 +1,6 @@
 {% extends 'based.html' %}
 
-{% block title  %}DASHBOARD - IMPLANTAÇÃO{% endblock  %}
+{% block title  %}DASHBOARD - PIPELINE{% endblock  %}
 
 
 {% block content %}
@@ -9,10 +9,10 @@
     
     <div class="container-adicionar">
         <button class="btn-x" onclick=sair1()>X</button>
-        <h2>Adicionar novo planejamento</h2>
+        <h2>Adicionar novo cliente da categoria A</h2>
         <form class="form-add-f" method="post">
             {% csrf_token %}
-            {{ formPlanejado.as_p}}
+            {{ formPipelineA.as_p}}
             <div class="flex-btn">
                 <input type="submit" class="btn btn-success text-center" value="Salvar">
             </div>
@@ -23,11 +23,11 @@
 <div class="modal-g" id="modal2">
     
     <div class="container-adicionar">
-        <button class="btn-x" onclick=sair2()>X</button>
-        <h2>Adicionar novo 'em curso'</h2>
+        <button class="btn-x" onclick=sair1()>X</button>
+        <h2>Adicionar novo cliente da categoria B</h2>
         <form class="form-add-f" method="post">
             {% csrf_token %}
-            {{ formCurso.as_p}}
+            {{ formPipelineB.as_p}}
             <div class="flex-btn">
                 <input type="submit" class="btn btn-success text-center" value="Salvar">
             </div>
@@ -38,11 +38,11 @@
 <div class="modal-g" id="modal3">
     
     <div class="container-adicionar">
-        <button class="btn-x" onclick=sair3()>X</button>
-        <h2>Adicionar novo concluído</h2>
+        <button class="btn-x" onclick=sair1()>X</button>
+        <h2>Adicionar novo cliente da categoria C</h2>
         <form class="form-add-f" method="post">
             {% csrf_token %}
-            {{ formConcluido.as_p}}
+            {{ formPipelineC.as_p}}
             <div class="flex-btn">
                 <input type="submit" class="btn btn-success text-center" value="Salvar">
             </div>
@@ -56,7 +56,7 @@
 <div class="caixa-implantacao">
     <div class="container-f">  
         <div class="container-flex">
-            <h3 id="h3_fd">PLANEJADO</h3>
+            <h3 id="h3_fd">PIPELINE A </h3>
             
             <div class="col-3 add-div text-center"  onclick=abrir1()>
                 <i class="fas fa-plus"> </i> Adicionar 
@@ -75,12 +75,12 @@
     </div>
     
     <ul class="implantacao-list">
-        {% for planejado in planejados %}
+        {% for pipelinea in pipelineA %}
             <li class="implantacao-item">
-                <p>{{planejado.descricao_planejado}}</p>  
+                <p>{{pipelinea.nome_a}}</p>  
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/implantacao/planejadoDel/{{planejado.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/implantacao/planejado/{{planejado.id}}"><span><i class="fas fa-edit"></i></span></a>
+                    <a id="delete" href="/dashboard/pipeline/deletePipelineA/{{pipelinea.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/pipeline/editPipelineA/{{pipelinea.id}}"><span><i class="fas fa-edit"></i></span></a>
                 </div>
                 
             </li>
@@ -92,7 +92,7 @@
 <div class="caixa-implantacao">
     <div class="container-f"> 
         <div class="container-flex">
-            <h3 id="h3_fd">EM CURSO</h3>
+            <h3 id="h3_fd">PIPELINE B</h3>
             
             <div class="col-3 add-div text-center"  onclick=abrir2()>
                 <i class="fas fa-plus"> </i> Adicionar 
@@ -111,14 +111,15 @@
     </div>
     
     <ul class="task-list">
-        {% for curso in cursos %}
+        {% for pipelineb in pipelineB %}
             <li class="implantacao-item">
-                <p>{{curso.descricao_curso}}</p>
+                <p>{{pipelineb.nome_b}}</p>  
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/implantacao/cursoDel/{{curso.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/implantacao/curso/{{curso.id}}"><span><i class="fas fa-edit"></i></span></a>    
+                    <a id="delete" href="/dashboard/pipeline/deletePipelineB/{{pipelineb.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/pipeline/editPipelineB/{{pipelineb.id}}"><span><i class="fas fa-edit"></i></span></a>
                 </div>
-               </li>
+                
+            </li>
         {% endfor %}
 
              
@@ -127,7 +128,7 @@
 <div class="caixa-implantacao">
     <div class="container-f">      
         <div class="container-flex">
-            <h3 id="h3_fd">CONCLUÍDO</h3>
+            <h3 id="h3_fd">PIPELINE C</h3>
             
             <div class="col-3 add-div text-center"  onclick=abrir3()>
                 <i class="fas fa-plus"> </i> Adicionar 
@@ -146,13 +147,14 @@
     </div>
     
     <ul class="implantacao-list">
-        {% for concluido in concluidos %}
+        {% for pipelinec in pipelineC %}
             <li class="implantacao-item">
-                <p>{{concluido.descricao_concluido}}</p>
+                <p>{{pipelinec.nome_c}}</p>  
                 <div style="display:flex">
-                    <a id="delete" href="/dashboard/implantacao/concluidoDel/{{concluido.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/implantacao/concluido/{{concluido.id}}"><span><i class="fas fa-edit"></i></span></a>              
+                    <a id="delete" href="/dashboard/pipeline/deletePipelineC/{{pipelinec.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                    <a id="edit" href="/dashboard/pipeline/editPipelineC/{{pipelinec.id}}"><span><i class="fas fa-edit"></i></span></a>
                 </div>
+                
             </li>
         {% endfor %}
     </ul>

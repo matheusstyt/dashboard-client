@@ -16,6 +16,11 @@ from .models import Concluido
 from .models import Meta_Valor
 from .models import Placar_Licensas
 from .models import Licencas_Faltando
+
+from .models import PipelineA
+from .models import PipelineB
+from .models import PipelineC
+
 from . import plotly_app
 from .forms import FaturamentoForm
 from .forms import PlanejadoForm
@@ -24,19 +29,131 @@ from .forms import ConcluidoForm
 from .forms import MetaForm
 from .forms import Placar_LicensasForm
 from .forms import Licencas_FaltandoForm
+from .forms import PipelineAForm
+from .forms import PipelineBForm
+from .forms import PipelineCForm
 from .graphic import plt
+from .graphic import FaturamentoClasse as FaturamentoC
+from .graphic import Dataframes
 def trial(request):
     return render(request, 'my_first_dash_plotly_app/trial.html')
 def dashboard(request):
     planejados = Planejado.objects.all()
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
-   
-    context = {'planejados': planejados, 'cursos' : cursos, 'concluidos' : concluidos, 'fig1' : plt.grafico_1(), 'fig2': plt.grafico_2(), 'fig3' : plt.grafico_3(), 'fig4' : plt.grafico_4(), 'df1': plt.glpi_suporte(), 'df2': plt.suporte()}
+    pipeLineA = PipelineA.objects.all()
+    pipeLineB = PipelineB.objects.all()
+    pipeLineC = PipelineC.objects.all()
+    faturamento = FaturamentoC()
+    context = {
+        'pipeline_header' : Dataframes.pipeline_header(), 
+        'pipeline_a' : pipeLineA, 
+        'pipeline_b' : pipeLineB, 
+        'pipeline_c' : pipeLineC, 
+        'meta' : faturamento.metaStr,
+        'real_projetado' : faturamento.real_projetado,
+        'real_acumulado' : faturamento.real_acumulado,
+        'real_percent' : faturamento.real_percent,
+        'projetado_percent' : faturamento.projetado_percent,
+        'planejados': planejados, 
+        'cursos' : cursos, 
+        'concluidos' : concluidos, 
+        'fig1' : plt.grafico_1(), 
+        'fig2': plt.grafico_2(), 
+        'fig3' : plt.grafico_3(), 
+        'fig4' : plt.grafico_4(), 
+        'df1': plt.glpi_suporte(), 
+        'df2': plt.suporte()}
    
     return render(request, 'dashboard/index.html', context)
+def pipeline(request):
+    pipelineA = PipelineA.objects.all()
+    pipelineB = PipelineB.objects.all()
+    pipelineC = PipelineC.objects.all()
 
+    formPipelineA = PipelineAForm()
+    formPipelineB = PipelineBForm()
+    formPipelineC = PipelineCForm()
+    
+    # tratamento para enviar para o banco
+    if request.method == 'POST':
+        formPipelineA = PipelineAForm(request.POST)
+        # planejado = formP.save(commit=False)
+        # MEIO TEMPO PRA MODIFICAÇÃO     
 
+        formPipelineB = PipelineBForm(request.POST)
+        # curso = formP.save(commit=False)
+        # MEIO TEMPO PRA MODIFICAÇÃO
+
+        formPipelineC = PipelineCForm(request.POST)
+        # concluido = formC.save(commit=False)
+        # MEIO TEMPO PRA ;MODIFICAÇÃO
+        if formPipelineA.is_valid():
+            formPipelineA.save()
+        if formPipelineB.is_valid():
+            formPipelineB.save()
+        if formPipelineC.is_valid(): 
+            formPipelineC.save()   
+                
+        return redirect('/dashboard/pipeline')
+    return render(request, 'pipeline/index.html', {'pipelineA':pipelineA, 'pipelineB':pipelineB, 'pipelineC':pipelineC, 'formPipelineA': formPipelineA, 'formPipelineB': formPipelineB, 'formPipelineC':formPipelineC})
+def pipeline_a_delete(request, id):
+    Pipelinea = get_object_or_404(PipelineA, pk=id)
+    Pipelinea.delete()
+    return redirect('/dashboard/pipeline') 
+
+def pipeline_b_delete(request, id):
+    Pipelineb = get_object_or_404(PipelineB, pk=id)
+    Pipelineb.delete()
+    return redirect('/dashboard/pipeline') 
+
+def pipeline_c_delete(request, id):
+    Pipelinec = get_object_or_404(PipelineC, pk=id)
+    Pipelinec.delete()
+    return redirect('/dashboard/pipeline') 
+def pipeline_a_edit(request, id):
+    Pipelinea = get_object_or_404(PipelineA, pk=id)
+    formPipelineA = PipelineAForm(instance=Pipelinea)
+
+    if(request.method == 'POST'):
+        formPipelineA = PipelineAForm(request.POST, instance=Pipelinea)
+        
+        if(formPipelineA.is_valid()):
+            formPipelineA.save()
+            return redirect('/dashboard/pipeline')
+        else:
+            return render(request, 'pipeline/pipelinea.html', {'formPipelineA': formPipelineA})
+    else:
+        return render(request, 'pipeline/pipelinea.html', {'formPipelineA': formPipelineA})
+def pipeline_b_edit(request, id):
+    Pipelineb = get_object_or_404(PipelineB, pk=id)
+    formPipelineB = PipelineBForm(instance=Pipelineb)
+
+    if(request.method == 'POST'):
+        formPipelineB = PipelineBForm(request.POST, instance=Pipelineb)
+        
+        if(formPipelineB.is_valid()):
+            formPipelineB.save()
+            return redirect('/dashboard/pipeline')
+        else:
+            return render(request, 'pipeline/pipelineb.html', {'formPipelineB': formPipelineB})
+    else:
+        return render(request, 'pipeline/pipelineb.html', {'formPipelineB': formPipelineB})
+
+def pipeline_c_edit(request, id):
+    Pipelinec = get_object_or_404(PipelineC, pk=id)
+    formPipelineC = PipelineCForm(instance=Pipelinec)
+
+    if(request.method == 'POST'):
+        formPipelineC = PipelineAForm(request.POST, instance=Pipelinec)
+        
+        if(formPipelineC.is_valid()):
+            formPipelineC.save()
+            return redirect('/dashboard/pipeline')
+        else:
+            return render(request, 'pipeline/pipelinec.html', {'formPipelineC': formPipelineC})
+    else:
+        return render(request, 'pipeline/pipelinec.html', {'formPipelineC': formPipelineC})
 
 def comercial(request):
     faturamentos = Faturamento.objects.all().order_by('-data_faturamento')

@@ -44,3 +44,28 @@ class Placar_Licensas(models.Model):
     placar_licensas =  models.IntegerField()
     def __str__(self):
         return str(self.placar_licensas)   
+
+class PipelineA(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    nome_a = models.CharField(max_length=255, null=False)
+    uf_a = models.CharField(max_length=255, null=False)
+    money_a = models.IntegerField()
+    def __str__(self):
+        return self.nome
+class PipelineB(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    nome_b = models.CharField(max_length=255, null=False)
+    uf_b = models.CharField(max_length=255, null=False)
+    money_b = models.IntegerField()
+    def __str__(self):
+        return self.nome
+class PipelineC(models.Model):
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField(auto_now_add=True)
+    nome_c = models.CharField(max_length=255, null=False)
+    uf_c = models.CharField(max_length=255, null=False)
+    money_c = models.IntegerField()
+    def __str__(self):
+        return self.nome
