@@ -1,6 +1,5 @@
 
 from django.db import models
- 
 class Faturamento(models.Model):
     faturamento_dia = models.CharField(max_length=255, null=False)
     data_faturamento = models.DateTimeField(auto_now=False, auto_now_add=False)

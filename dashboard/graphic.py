@@ -93,11 +93,15 @@ class plt:
         faturamento = FaturamentoClasse()
         df = df_faturamento()
         # CALCULO DE ACUMULADO POR DIA
+        percent_dia = []
         acumulado_total = 0
         real_acumulado_por_dia = []
         for item in df['faturamento_dia']:
             acumulado_total = acumulado_total + int(item)
             real_acumulado_por_dia.append(acumulado_total)
+            # ADICIONA META NUM ARRAY
+            percent_dia.append(faturamento.meta)
+        print(percent_dia)
         # CONSTRUÇÃO DO GRÁFICO
         layout = go.Layout(
             autosize=True,
@@ -116,14 +120,19 @@ class plt:
                 l=0,
                 r=0,
                 b=0,
-                t=0,
+                t=10,
                 pad = 2
             )
         )
         fig = go.Figure(layout=layout) 
-        fig.add_hline(y=faturamento.meta, opacity=1, line_width=2, line_dash='dash', line_color='Red', name='Meta')
-        fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, name = 'Acumulado / dia'))
-        fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia'))
+        
+        fig.add_hline(y=faturamento.meta, opacity=1, line_width=2, line_dash='solid', line_color='Red', name='Meta')
+        fig.add_trace(go.Line(x = df['data_faturamento'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
+        fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
+        fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.6))
+        # fig.add_trace(go.Scatter(x=percent_dia, y=df['faturamento_dia'],
+        #             mode='markers',
+        #             name='markers'))
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
 
@@ -168,9 +177,11 @@ class plt:
         # TRATAMENTO DO DATAFRAME
         faturamento = FaturamentoClasse()
         # FIGURA DE FATURAMENTO
-        faturamentoL = [('Meta', faturamento.meta),
-                        ('Realizado', faturamento.real_acumulado),
-                        ('Projetado', faturamento.real_projetado)]
+        real_percent = faturamento.real_percent / 100
+        projetado_percent = faturamento.projetado_percent / 100
+        faturamentoL = [
+                        ('Realizado', real_percent),
+                         ('Projetado', projetado_percent)]
         npLista = np.array(faturamentoL)  
         dfFaturamento = pd.DataFrame(npLista, columns=['Categoria', 'Montante'])    
         
@@ -203,13 +214,15 @@ class plt:
             y=dfFaturamento['Montante'], 
             x=dfFaturamento['Categoria'], 
             marker={'color': color_d},
-            name="sum",texttemplate="%{y}", 
+            name="sum",
+            # texttemplate='%{y:.1%f}', 
             textfont_size=20))
         fig.update_layout( plot_bgcolor = 'white',
                             font = {'family': 'Arial','size': 12,'color': 'black'},
                             margin=dict(l=5, r=5, t=15, b=5),
                             
                             )
+        fig.update_traces(texttemplate="%{y:.0%}")
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
         return gantt_ploty

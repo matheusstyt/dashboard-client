@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import date
+from django.db.models import Sum
 from workalendar.america import Brazil
 import datetime as dt
 from workadays import workdays as wd
@@ -42,14 +43,22 @@ def dashboard(request):
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
     pipeLineA = PipelineA.objects.all()
+    pipeline_a_total = PipelineA.objects.aggregate(Sum('money_a'))
     pipeLineB = PipelineB.objects.all()
+    pipeline_b_total = PipelineB.objects.aggregate(Sum('money_b'))
     pipeLineC = PipelineC.objects.all()
+    pipeline_c_total = PipelineC.objects.aggregate(Sum('money_c'))
     faturamento = FaturamentoC()
+    print(pipeline_b_total)
+    print(pipeline_c_total)
     context = {
         'pipeline_header' : Dataframes.pipeline_header(), 
         'pipeline_a' : pipeLineA, 
         'pipeline_b' : pipeLineB, 
         'pipeline_c' : pipeLineC, 
+        'pipeline_a_total' : pipeline_a_total['money_a__sum'], 
+        'pipeline_b_total' : pipeline_b_total['money_b__sum'], 
+        'pipeline_c_total' : pipeline_c_total['money_c__sum'], 
         'meta' : faturamento.metaStr,
         'real_projetado' : faturamento.real_projetado,
         'real_acumulado' : faturamento.real_acumulado,
