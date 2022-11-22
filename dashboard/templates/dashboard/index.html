@@ -79,36 +79,43 @@
                         <div class="caixa-grafico-pipeline">
                             <div class="pipe pipeline-a">
                                 <div class="lado-e">
-                                    <h2>{{pipeline_a_total}}</h2>
+                                    <h2>{{total_a}}</h2>
                                 </div>
                                 <div class="lado-d">
-                                    <h2>240</h2>
+                                    <h2>{{count_a}}</h2>
                                 </div>
                          
                             </div>
                             <div class="pipe pipeline-b">
                                 <div class="lado-e">
-                                    <h2>{{pipeline_b_total}}</h2>
+                                    <h2>{{total_b}}</h2>
                                 </div>
                                 <div class="lado-d">
-                                    <h2>57</h2>
+                                    <h2>{{count_b}}</h2>
                                 </div>
                   
                             </div>        
                             <div class="pipe pipeline-c">
                                 <div class="lado-e">
-                                    <h2>{{pipeline_c_total}}</h2>
+                                    <h2>{{total_c}}</h2>
                                 </div>
                                 <div class="lado-d">
-                                    <h2>2</h2>
+                                    <h2>{{count_c}}</h2>
                                 </div>
-              
+                            </div>
+                            <div class="pipe pipeline-d">
+                                <div class="lado-e">
+                                    <h2>{{total_d}}</h2>
+                                </div>
+                                <div class="lado-d">
+                                    <h2>{{count_d}}</h2>
+                                </div>
                             </div>
                         </div>
                         <div class="pipeline-detalhes">
                             <div class="container-header">
                                 <ul>
-                                    {% for item in pipeline_header.columns%}
+                                    {% for item in pipeline_header %}
                                     <li>{{item}}</li>
                                     {% endfor %}
                                 </ul>
@@ -118,12 +125,17 @@
                             <div class="container-p">
                                 <table class="table">
                                     <tbody>
-                                        {% for i in pipeline_a %}
-                                        <tr>
-                                            <td>{{i.nome_a}}</td>
-                                            <td>{{i.money_a}}</td>
-                                            <td>{{i.uf_a}}</td>
-                                        </tr>
+                                        {% for c in pipeline %}
+                                            {% if c.Fase == 'Inicio' %}
+                                                <tr>
+                                                    <td>{{c.Cliente}}</td>
+                                                    <td>{{c.Fase}}</td>
+                                                    <td>{{c.Recorrencia}}</td>
+                                                    <td>{{c.Perpetua}}</td>
+                                                    <td>{{c.Hardware}}</td>
+                                                    <td>{{c.Servicos}}</td>
+                                                </tr>                                        
+                                            {% endif %}                                  
                                         {% endfor %}
                                     </tbody>
                                 </table>            
@@ -131,12 +143,17 @@
                             <div class="container-p">
                                 <table class="table ">
                                     <tbody>
-                                        {% for j in pipeline_b %}
-                                        <tr>
-                                            <td>{{j.nome_b}}</td>
-                                            <td>{{j.money_b}}</td>
-                                            <td>{{j.uf_b}}</td>
-                                        </tr>
+                                        {% for c in pipeline %}
+                                            {% if c.Fase == 'Negociação' %}
+                                                <tr>
+                                                    <td>{{c.Cliente}}</td>
+                                                    <td>{{c.Fase}}</td>
+                                                    <td>{{c.Recorrencia}}</td>
+                                                    <td>{{c.Perpetua}}</td>
+                                                    <td>{{c.Hardware}}</td>
+                                                    <td>{{c.Servicos}}</td>
+                                                </tr>                                        
+                                            {% endif %}                                  
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -144,12 +161,35 @@
                             <div class="container-p">
                                 <table class="table ">
                                     <tbody>
-                                        {% for k in pipeline_c %}
-                                        <tr>
-                                            <td>{{k.nome_c}}</td>
-                                            <td>{{k.money_c}}</td>
-                                            <td>{{k.uf_c}}</td>
-                                        </tr>
+                                        {% for c in pipeline %}
+                                            {% if c.Fase == 'Compras' %}
+                                                <tr>
+                                                    <td>{{c.Cliente}}</td>
+                                                    <td>{{c.Fase}}</td>
+                                                    <td>{{c.Recorrencia}}</td>
+                                                    <td>{{c.Perpetua}}</td>
+                                                    <td>{{c.Hardware}}</td>
+                                                    <td>{{c.Servicos}}</td>
+                                                </tr>                                        
+                                            {% endif %}                                  
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="container-p">
+                                <table class="table ">
+                                    <tbody>
+                                        {% for c in pipeline %}
+                                            {% if c.Fase == 'Aprovado' %}
+                                                <tr>
+                                                    <td>{{c.Cliente}}</td>
+                                                    <td>{{c.Fase}}</td>
+                                                    <td>{{c.Recorrencia}}</td>
+                                                    <td>{{c.Perpetua}}</td>
+                                                    <td>{{c.Hardware}}</td>
+                                                    <td>{{c.Servicos}}</td>
+                                                </tr>                                        
+                                            {% endif %}                                  
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -271,6 +311,152 @@
      
         });
         </script>
+        <style>
+            .pipeline-detalhes{
+                display: inline-block;
+                background-color: rgb(228, 230, 240);
+                border-left: 1px solid rgb(192, 192, 192);
+                width: 64%;
+                height: 100%;
+                flex-flow: wrap row;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+            .caixa-grafico-pipeline{
+                display: block;
+                width: 35%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .pipeline-a, .pipeline-b, .pipeline-c, .pipeline-d{
+                background-color: transparent;
+                display: flex;
+                flex-flow: wrap row;
+                align-items: center;
+                justify-content:center;
+                margin: 0.2vmax auto;
+                gap: 0.5em;
+                position: relative;
+            } 
+            .pipeline-a{
+                margin-top: 1.5em;
+            }
+            .pipeline-a .lado-e, .pipeline-a .lado-d{
+                height: 1px;
+                background-color: transparent;
+            }
+            .pipeline-a .lado-e{
+                width: 33.2%;
+                border-left: 2.5vmax solid transparent;
+                border-top: 4.3vmax solid rgb(244, 72, 72);
+            }
+            .pipeline-a .lado-d{
+                width: 33.2%;
+                border-right: 2.5vmax solid transparent;
+                border-top: 4.3vmax solid rgb(81, 179, 249);
+            }
+            .pipeline-b .lado-e{
+                width: 21%;
+                border-left: 2.5vmax solid transparent;
+                border-top: 4.3vmax solid rgb(239, 47, 47);
+            }
+            .pipeline-b .lado-d{
+                width: 21%;
+                border-right: 2.5vmax solid transparent;
+                border-top: 4.3vmax solid rgb(53, 81, 237);
+            }
+            .pipeline-c .lado-e{
+                width:10.4%;
+                border-left: 2.2vmax solid transparent;
+                border-top: 4.3vmax solid rgb(220, 22, 22);
+            }
+            .pipeline-c .lado-d{
+                width:10.4%;
+                border-right: 2.2vmax solid transparent;
+                border-top: 4.3vmax solid rgb(16, 38, 159);
+            }
+            .pipeline-d .lado-e{
+                width: 0%;
+                border-left: 2.1vmax solid transparent;
+                border-top: 4.3vmax solid rgb(220, 22, 22);
+            }
+            .pipeline-d .lado-d{
+                width: 0%;
+                border-right: 2.1vmax solid transparent;
+                border-top: 4.3vmax solid rgb(16, 38, 159);
+            }
+            .lado-p h2{
+                margin-top: -2.8vmax;
+                font-family: 'Consolas';
+                font-size: 1vmax;
+                background-color: transparent;
+                color: #0000;
+                text-shadow: 2px 1px #fff;
+                border: none;
+            }
+            .pipeline-d .lado-p h2{
+                margin-top: -5.5vmax;
+                
+                z-index: 3;
+            }
+            
+            .pipeline-c .lado-direito h2, .pipeline-d .lado-direito h2{
+            margin-left: 0.7vmax;
+            }
+            .pipeline-c .lado-esquerdo h2, .pipeline-d .lado-esquerdo h2{
+                margin-left: -5vmax;
+            }
+            .pipeline-b .lado-direito h2, .pipeline-a .lado-direito h2{
+                text-align: left;
+                margin-left: 0.7vmax;
+                }
+            .pipeline-a .lado-esquerdo h2{
+                text-align: right;
+                margin-right: 0.7vmax;
+                background-color: bisque;
+            }
+            .pipeline-d .lado-direito h2{
+                margin-left: 0.7vmax;
+                }
+            .pipeline-d .lado-esquerdo h2{
+                background-color: bisque;
+                margin-left: -2vmax;
+            }
+                .container-p{
+                    width: 100%;
+                    height: 19.5%;
+                    margin-bottom: 3px;
+                    overflow-y:scroll; 
+                    overflow-x:hidden;
+                    border-top: 2px solid  rgb(149, 153, 214);
+                    border-bottom: 2px solid  rgb(149, 153, 214);
+                    border-left: 1px solid  rgb(149, 153, 214);
+                    text-align: center; 
+                }
+                .container-header{
+                    font-weight: 200;
+                }
+                .container-header ul{
+                    background-color:rgb(205, 205, 227);
+                    padding: 0;
+                    margin: 0;
+                    width: 100%;
+                    list-style: none;
+                    display: flex;
+                    flex-flow: row;
+                    align-items:flex-start;
+                    justify-content:space-around;
+                    
+                }
+                .container-header ul li{
+                    border-right: 1px solid  rgb(159, 159, 159);
+                    text-align: center;
+                    font-size: 0.8em;
+
+                }
+        </style>
 </body>
 </html>
 

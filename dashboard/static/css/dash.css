@@ -1,5 +1,5 @@
 body { 
-    position: fixed; top: 0; left: 0; width: 100vw;
+    /* position: fixed; top: 0; left: 0; width: 100vw; */
     background-color: rgb(80, 80, 182);
     margin:0;
     padding: 0;
@@ -346,7 +346,7 @@ novo layout */
     position: relative;
 }
 .pipeline-detalhes .container-header{
-    font-weight: bold;
+    font-weight:100;
 }
 /* PIPELINE FEITO EM CSS HEHE */
 .lado-e h2, .lado-d h2{
@@ -364,92 +364,98 @@ novo layout */
     margin-left: 1vmax;  
 }
 .caixa-grafico-pipeline{
-
     display: block;
-    width: 49%;
+    width: 45%;
     height: 100%;
     margin: 0;
     padding: 0;
-
 }
 
- .pipeline-a, .pipeline-b, .pipeline-c{
-    background-color: transparent;
-    display: flex;
-    flex-flow: wrap row;
-    align-items: center;
-    justify-content:center;
-    margin: 0.2vmax auto;
-    gap: 0.3em;
-    position: relative;
+.pipeline-a, .pipeline-b, .pipeline-c, .pipeline-d{
+  background-color: transparent;
+  display: flex;
+  flex-flow: wrap row;
+  align-items: center;
+  justify-content:center;
+  margin: 0.2vmax auto;
+  gap: 0.5em;
+  position: relative;
 } 
 .pipeline-a{
-    margin-top: 1.5em;
+  margin-top: 1.5em;
 }
 .pipeline-a .lado-e, .pipeline-a .lado-d{
-    
-    height: 1px;
-    background-color: transparent;
+  height: 1px;
+  background-color: transparent;
 }
 .pipeline-a .lado-e{
-    width: 32%;
-    border-left: 3.8vmax solid transparent;
-    border-top: 5vmax solid rgb(244, 72, 72);
+  width: 29.2%;
+  border-left: 3.3vmax solid transparent;
+  border-top: 4.3vmax solid rgb(244, 72, 72);
 }
 .pipeline-a .lado-d{
-    width: 32%;
-    border-right: 3.8vmax solid transparent;
-    border-top: 5vmax solid rgb(81, 179, 249);
+  width: 29.2%;
+  border-right: 3.3vmax solid transparent;
+  border-top: 4.3vmax solid rgb(81, 179, 249);
 }
 .pipeline-b .lado-e{
-    width: 19.2%;
-    border-left: 3.7vmax solid transparent;
-    border-top: 5vmax solid rgb(239, 47, 47);
+  width: 18.5%;
+  border-left: 3vmax solid transparent;
+  border-top: 4.3vmax solid rgb(239, 47, 47);
 }
 .pipeline-b .lado-d{
-    width: 19.2%;
-    border-right: 3.7vmax solid transparent;
-    border-top: 5vmax solid rgb(53, 81, 237);
+  width: 18.5%;
+  border-right: 3vmax solid transparent;
+  border-top: 4.3vmax solid rgb(53, 81, 237);
 }
 .pipeline-c .lado-e{
-    width: 4%;
-    border-left: 4.3vmax solid transparent;
-    border-top: 6vmax solid rgb(220, 22, 22);
+  width: 9%;
+  border-left: 2.7vmax solid transparent;
+  border-top: 4.3vmax solid rgb(220, 22, 22);
 }
 .pipeline-c .lado-d{
-    width: 4%;
-    border-right: 4.3vmax solid transparent;
-    border-top: 6vmax solid rgb(16, 38, 159);
+  width: 9%;
+  border-right: 2.7vmax solid transparent;
+  border-top: 4.3vmax solid rgb(16, 38, 159);
 }
-
+.pipeline-d .lado-e{
+  width: 0%;
+  border-left: 2.6vmax solid transparent;
+  border-top: 4.3vmax solid rgb(220, 22, 22);
+}
+.pipeline-d .lado-d{
+  width: 0%;
+  border-right: 2.6vmax solid transparent;
+  border-top: 4.3vmax solid rgb(16, 38, 159);
+}
 .lado-p h2{
-    margin-top: -2.8vmax;
-    font-family: 'Consolas';
-    font-size: 1vmax;
-    background-color: transparent;
-    color: #fff;
-    text-shadow: 2px 1px black;
-    border: none;
+  margin-top: -2.8vmax;
+  font-family: 'Consolas';
+  font-size: 1vmax;
+  background-color: transparent;
+  color: #0000;
+  text-shadow: 2px 1px #fff;
+  border: none;
 }
 .pipeline-c .lado-p h2{
-    margin-top: -5.5vmax;
-    z-index: 3;
+  margin-top: -5.5vmax;
+  z-index: 3;
 }
 
 .pipeline-c .lado-direito h2{
 margin-left: 0.7vmax;
 }
 .pipeline-c .lado-esquerdo h2{
-    margin-left: -5vmax;
+  margin-left: 0vmax;
 }
 .pipeline-b .lado-direito h2, .pipeline-a .lado-direito h2{
-    text-align: left;
-    margin-left: 0.7vmax;
-    }
+  text-align: left;
+  margin-left: 0.7vmax;
+  }
 .pipeline-a .lado-esquerdo h2{
-    text-align: right;
-    margin-right: 0.7vmax;
-    }
+  text-align: right;
+  margin-right: 0.7vmax;
+}
 /* FIM PIPELINE FEITO EM CSS  */
 .caixa-flex-pipeline{
     display: flex;
@@ -483,15 +489,15 @@ margin-left: 0.7vmax;
     text-align: center;
 }
 .container-p{
-    width: 100%;
-    height: 27.1%;
-    margin-bottom: 3px;
-    overflow-y:scroll; 
-    overflow-x:hidden;
-    border-top: 2px solid  rgb(149, 153, 214);
-    border-bottom: 2px solid  rgb(149, 153, 214);
-    border-left: 1px solid  rgb(149, 153, 214);
-    text-align: center; 
+  width: 100%;
+  height: 19.5%;
+  margin-bottom: 3px;
+  overflow-y:scroll; 
+  overflow-x:hidden;
+  border-top: 2px solid  rgb(149, 153, 214);
+  border-bottom: 2px solid  rgb(149, 153, 214);
+  border-left: 1px solid  rgb(149, 153, 214);
+  text-align: center; 
 }
 table{
     background-color: rgba(229, 229, 229, 1);

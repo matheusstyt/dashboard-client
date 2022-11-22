@@ -6,11 +6,11 @@ h1{
     padding: 2em 5em;
 }
 .description p{
-    font-size: 2em;
+    font-size: 1.3em;
     text-align: justify;
 }
 .foo{
-    background-color: rgba(31, 36, 108, 0.9);
+    background-color: rgba(12, 14, 53, 0.9);
     height: 200px;
     width: 100vw;
     text-align: center;

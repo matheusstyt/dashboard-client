@@ -75,24 +75,25 @@
             </div>
             
         </div>
+        <div class="caixa-licencas" style="margin-bottom: 2vmax;">
+            <h3>PLACAR DE  LICENÇAS</h3>
+            <div class=caixa-licencas-valor onclick="abrir_modal_placar()">
+                <h3 class="meta-valor">{{formPlacar.placar_licensas.value}}</h3>
+                <i class="fas fa-edit"></i>
+            </div>
+            
+        </div>
+        <div class="caixa-licencas">
+            <h3>LICENÇAS FALTANDO</h3>
+            <div class=caixa-licencas-valor onclick="abrir_licensas_f()">
+                {% comment %} <h3 class="meta-sigla">R$</h3> {% endcomment %}
+                <h3 class="licencas-valor">{{formLicensas.lincencas_faltando.value}}</h3>
+                <i class="fas fa-edit"></i>
+            </div>
+            
+        </div>
         <div class="row">
-            <div class="caixa-licencas">
-                <h3>PLACAR DE  LICENÇAS</h3>
-                <div class=caixa-licencas-valor onclick="abrir_modal_placar()">
-                    <h3 class="meta-valor">{{formPlacar.placar_licensas.value}}</h3>
-                    <i class="fas fa-edit"></i>
-                </div>
-                
-            </div>
-            <div class="caixa-licencas">
-                <h3>LICENÇAS FALTANDO</h3>
-                <div class=caixa-licencas-valor onclick="abrir_licensas_f()">
-                    {% comment %} <h3 class="meta-sigla">R$</h3> {% endcomment %}
-                    <h3 class="licencas-valor">{{formLicensas.lincencas_faltando.value}}</h3>
-                    <i class="fas fa-edit"></i>
-                </div>
-                
-            </div>
+            
             
         </div>
         

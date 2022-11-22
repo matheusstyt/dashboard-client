@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import date
 from django.db.models import Sum
+
+from pipeline.models import PipelineVendas
+
 from workalendar.america import Brazil
 import datetime as dt
 from workadays import workdays as wd
@@ -39,26 +42,52 @@ from .graphic import Dataframes
 def trial(request):
     return render(request, 'my_first_dash_plotly_app/trial.html')
 def dashboard(request):
+    # PIPELINE DADOS 
+
+    pipeline_header = ['Cliente', 'Fase', 'Recorrencia' , 'Perpetua', 'Hardware', 'Serviços']
+    pipeline = PipelineVendas.objects.all()
+
+    total_a = 0
+    count_a = 0
+
+    total_b = 0
+    count_b = 0
+
+    total_c = 0
+    count_c = 0
+
+    total_d = 0
+    count_d = 0
+
+    for x in pipeline:
+        if x.Fase == 'Inicio':
+            total_a += x.TotalPrevisto
+            count_a += 1
+        if x.Fase == 'Negociação':
+            total_b += x.TotalPrevisto
+            count_b += 1
+        if x.Fase == 'Compras':
+            total_c += x.TotalPrevisto
+            count_c += 1
+        if x.Fase == 'Aprovado':
+            total_d += x.TotalPrevisto
+            count_d += 1
+
     planejados = Planejado.objects.all()
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
-    pipeLineA = PipelineA.objects.all()
-    pipeline_a_total = PipelineA.objects.aggregate(Sum('money_a'))
-    pipeLineB = PipelineB.objects.all()
-    pipeline_b_total = PipelineB.objects.aggregate(Sum('money_b'))
-    pipeLineC = PipelineC.objects.all()
-    pipeline_c_total = PipelineC.objects.aggregate(Sum('money_c'))
     faturamento = FaturamentoC()
-    print(pipeline_b_total)
-    print(pipeline_c_total)
     context = {
-        'pipeline_header' : Dataframes.pipeline_header(), 
-        'pipeline_a' : pipeLineA, 
-        'pipeline_b' : pipeLineB, 
-        'pipeline_c' : pipeLineC, 
-        'pipeline_a_total' : pipeline_a_total['money_a__sum'], 
-        'pipeline_b_total' : pipeline_b_total['money_b__sum'], 
-        'pipeline_c_total' : pipeline_c_total['money_c__sum'], 
+        'pipeline_header' : pipeline_header, 
+        'pipeline' : pipeline, 
+        'total_a' : total_a, 
+        'total_b' : total_b, 
+        'total_c' : total_c, 
+        'total_d' : total_d, 
+        'count_a' : count_a, 
+        'count_b' : count_b, 
+        'count_c' : count_c, 
+        'count_d' : count_d, 
         'meta' : faturamento.metaStr,
         'real_projetado' : faturamento.real_projetado,
         'real_acumulado' : faturamento.real_acumulado,

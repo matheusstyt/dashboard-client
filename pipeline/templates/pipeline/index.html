@@ -1,0 +1,61 @@
+{% extends 'based.html' %}
+
+{% block title %}Pipeline de Vendas{% endblock  %}
+{% block content %}
+
+<div class="modal-g" id="modal1">
+    
+    <div class="container-adicionar">
+        <button class="btn-x" onclick=sair1()>X</button>
+        <h2>Adicionar novo cliente da categoria A</h2>
+        <form class="form-add-f" method="post">
+            {% csrf_token %}
+            {{ formPipelineA.as_p}}
+            <div class="flex-btn">
+                <input type="submit" class="btn btn-success text-center" value="Salvar">
+            </div>
+           
+        </form>
+    </div>
+</div>
+
+<div class="container-g">
+
+    <div class="caixa-implantacao">
+        <div class="container-f">  
+            <div class="container-flex">
+                <h3 id="h3_fd">PIPELINE A </h3>
+                
+                <div class="col-3 add-div text-center"  onclick=abrir1()>
+                    <i class="fas fa-plus"> </i> Adicionar 
+                </div>
+           
+            
+            </div>    
+            {% if messages %}
+                <ul class="messages">
+                    {%  for message in messages %}
+                    {% comment %} //tags sao infos {% endcomment %}
+                        <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}    
+        </div>
+        
+        <ul class="implantacao-list">
+            {% for pipelinea in pipelineA %}
+                <li class="implantacao-item">
+                    <p>{{pipelinea.nome_a}}</p>  
+                    <div style="display:flex">
+                        <a id="delete" href="/dashboard/pipeline/deletePipelineA/{{pipelinea.id}}"><span><i class="fas fa-trash"></i></span></a> 
+                        <a id="edit" href="/dashboard/pipeline/editPipelineA/{{pipelinea.id}}"><span><i class="fas fa-edit"></i></span></a>
+                    </div>
+                    
+                </li>
+            {% endfor %}
+    
+                 
+        </ul>
+    </div>
+</div>
+{% endblock  %}

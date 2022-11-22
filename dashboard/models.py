@@ -49,6 +49,12 @@ class PipelineA(models.Model):
     updated_at = models.DateField(auto_now_add=True)
     nome_a = models.CharField(max_length=255, null=False)
     uf_a = models.CharField(max_length=255, null=False)
+    # OP1 = (
+    #     ('aprovado', 'Aprovado'),
+    #     ('negociacao', 'Negociação'),
+    #     ('perdido', 'Perdido'),
+    # )
+    #fase = models.CharField(choices=OP1, max_length=10)
     money_a = models.IntegerField()
     def __str__(self):
         return self.nome

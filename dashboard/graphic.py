@@ -63,6 +63,14 @@ class FaturamentoClasse():
         self.projetado_percent = int(projetado_percent * 100)
 
 class plt:
+    def omie_administracao():
+        nome_ficheiro = 'C:/Users/simone/Documents/desenvolvimento/django_ficha/pipeline/assets/PIPELINE VENDAS COMERCIAL DIARIO.xlsx'
+        df = pd.read_excel(nome_ficheiro, 'NOV_22')
+        # df.sort_values(by=['Cliente'], ascending=False, inplace=True)
+        # d.columns = ['Empresa', 'N° de Chamados']
+            # df['N° de Chamados'] = df['N° de Chamados'].astype('str')
+
+
     def suporte():
         lista = [
             ("INJET (1)",21),
@@ -94,6 +102,7 @@ class plt:
         df = df_faturamento()
         # CALCULO DE ACUMULADO POR DIA
         percent_dia = []
+        line_projetado = []
         acumulado_total = 0
         real_acumulado_por_dia = []
         for item in df['faturamento_dia']:
@@ -101,7 +110,8 @@ class plt:
             real_acumulado_por_dia.append(acumulado_total)
             # ADICIONA META NUM ARRAY
             percent_dia.append(faturamento.meta)
-        print(percent_dia)
+            line_projetado.append(faturamento.real_projetado)
+        # print(percent_dia)
         # CONSTRUÇÃO DO GRÁFICO
         layout = go.Layout(
             autosize=True,
@@ -126,10 +136,10 @@ class plt:
         )
         fig = go.Figure(layout=layout) 
         
-        fig.add_hline(y=faturamento.meta, opacity=1, line_width=2, line_dash='solid', line_color='Red', name='Meta')
+        fig.add_trace(go.Line(x = df['data_faturamento'], y = line_projetado,line_color='Green', line_dash='solid', name = 'Projetado'))
         fig.add_trace(go.Line(x = df['data_faturamento'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
         fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
-        fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.6))
+        fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.8))
         # fig.add_trace(go.Scatter(x=percent_dia, y=df['faturamento_dia'],
         #             mode='markers',
         #             name='markers'))
@@ -142,13 +152,13 @@ class plt:
         # TRATAMENTO DO DATAFRAME
         placar_atual = get_object_or_404(Placar_Licensas, pk=1)
         licencas_faltando = get_object_or_404(Licencas_Faltando, pk=1)
-        print('placar_atual.placar_licensas')
+        # print('placar_atual.placar_licensas')
         colors = ['#48D2ED', '#488CED', 'darkorange', 'lightgreen']
 
         fig = go.Figure(data=[go.Pie(labels=['Placar De Licenças','Licenças Faltando'],
                                     values=[placar_atual.placar_licensas,licencas_faltando.lincencas_faltando])])
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
-                        marker=dict(colors=colors, line=dict(color='#000000', width=1,)), title='Distribuição de Licenças')
+                        marker=dict(colors=colors, line=dict(color='#283386', width=1,)), title='Distribuição de Licenças')
        
         fig.update_layout( plot_bgcolor = '#212121',
                             font = {'family': 'Arial','size': 12,'color': 'black'},
@@ -207,13 +217,16 @@ class plt:
             )
         )
         fig = go.Figure(layout=layout)
-        color_d = ["#DD2525", "#3675D6 ", "#4B4FD6"]
+
 
         fig.add_trace(
             go.Histogram(histfunc="sum", 
             y=dfFaturamento['Montante'], 
             x=dfFaturamento['Categoria'], 
-            marker={'color': color_d},
+            marker_color=['rgb(158,202,225)', '#DD2525'], 
+            marker_line_color=['rgb(8,48,107)','#EE0C0C'], 
+            marker_line_width=1.5, 
+            opacity=0.8,
             name="sum",
             # texttemplate='%{y:.1%f}', 
             textfont_size=20))
@@ -255,10 +268,10 @@ class plt:
                 pad = 4
             )
         )
-        fig = go.Figure(data=[go.Pie(labels=['Em atendimento (atribuído)','Solucionado', 'Fechado'],
+        fig = go.Figure(data=[go.Pie(labels=['Em atendimento (atribuído)','Solucionado', 'Fechado'], opacity=0.9,
                                     values=list_chamados)], layout=layout)
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
-                        marker=dict(colors=['#F5894F', '#3D37B6', '#DA2631'], line=dict(color='#000000', width=1,)), title='Chamados por Categoria')
+                        marker=dict(colors=['#51A2C2', '#3D37B6', '#DA2631'], line=dict(color='#852886', width=1,)), title='Chamados por Categoria')
         fig.update_layout( plot_bgcolor = '#212121', 
                             font = {'family': 'Arial','size': 12,'color': 'black'},
             
