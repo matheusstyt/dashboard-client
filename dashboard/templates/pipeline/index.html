@@ -53,10 +53,10 @@
 
 <div class="container-g">
 
-<div class="caixa-implantacao">
+<div class="caixa-pipeline">
     <div class="container-f">  
         <div class="container-flex">
-            <h3 id="h3_fd">PIPELINE A </h3>
+            <h3 id="h3_fd">Pipeline de Vendas - Novembro</h3>
             
             <div class="col-3 add-div text-center"  onclick=abrir1()>
                 <i class="fas fa-plus"> </i> Adicionar 
@@ -74,99 +74,95 @@
         {% endif %}    
     </div>
     
-    <ul class="implantacao-list">
-        {% for pipelinea in pipelineA %}
-            <li class="implantacao-item">
-                <p>{{pipelinea.nome_a}}</p>  
-                <div style="display:flex">
-                    <a id="delete" href="/dashboard/pipeline/deletePipelineA/{{pipelinea.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/pipeline/editPipelineA/{{pipelinea.id}}"><span><i class="fas fa-edit"></i></span></a>
-                </div>
-                
-            </li>
+    <table class="pipeline-list">
+        {% for item in lista %}
+                <th>{{item}}</th> 
         {% endfor %}
 
-             
-    </ul>
-</div>
-<div class="caixa-implantacao">
-    <div class="container-f"> 
-        <div class="container-flex">
-            <h3 id="h3_fd">PIPELINE B</h3>
-            
-            <div class="col-3 add-div text-center"  onclick=abrir2()>
-                <i class="fas fa-plus"> </i> Adicionar 
-            </div>
-       
-        
-        </div>     
-        {% if messages %}
-            <ul class="messages">
-                {%  for message in messages %}
-                {% comment %} //tags sao infos {% endcomment %}
-                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}    
-    </div>
-    
-    <ul class="task-list">
-        {% for pipelineb in pipelineB %}
-            <li class="implantacao-item">
-                <p>{{pipelineb.nome_b}}</p>  
-                <div style="display:flex">
-                    <a id="delete" href="/dashboard/pipeline/deletePipelineB/{{pipelineb.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/pipeline/editPipelineB/{{pipelineb.id}}"><span><i class="fas fa-edit"></i></span></a>
-                </div>
-                
-            </li>
+        {% for item in dados %} 
+            <tr class="pipeline-item">
+                <td>{{item.Cliente}}</td>    
+                <td>{{item.UF}}</td>   
+                <td>{{item.Fase}}</td>   
+                <td>{{item.Descricao}}</td>   
+                <td>{{item.OMIE}}</td>   
+                <td>{{item.NF_Emitidas}}</td>     
+                <td>{{item.Qtd_Coletor}}</td>    
+                <td>{{item.Data_envio_Proposta}}</td>   
+                <td>{{item.RevisaoRecente}}</td>   
+                <td>{{item.Data_doPC}}</td>   
+                <td>{{item.Recorrencia}}</td>   
+                <td>{{item.Perpetua}}</td> 
+                <td>{{item.Hardware}}</td>   
+                <td>{{item.Servicos}}</td>   
+                <td>{{item.TotalPrevisto}}</td>   
+                <td>{{item.FaturadoMesAtual}}</td>   
+                <td>{{item.Entrega}}</td>     
+                <td>{{item.Pagamento}}</td>   
+                <td>{{item.Contato}}</td>   
+                <td>{{item.OBS}}</td>            
+            </tr>
         {% endfor %}
+        
+            
 
-             
-    </ul>
-</div>
-<div class="caixa-implantacao">
-    <div class="container-f">      
-        <div class="container-flex">
-            <h3 id="h3_fd">PIPELINE C</h3>
-            
-            <div class="col-3 add-div text-center"  onclick=abrir3()>
-                <i class="fas fa-plus"> </i> Adicionar 
-            </div>
-       
-        
-        </div>
-        {% if messages %}
-            <ul class="messages">
-                {%  for message in messages %}
-                {% comment %} //tags sao infos {% endcomment %}
-                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}    
-    </div>
+    </table>
     
-    <ul class="implantacao-list">
-        {% for pipelinec in pipelineC %}
-            <li class="implantacao-item">
-                <p>{{pipelinec.nome_c}}</p>  
-                <div style="display:flex">
-                    <a id="delete" href="/dashboard/pipeline/deletePipelineC/{{pipelinec.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                    <a id="edit" href="/dashboard/pipeline/editPipelineC/{{pipelinec.id}}"><span><i class="fas fa-edit"></i></span></a>
-                </div>
-                
-            </li>
-        {% endfor %}
-    </ul>
 </div>
+
     <style>
-        .caixa-implantacao{
+        .caixa-pipeline{
+            box-shadow: 0px 9px 20px rgb(0 0 0 / 12%);
+            width: auto;
+            padding: 0;
+            overflow-y:scroll; 
+            overflow-x:scroll;
             position: relative;
-
-        }
-        .container-f{
-            position: sticky;
+        
         }   
+        .list-div{
+            padding: 0;
+        }
+        .pipeline-ul{
+            display: flex;
+            align-content: center;
+            justify-content: space-around;
+        }
+        .pipeline-ul li{
+            font-size: 0.9em;
+        }
+        .pipeline-list{
+            padding-left: 0;
+            width: max-content;
+            text-align: center;
+        }
+        .pipeline-item{
+            font-size: 0.9em;
+            padding-top: 10px;
+            border-bottom: 1px dashed #ccc;
+            
+            color: rgb(42, 42, 42);
+            padding: 0.5em 2em;
+            text-align: justify;
+            border: 
+        }
+        .pipeline-item th{
+            border-right: 1px solid #ccc;
+            padding:1vmax
+        }
+        .pipeline-item td{
+            border-right: 1px solid #ccc;
+            padding:1vmax
+        }
+        .pipeline-item:hover{
+            background-color: rgba(161, 161, 161, 0.2);
+            transition: 0.5S ease;
+        }
+        .pipeline-item p{ 
+            display: inline-block;
+            padding: 0 1em;
+        
+        } 
     </style>
 </div>
 
