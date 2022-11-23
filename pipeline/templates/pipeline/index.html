@@ -1,16 +1,18 @@
 {% extends 'based.html' %}
 
-{% block title %}Pipeline de Vendas{% endblock  %}
+{% block title  %}DASHBOARD - PIPELINE{% endblock  %}
+
+
 {% block content %}
 
 <div class="modal-g" id="modal1">
     
     <div class="container-adicionar">
         <button class="btn-x" onclick=sair1()>X</button>
-        <h2>Adicionar novo cliente da categoria A</h2>
+        <h2>Adicionar novo cliente</h2>
         <form class="form-add-f" method="post">
             {% csrf_token %}
-            {{ formPipelineA.as_p}}
+            {{ formPipeline}}
             <div class="flex-btn">
                 <input type="submit" class="btn btn-success text-center" value="Salvar">
             </div>
@@ -19,43 +21,257 @@
     </div>
 </div>
 
-<div class="container-g">
+<div class="container-f">  
+        <div class="container-flex">
+            <h3 id="h3_fd">Pipeline de Vendas </h3>
+            <div class="caixa-filtro "  onclick=abrir14()>
+                <form action="" class="form-flex" >
+                    <p>Filtrar por:</p>
+                    <select name="filter_mes" id="filter" class="col-3  form-control">
+                        <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{mesAtual}}">{{mesAtual}}</option>
+                        {% for mes in lista_mes %}
+                        <option value="{{mes}}">{{mes}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="filter_ano" id="filter" class="col-3  form-control">
+                        <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{anoAtual}}">{{anoAtual}}</option>
+                        {% for ano in lista_ano %}
+                        <option value="{{ano}}">{{ano}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary my-2 my-sm-0" type="submit">Filtrar</button>
 
-    <div class="caixa-implantacao">
-        <div class="container-f">  
-            <div class="container-flex">
-                <h3 id="h3_fd">PIPELINE A </h3>
+                </form>
                 
-                <div class="col-3 add-div text-center"  onclick=abrir1()>
-                    <i class="fas fa-plus"> </i> Adicionar 
-                </div>
-           
-            
-            </div>    
-            {% if messages %}
-                <ul class="messages">
-                    {%  for message in messages %}
-                    {% comment %} //tags sao infos {% endcomment %}
-                        <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}    
-        </div>
+            </div>
+            <div class="col-3 add-div text-center"  onclick=abrir1()>
+                <i class="fas fa-plus"> </i> Adicionar 
+            </div>
+       
         
-        <ul class="implantacao-list">
-            {% for pipelinea in pipelineA %}
-                <li class="implantacao-item">
-                    <p>{{pipelinea.nome_a}}</p>  
-                    <div style="display:flex">
-                        <a id="delete" href="/dashboard/pipeline/deletePipelineA/{{pipelinea.id}}"><span><i class="fas fa-trash"></i></span></a> 
-                        <a id="edit" href="/dashboard/pipeline/editPipelineA/{{pipelinea.id}}"><span><i class="fas fa-edit"></i></span></a>
-                    </div>
-                    
-                </li>
-            {% endfor %}
-    
-                 
-        </ul>
+        </div>    
+        {% if messages %}
+            <ul class="messages">
+                {%  for message in messages %}
+                {% comment %} //tags sao infos {% endcomment %}
+                    <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} >{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}    
     </div>
+<div class="container-central">
+    <table class="pipe-table">
+        <tr class="header-pipe-table">
+            {% for item in lista %}
+                <th>{{item}}</th> 
+            {% endfor %}
+        </tr>
+        
+
+        {% for item in dados %} 
+            {% if item.Fase == 'Aprovado' %}
+                <tr class="pipe-table-tr" style="background-color: #86EA71; border-right: 1px solid #318C1E;" onmouseover="this.style.backgroundColor='#6FC35E'" onmouseout="this.style.backgroundColor='#86EA71'">
+                        
+                    <td>
+                        <a id="edit" href="/pipeline/editPipeline/{{item.id}}"><span><i class="fas fa-edit"></i></span></a>
+                    </td>
+                    <td>{{item.Cliente}}</td>    
+                    <td>{{item.UF}}</td>   
+                    <td>{{item.Fase}}</td>   
+                    <td>{{item.Descricao}}</td>   
+                    <td>{{item.OMIE}}</td>   
+                    <td>{{item.NF_Emitidas}}</td>     
+                    <td>{{item.Qtd_Coletor}}</td>    
+                    <td>{{item.Data_envio_Proposta}}</td>   
+                    <td>{{item.RevisaoRecente}}</td>   
+                    <td>{{item.Data_doPC}}</td>   
+                    <td>{{item.Recorrencia}}</td>   
+                    <td>{{item.Perpetua}}</td> 
+                    <td>{{item.Hardware}}</td>   
+                    <td>{{item.Servicos}}</td>   
+                    <td>{{item.TotalPrevisto}}</td>   
+                    <td>{{item.FaturadoMesAtual}}</td>   
+                    <td>{{item.Entrega}}</td>     
+                    <td>{{item.Pagamento}}</td>   
+                    <td>{{item.Contato}}</td>   
+                    <td>{{item.OBS}}</td>      
+                    <td>
+                        <a id="delete" href="/pipeline/deletePipeline/{{item.id}}"><span><i class="fas fa-trash"></i></span></a> 
+
+                    </td>      
+                </tr>
+            {% else %}
+                <tr class="pipe-table-tr">
+                            
+                    <td>
+                        <a id="edit" href="/pipeline/editPipeline/{{item.id}}"><span><i class="fas fa-edit"></i></span></a>
+                    </td>
+                    <td>{{item.Cliente}}</td>    
+                    <td>{{item.UF}}</td>   
+                    <td>{{item.Fase}}</td>   
+                    <td>{{item.Descricao}}</td>   
+                    <td>{{item.OMIE}}</td>   
+                    <td>{{item.NF_Emitidas}}</td>     
+                    <td>{{item.Qtd_Coletor}}</td>    
+                    <td>{{item.Data_envio_Proposta}}</td>   
+                    <td>{{item.RevisaoRecente}}</td>   
+                    <td>{{item.Data_doPC}}</td>   
+                    <td>{{item.Recorrencia}}</td>   
+                    <td>{{item.Perpetua}}</td> 
+                    <td>{{item.Hardware}}</td>   
+                    <td>{{item.Servicos}}</td>   
+                    <td>{{item.TotalPrevisto}}</td>   
+                    <td>{{item.FaturadoMesAtual}}</td>   
+                    <td>{{item.Entrega}}</td>     
+                    <td>{{item.Pagamento}}</td>   
+                    <td>{{item.Contato}}</td>   
+                    <td>{{item.OBS}}</td>      
+                    <td>
+                        <a id="delete" href="/pipeline/deletePipeline/{{item.id}}"><span><i class="fas fa-trash"></i></span></a> 
+
+                    </td>      
+                </tr>
+            {% endif %}
+            
+        {% endfor %}
+        
+            
+
+    </table>
+    <style>
+        .form-flex{
+            display:flex;
+            align-items: space-around;
+            justify-content: center;
+            width: 100%;
+        }
+        .form-flex select{
+            margin: 0 1em
+        }
+        .caixa-filtro{
+            width:35em;
+            display:flex;
+            align-items: space-around;
+        }
+        .caixa-filtro p{
+            margin: 0;
+        }
+        .caixa-filtro span{
+
+        }
+        .i-block{
+            width: 49%;
+            display:inline-block
+        }
+        .foo{
+            background-color: rgba(21, 25, 140, 0.8);
+            height: 4vmax;
+            width: 100%;
+            text-align: center;
+
+            position: absolute;
+            bottom: 0;
+            margin-top: 0.5em; 
+        }
+        .foo p{
+            color: aliceblue;
+            font-size: 1.2vmax;
+        }
+        .container-central{
+            width: 100%;
+            height: 75vh;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0px 9px 20px rgb(0 0 0 / 12%);
+            width: auto;
+            padding: 0;
+            overflow-y:scroll; 
+            overflow-x:scroll;
+            position: relative;
+        
+        }
+        #h3_fd{
+            font-size: 1.6vmax;
+            margin: 0;
+        }
+
+        .pipe-table{
+            padding-left: 0;
+            width: max-content;
+            text-align: center;
+            box-shadow: 0px 1vmax 1.6vmax rgb(0 0 0 / 12%);
+        }
+        .pipe-table-tr{
+            font-size: 0.9vmax;
+            padding-top: 0.9vmax;
+            border-bottom: 1px dashed #ccc;
+            color: rgb(42, 42, 42);
+            padding: 0.5vmax 2vmax;
+            text-align: justify;
+            border: 
+        }
+        .header-pipe-table{
+            border-bottom: 1px solid #ccc;
+            font-weight: 500;
+            color:rgb(73, 73, 73);
+        }
+        .header-pipe-table th{
+            border-right: 1px solid #ccc;
+            padding:.5vmax 1vmax ;
+            font-size: 0.9vmax;
+        }
+
+        .pipe-table-tr td{
+            border-right: 1px solid #ccc;
+            padding:1vmax;
+            text-align: center;
+        }
+        .pipe-table-tr:hover{
+            background-color: rgba(161, 161, 161, 0.2);
+            transition: 0.5S ease;
+        }
+        .pipe-table-tr p{ 
+            display: inline-block;
+            padding: 0 1em;
+        
+        } 
+        .container-flex{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0.5vmax 0;
+        }
+        .container-adicionar{
+            width: auto; 
+            background-color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            padding: 2em;
+            height: auto;
+        }
+        .form-add-f{
+             width: 90%; 
+            
+            margin: 0 auto;
+        }
+        .form-add-f input[type="text"], .form-add-f input[type="number"], .form-add-f input[type="date"], .form-add-f select{
+            width: auto;
+            padding: 0.5em 2em;
+            margin: 1vmax;
+            margin-right: 1vmax;
+            border-radius: 10px;
+            text-align: center;
+            
+        }
+        
+        .form-add-f textarea{
+            height: 5em;
+            width: 50em;
+            padding: 0.5em 1em;
+            margin: 1vmax;
+            border-radius: 10px;
+        }
+    </style>
 </div>
+
 {% endblock  %}

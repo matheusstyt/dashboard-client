@@ -40,8 +40,7 @@ class PipelineVendas(models.Model):
         ('Inicio', 'Inicio'),
         ('Negociação', 'Negociação'),
         ('Compras', 'Compras'),
-        ('Aprovado', 'Aprovado'),
-        
+        ('Aprovado', 'Aprovado'),   
     )
     Fase = models.CharField(choices=OP2, max_length=10, blank=False, null=False)
     Descricao = models.CharField(max_length=100, blank=True, null=True) 
