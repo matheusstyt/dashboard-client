@@ -1,10 +1,39 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import PipelineVendas
 from .forms import PipelineForm
+from datetime import date
+import calendar
 # Create your views here.
-
+def switch_mes(mes):
+    match mes:
+        case "January":
+            return 1
+        case "February":
+            return 2
+        case "March":
+            return 3
+        case "April":
+            return 4
+        case "May":
+            return 5
+        case "June":
+            return 6
+        case "July":
+            return 7
+        case "August":
+            return 8
+        case "September":
+            return 9
+        case "October":
+            return 10
+        case "November":
+            return 11
+        case "December":
+            return 12
+        case _:
+            print("Uai")
 def PipelineView(request):
-    
+    today = date.today()
     lista = [
         "*",
         "Cliente",
@@ -29,73 +58,33 @@ def PipelineView(request):
         "Observação",
         "*"
     ]
-    lista_mes = (
-        'Janeiro',  
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-         'Outubro',
-         'Novembro',
-         'Dezembro',
-    )
-    lista_ano = (
-        2017,
-        2018,
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024,
-    )
-
-    mesAtual = 'Outubro'
-    anoAtual = 2022
-    mes = request.GET.get('filter_mes')
+    # GERANDO LISTA DE MES
+    lista_mes = []
+    for i in range(1, 13):
+        lista_mes.append(calendar.month_name[i])
+    # GERAND LSITA DE ANO
+    lista_ano = []  
+    for i in range(2015, today.year+1):
+        lista_ano.append(i)
+    # VALORES PADRÕES QUANDO INICIA A APLICAÇÃO
+    mesAtual = 'October'
+    anoAtual = today.year
     
-    year = request.GET.get('filter_ano')
-    year = 2022
-    month = 0
-    match mes:
-        case "Janeiro":
-            month = 1
-        case "Fevereiro":
-            month = 2
-        case "Março":
-            month = 3
-        case "Abril":
-            month = 4
-        case "Maio":
-            month = 5
-        case "Junho":
-            month = 6
-        case "Julho":
-            month = 7
-        case "Agosto":
-            month = 8
-        case "Setembro":
-            month = 9
-        case "Outubro":
-            month = 10
-        case "Novembro":
-            month = 11
-        case "Dezembro":
-            month = 12
-        case _:
-            print("Uai")
+    mes = request.GET.get('filter_mes')
+    # CONVERTE MES DE NOME PARA NUMERO
+
+    month = switch_mes(mes)
+
+    # RECUPERA DADOS PELA REQUISIÇÃO
     mesAtual = request.GET.get('filter_mes')
     anoAtual = request.GET.get('filter_ano')
+    # VERIFICA SE ESTÁ VAZIO NO FRONT END E ATRIBUI O VALOR CASO TRUE
     if(anoAtual is None):
-        anoAtual = 2022
+        anoAtual = today.year
     if(mesAtual is None):
-        month = 11
-        mesAtual = 'Novembro'
-    pipeline = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year__gte=anoAtual)
+        month = today.month
+        mesAtual = 'November'
+    pipeline = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
     formPipeline = PipelineForm()
     # tratamento para enviar para o banco
     print(str(pipeline))

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
 from datetime import date
 from django.db.models import Sum
 
 from pipeline.models import PipelineVendas
 
 from workalendar.america import Brazil
-import datetime as dt
+from datetime import datetime as dt
 from workadays import workdays as wd
 import calendar
 import numpy as np
@@ -31,10 +32,35 @@ from .forms import Placar_LicensasForm
 from .forms import Licencas_FaltandoForm
 
 from .graphic import plt
-from .graphic import FaturamentoClasse as FaturamentoC
-from .graphic import Dataframes
-def trial(request):
-    return render(request, 'my_first_dash_plotly_app/trial.html')
+from .graphic import tempoFaturamento as periodo
+def switch_mes(mes):
+    match mes:
+        case "January":
+            return 1
+        case "February":
+            return 2
+        case "March":
+            return 3
+        case "April":
+            return 4
+        case "May":
+            return 5
+        case "June":
+            return 6
+        case "July":
+            return 7
+        case "August":
+            return 8
+        case "September":
+            return 9
+        case "October":
+            return 10
+        case "November":
+            return 11
+        case "December":
+            return 12
+        case _:
+            print("Uai")
 def dashboard(request):
     # PIPELINE DADOS 
 
@@ -70,8 +96,47 @@ def dashboard(request):
     planejados = Planejado.objects.all()
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
-    faturamento = FaturamentoC()
+
+
+    # GERANDO LISTA DE MES
+    today = date.today()
+    lista_mes = []
+    for i in range(1, 13):
+        lista_mes.append(calendar.month_name[i])
+    # GERAND LSITA DE ANO
+    lista_ano = []  
+    for i in range(2015, today.year+1):
+        lista_ano.append(i)
+    # VALORES PADRÕES QUANDO INICIA A APLICAÇÃO
+    mesAtual = 'October'
+    anoAtual = today.year
+    
+    mes = request.GET.get('filter_mes')
+    # CONVERTE MES DE NOME PARA NUMERO
+
+    month = switch_mes(mes)
+
+    # RECUPERA DADOS PELA REQUISIÇÃO
+    mesAtual = request.GET.get('filter_mes')
+    anoAtual = request.GET.get('filter_ano')
+    # VERIFICA SE ESTÁ VAZIO NO FRONT END E ATRIBUI O VALOR CASO TRUE
+    if(anoAtual is None):
+        anoAtual = today.year
+    if(mesAtual is None):
+        month = today.month
+        mesAtual = 'November'
+
+    meta, dias_corridos, dias_totais_mes, real_acumulado, real_projetado, real_percent, projetado_percent, fig1, fig2 = periodo(month, anoAtual)
+
+    now = dt.now()
+    date_time = now.strftime("%B %d, %Y   %H:%M:%S")
+
     context = {
+        'lista_ano' : lista_ano,
+        'lista_mes' : lista_mes,
+        'mesAtual' : mesAtual,
+        'anoAtual' : anoAtual,
+        'data' : date_time,
         'pipeline_header' : pipeline_header, 
         'pipeline' : pipeline, 
         'total_a' : total_a, 
@@ -82,17 +147,17 @@ def dashboard(request):
         'count_b' : count_b, 
         'count_c' : count_c, 
         'count_d' : count_d, 
-        'meta' : faturamento.metaStr,
-        'real_projetado' : faturamento.real_projetado,
-        'real_acumulado' : faturamento.real_acumulado,
-        'real_percent' : faturamento.real_percent,
-        'projetado_percent' : faturamento.projetado_percent,
+        'meta' : meta,
+        'real_projetado' : real_projetado,
+        'real_acumulado' : real_acumulado,
+        'real_percent' : real_percent,
+        'projetado_percent' : projetado_percent,
         'planejados': planejados, 
         'cursos' : cursos, 
         'concluidos' : concluidos, 
-        'fig1' : plt.grafico_1(), 
+        'fig1' : fig1, 
         'fig2': plt.grafico_2(), 
-        'fig3' : plt.grafico_3(), 
+        'fig3' : fig2, 
         'fig4' : plt.grafico_4(), 
         'df1': plt.glpi_suporte(), 
         'df2': plt.suporte()}

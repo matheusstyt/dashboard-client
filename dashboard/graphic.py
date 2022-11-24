@@ -15,62 +15,54 @@ from .models import Placar_Licensas
 from .models import Licencas_Faltando
 from django.shortcuts import render, redirect, get_object_or_404
 
-class FaturamentoClasse(): 
-    meta = 0
-    metaStr = ''
-    real_acumulado = 0
-    real_projetado = 0
-    dias_corridos = 0
-    dias_totais_mes = 0
-    real_percent = 0
-    projetado_percent = 0 
-    def __init__(self, *args, **kwargs):
-        super(CLASS_NAME, self).__init__(*args, **kwargs)
-    
-    def __init__(self):
-        #DATA FRAME
-        df = df_faturamento()
-        # META
-        meta = get_object_or_404(Meta_Valor, pk=2)
-        meta = int(meta.meta)
-        # DATA ATUAL 
-        today = date.today()
-        # DIAS CORRIDOS
-        # ULTIMO DIA df['data_faturamento'].iloc[-1]
-        # PRIMEIRO DIA df['data_faturamento'].iloc[0]
+def tempoFaturamento(mes, ano):
+    # TRATAMENTO DO DATAFRAME
+    faturamentos = Faturamento.objects.all().order_by('data_faturamento').filter(data_faturamento__month=mes).filter(data_faturamento__year=ano)
+    faturamentos_data = [
+        {   'faturamento_dia': i.faturamento_dia,
+            'data_faturamento': i.data_faturamento,
+        } for i in faturamentos
+    ]
+    df = pd.DataFrame(faturamentos_data)
+    # META
+    meta = get_object_or_404(Meta_Valor, pk=2)
+    meta = float(meta.meta) 
+    # DATA ATUAL 
+    today = date.today()
+    # DIAS CORRIDOS
+    # ULTIMO DIA df['data_faturamento'].iloc[-1]
+    # PRIMEIRO DIA df['data_faturamento'].iloc[0]
+    try:
         dias_corridos = df[df.columns[0]].count()
-        df = df['faturamento_dia'].astype('int64')
+        df_faturamento_dia = df['faturamento_dia'].astype('int64')
         # DIAS TOTAIS DO MÊS
         monthRange = calendar.monthrange(today.year,today.month)
         dias_totais_mes = monthRange[1]
         #REAL ACUMULADO
-        real_acumulado = df.sum()
+        real_acumulado = df_faturamento_dia.sum()
         # PROJETADO
         x = real_acumulado / dias_corridos
         real_projetado = x * dias_totais_mes
+        real_projetado = float("{:.2f}".format(real_projetado)) 
         # PERCENT REAL 
         real_percent = real_acumulado / meta
+        real_percent = int(real_percent * 100)
         # PERCENT PROJETADO
         projetado_percent = real_projetado / meta
+        projetado_percent = int(projetado_percent * 100)
+    except:
+        dias_corridos = 0
+        meta = 0
+        dias_corridos = 0
+        dias_totais_mes = 0
+        real_acumulado = 0
+        real_projetado = 0
+        real_percent = 0
+        projetado_percent = 0
+    return meta, dias_corridos, dias_totais_mes, real_acumulado, real_projetado, real_percent, projetado_percent, grafico_faturamento(df, meta, real_projetado), grafico_meta_projetado(real_percent, projetado_percent)
 
-        self.meta = float("{:.2f}".format(meta))
-        self.metaStr = float("{:.2f}".format(meta))
-        self.real_acumulado = float("{:.2f}".format(real_acumulado))
-        self.real_projetado = float("{:.2f}".format(real_projetado)) 
-        self.dias_corridos = dias_corridos
-        self.dias_totais_mes = dias_totais_mes
-        self.real_percent = int(real_percent * 100)
-        self.projetado_percent = int(projetado_percent * 100)
 
 class plt:
-    def omie_administracao():
-        nome_ficheiro = 'C:/Users/simone/Documents/desenvolvimento/django_ficha/pipeline/assets/PIPELINE VENDAS COMERCIAL DIARIO.xlsx'
-        df = pd.read_excel(nome_ficheiro, 'NOV_22')
-        # df.sort_values(by=['Cliente'], ascending=False, inplace=True)
-        # d.columns = ['Empresa', 'N° de Chamados']
-            # df['N° de Chamados'] = df['N° de Chamados'].astype('str')
-
-
     def suporte():
         lista = [
             ("INJET (1)",21),
@@ -97,56 +89,6 @@ class plt:
         data['N° de Chamados'] = data['N° de Chamados'].astype('str')
         html = data.to_html(index=False)
         return html
-    def grafico_1():
-        faturamento = FaturamentoClasse()
-        df = df_faturamento()
-        # CALCULO DE ACUMULADO POR DIA
-        percent_dia = []
-        line_projetado = []
-        acumulado_total = 0
-        real_acumulado_por_dia = []
-        for item in df['faturamento_dia']:
-            acumulado_total = acumulado_total + int(item)
-            real_acumulado_por_dia.append(acumulado_total)
-            # ADICIONA META NUM ARRAY
-            percent_dia.append(faturamento.meta)
-            line_projetado.append(faturamento.real_projetado)
-        # print(percent_dia)
-        # CONSTRUÇÃO DO GRÁFICO
-        layout = go.Layout(
-            autosize=True,
-            # width=550,
-            height=200,
-
-            xaxis= go.layout.XAxis(linecolor = 'black',
-                                linewidth = 1,
-                                mirror = True),
-
-            yaxis= go.layout.YAxis(linecolor = 'black',
-                                linewidth = 1,
-                                mirror = True),
-
-            margin=go.layout.Margin(
-                l=0,
-                r=0,
-                b=0,
-                t=10,
-                pad = 2
-            )
-        )
-        fig = go.Figure(layout=layout) 
-        
-        fig.add_trace(go.Line(x = df['data_faturamento'], y = line_projetado,line_color='Green', line_dash='solid', name = 'Projetado'))
-        fig.add_trace(go.Line(x = df['data_faturamento'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
-        fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
-        fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.8))
-        # fig.add_trace(go.Scatter(x=percent_dia, y=df['faturamento_dia'],
-        #             mode='markers',
-        #             name='markers'))
-        gantt_ploty = plot(fig, output_type="div")
-        context = {'gantt_ploty': gantt_ploty}
-
-        return gantt_ploty
 
     def grafico_2():
         # TRATAMENTO DO DATAFRAME
@@ -183,68 +125,13 @@ class plt:
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
         return gantt_ploty
-    def grafico_3():
-        # TRATAMENTO DO DATAFRAME
-        faturamento = FaturamentoClasse()
-        # FIGURA DE FATURAMENTO
-        real_percent = faturamento.real_percent / 100
-        projetado_percent = faturamento.projetado_percent / 100
-        faturamentoL = [
-                        ('Realizado', real_percent),
-                         ('Projetado', projetado_percent)]
-        npLista = np.array(faturamentoL)  
-        dfFaturamento = pd.DataFrame(npLista, columns=['Categoria', 'Montante'])    
-        
-        layout = go.Layout(
-            autosize=True,
-            # width=265,
-             height=200,
-
-            xaxis= go.layout.XAxis(linecolor = 'black',
-                                linewidth = 1,
-                                mirror = True),
-
-            yaxis= go.layout.YAxis(linecolor = 'black',
-                                linewidth = 1,
-                                mirror = True),
-
-            margin=go.layout.Margin(
-                l=0,
-                r=0,
-                b=0,
-                t=0,
-                pad = 2
-            )
-        )
-        fig = go.Figure(layout=layout)
-
-
-        fig.add_trace(
-            go.Histogram(histfunc="sum", 
-            y=dfFaturamento['Montante'], 
-            x=dfFaturamento['Categoria'], 
-            marker_color=['rgb(158,202,225)', '#DD2525'], 
-            marker_line_color=['rgb(8,48,107)','#EE0C0C'], 
-            marker_line_width=1.5, 
-            opacity=0.8,
-            name="sum",
-            # texttemplate='%{y:.1%f}', 
-            textfont_size=20))
-        fig.update_layout( plot_bgcolor = 'white',
-                            font = {'family': 'Arial','size': 12,'color': 'black'},
-                            margin=dict(l=5, r=5, t=15, b=5),
-                            
-                            )
-        fig.update_traces(texttemplate="%{y:.0%}")
-        gantt_ploty = plot(fig, output_type="div")
-        context = {'gantt_ploty': gantt_ploty}
-        return gantt_ploty
+    
     def grafico_4():
         # TRATAMENTO DO DATAFRAME
         nome_ficheiro = 'C:/Users/simone/Documents/desenvolvimento/dashboard/suporte/chamados-por-status.csv'
         df = pd.read_csv(nome_ficheiro )
         lista = df['Chamados'].values
-        faturamento = FaturamentoClasse()
+     
         # FIGURA DE FATURAMENTO
         # gráfico scatter 1
         list_chamados = df['Chamados'].values.tolist()
@@ -287,67 +174,103 @@ class plt:
         gantt_ploty = plot(fig, output_type="div")
         context = {'gantt_ploty': gantt_ploty}
         return gantt_ploty
-def df_faturamento():
-    # TRATAMENTO DO DATAFRAME
-    faturamentos = Faturamento.objects.all()
+
+def grafico_faturamento(df, meta, real_projetado):
+    # CALCULO DE ACUMULADO POR DIA
+    percent_dia = []
+    line_projetado = []
+    acumulado_total = 0
+    real_acumulado_por_dia = []
+    for item in df['faturamento_dia']:
+        acumulado_total = acumulado_total + int(item)
+        real_acumulado_por_dia.append(acumulado_total)
+        # ADICIONA META NUM ARRAY
+        percent_dia.append(meta)
+        line_projetado.append(real_projetado)
+    # print(percent_dia)
+    # CONSTRUÇÃO DO GRÁFICO
+    layout = go.Layout(
+        autosize=True,
+        # width=550,
+        height=200,
+
+        xaxis= go.layout.XAxis(linecolor = 'black',
+                            linewidth = 1,
+                            mirror = True),
+
+        yaxis= go.layout.YAxis(linecolor = 'black',
+                            linewidth = 1,
+                            mirror = True),
+
+        margin=go.layout.Margin(
+            l=0,
+            r=0,
+            b=0,
+            t=10,
+            pad = 2
+        )
+    )
+    fig = go.Figure(layout=layout) 
     
-    faturamentos_data = [
-        {
-            'faturamento_dia': i.faturamento_dia,
-            'data_faturamento': i.data_faturamento,
+    fig.add_trace(go.Line(x = df['data_faturamento'], y = line_projetado,line_color='Green', line_dash='solid', name = 'Projetado'))
+    fig.add_trace(go.Line(x = df['data_faturamento'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
+    fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
+    fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.8))
+    # fig.add_trace(go.Scatter(x=percent_dia, y=df['faturamento_dia'],
+    #             mode='markers',
+    #             name='markers'))
+    gantt_ploty = plot(fig, output_type="div")
+    context = {'gantt_ploty': gantt_ploty}
 
-        } for i in faturamentos
-    ]
-    df = pd.DataFrame(faturamentos_data)
-    df['data_faturamento'] = pd.to_datetime(df['data_faturamento'], dayfirst=True)
-    df.sort_values(["data_faturamento"], axis=0,ascending=True, inplace=True)
+    return gantt_ploty
+def grafico_meta_projetado(real_percent, projetado_percent):
+        # FIGURA DE FATURAMENTO
+        real_percent = real_percent / 100
+        projetado_percent = projetado_percent / 100
+        faturamentoL = [
+                        ('Realizado', real_percent),
+                         ('Projetado', projetado_percent)]
+        npLista = np.array(faturamentoL)  
+        dfFaturamento = pd.DataFrame(npLista, columns=['Categoria', 'Montante'])    
+        
+        layout = go.Layout(
+            autosize=True,
+            # width=265,
+             height=200,
 
-    return df
-class Dataframes:
-    def pipeline_header():
-        lista = [
-            ("Cliente A", 70000, 'Amazonas'), 
-            ("Cliente B", 65000, 'Bahia'), 
-            ("Cliente C", 15000, 'Amazonas'), 
-            ("Cliente D", 70060, 'Bahia'),
-            ("Cliente E", 23000, 'Amazonas'),
-        ]
-        npLista = np.array(lista)
-        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
-        return df
-    def pipeline_a():
-        lista = [
-            ("Cliente A", 70000, 'Amazonas'), 
-            ("Cliente B", 65000, 'Bahia'), 
-            ("Cliente C", 15000, 'Amazonas'), 
-            ("Cliente D", 70060, 'Bahia'),
-            ("Cliente E", 23000, 'Amazonas'),
-        ]
-        npLista = np.array(lista)
-        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
-        html = df.to_html(index=False, header=False)
-        return html
-    def pipeline_b():
-        lista = [
-            ("Cliente F", 54000, 'Amazonas'), 
-            ("Cliente G", 60000, 'Amazonas'), 
-            ("Cliente H", 19000, 'São Paulo'), 
-            ("Cliente I", 50000, 'São Paulo'),
-            ("Cliente J", 23000, 'Amazonas'),
-        ]
-        npLista = np.array(lista)
-        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
-        html = df.to_html(index=False, header=False)
-        return html
-    def pipeline_c():
-        lista = [
-            ("Cliente K", 44000, 'Amazonas'), 
-            ("Cliente L", 56000, 'Bahia')
-            # ("Cliente M", 15000, 'São Paulo'), 
-            # ("Cliente N", 12000, 'Bahia'),
-            # ("Cliente O", 23000, 'Amazonas'),
-        ]
-        npLista = np.array(lista)
-        df = pd.DataFrame(npLista, columns=['Clientes', '$$$', 'UF'])
-        html = df.to_html(index=False, header=False)
-        return html
+            xaxis= go.layout.XAxis(linecolor = 'black',
+                                linewidth = 1,
+                                mirror = True),
+
+            yaxis= go.layout.YAxis(linecolor = 'black',
+                                linewidth = 1,
+                                mirror = True),
+
+            margin=go.layout.Margin(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad = 2
+            )
+        )
+        fig = go.Figure(layout=layout)
+        fig.add_trace(
+            go.Histogram(histfunc="sum", 
+            y=dfFaturamento['Montante'], 
+            x=dfFaturamento['Categoria'], 
+            marker_color=['rgb(158,202,225)', '#DD2525'], 
+            marker_line_color=['rgb(8,48,107)','#EE0C0C'], 
+            marker_line_width=1.5, 
+            opacity=0.8,
+            name="sum",
+            # texttemplate='%{y:.1%f}', 
+            textfont_size=20))
+        fig.update_layout( plot_bgcolor = 'white',
+                            font = {'family': 'Arial','size': 12,'color': 'black'},
+                            margin=dict(l=5, r=5, t=15, b=5),             
+                            )
+        fig.update_traces(texttemplate="%{y:.0%}")
+        gantt_ploty = plot(fig, output_type="div")
+        context = {'gantt_ploty': gantt_ploty}
+        return gantt_ploty
