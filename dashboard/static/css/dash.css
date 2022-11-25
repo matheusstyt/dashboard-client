@@ -163,7 +163,7 @@ novo layout */
     width: 100%;
     height: 60%;
     background-color: rgb(237, 251, 255);
-    display:block;
+    display:flex;
     flex-flow: wrap row;
     /* align-items: center; */
     justify-content: center;
