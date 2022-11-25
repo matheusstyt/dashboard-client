@@ -47,9 +47,15 @@ def PipelineView(request):
     # VALORES PADRÕES QUANDO INICIA A APLICAÇÃO
     mesAtual = 'October'
     anoAtual = today.year
-    
+    faturados_option = True
+
     mes = request.GET.get('filter_mes')
+    
     # CONVERTE MES DE NOME PARA NUMERO
+    option = request.GET.get('faturados_option')
+    if (option is None):
+        option = 'true'
+    
 
     month = switch_mes(mes)
 
@@ -63,13 +69,19 @@ def PipelineView(request):
         month = today.month
         mesAtual = 'November'
     
-    pipeline = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
-    dados_pipeline = pd.DataFrame(list(PipelineVendas.objects.all().values().filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)))
-    dados_pipeline = dados_pipeline[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_envio_Proposta', 'RevisaoRecente', 
-    'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS']]
     
+    dados_pipeline = pd.DataFrame(list(PipelineVendas.objects.all().values().filter(Data_doPC__month=month).filter(Data_doPC__year=anoAtual)))
+    dados_pipeline = dados_pipeline[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_doPC', 'RevisaoRecente', 
+    'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS']]
+    if option == 'true':
+        # TRATANDO A OPÇÃO DE FATURADO
+        dados_none = pd.DataFrame(list(PipelineVendas.objects.all().values().filter(Data_doPC__isnull=True)))
+        dados_none = dados_none[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_doPC', 'RevisaoRecente', 
+        'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS']]
+        dados_pipeline = pd.concat([dados_pipeline, dados_none])
+
     # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
-    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_doPC__month=month).filter(Data_doPC__year=anoAtual)
     dfProdutos = pd.DataFrame(produtos)
     dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento']
     lista_produto = dfProdutos.Descricao.unique()
@@ -78,10 +90,9 @@ def PipelineView(request):
     for produto in lista_produto:
         df = dfProdutos[dfProdutos['Descricao'] == produto]
         data_produtos = data_produtos.append({'Produto' : produto, 'TotalPrevisto': df['TotalPrevisto'].sum(), 'FaturadoMesAtual' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
-    print(data_produtos)
     # fim produtos
 
-    n_faturados = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__isnull=True)
+    n_faturados = PipelineVendas.objects.order_by('Cliente').filter(Data_doPC__isnull=True)
     
     formPipeline = PipelineForm()
     # tratamento para enviar para o banco
@@ -98,9 +109,9 @@ def PipelineView(request):
         "Cliente",
         "UF",
         "Fase",
+        "OMIE",
         "Código da proposta",
         "Descrição/Proposta",
-        "OMIE",
         "NF_ Emitidas",
         "Coletor QTDA",
         "Data de envio da Proposta",
@@ -119,15 +130,18 @@ def PipelineView(request):
         "Observação",
         "*"
     ]
+    op = ['Faturados', 'Não Faturados']
+
     context = {
-    'dados_pipeline' : dados_pipeline,
-    'dados' : pipeline, 
+    'dados_pipeline' : dados_pipeline   ,
     'lista': lista, 
     'formPipeline': formPipeline,
     'lista_ano' : lista_ano,
     'lista_mes' : lista_mes,
     'mesAtual' : mesAtual,
-    'anoAtual' : anoAtual
+    'anoAtual' : anoAtual,
+    'op' : op, 
+    'faturados_option' : faturados_option
     }
     return render(request, 'pipeline/index.html', context)
 def pipeline_delete(request, id):
