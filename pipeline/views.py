@@ -74,6 +74,7 @@ def PipelineView(request):
     dados_pipeline = dados_pipeline[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_doPC', 'RevisaoRecente', 
     'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS']]
     if option == 'true':
+        option = 'true'
         # TRATANDO A OPÇÃO DE FATURADO
         dados_none = pd.DataFrame(list(PipelineVendas.objects.all().values().filter(Data_doPC__isnull=True)))
         dados_none = dados_none[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_doPC', 'RevisaoRecente', 
