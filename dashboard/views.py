@@ -90,7 +90,6 @@ def dashboard(request):
         month = today.month
         mesAtual = 'November'
 
-    meta, dias_corridos, dias_totais_mes, real_acumulado, real_projetado, real_percent, projetado_percent, fig1, fig2 = periodo(month, anoAtual)
     
     # PIPELINE DADOS 
     pipeline_header = ['Cliente', 'Fase', 'Recorrencia' , 'Perpetua', 'Hardware', 'Serviços']
@@ -127,9 +126,9 @@ def dashboard(request):
     # SECÇÃO PRODUTOS MAP
 
     # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
-    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Data_doPC').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
     dfProdutos = pd.DataFrame(produtos)
-    dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento']
+    dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Data_doPC']
     lista_produto = dfProdutos.Descricao.unique()
     data_produtos = pd.DataFrame(columns=['Produto', 'T. Previsto', 'Faturado'])
     # LOOP DOS VALORES ÚNICOS DA COLUNA DESCRICAO, CRIA UM DATAFRAME CONTENDO OS PRODUTOS NO LOOP ATUAL E ADICIONA NO DATAFRAME data_produtos
@@ -137,8 +136,10 @@ def dashboard(request):
         df = dfProdutos[dfProdutos['Descricao'] == produto]
         data_produtos = data_produtos.append({'Produto' : produto, 'T. Previsto': df['TotalPrevisto'].sum(), 'Faturado' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
         data_produtos = data_produtos.dropna()
-    print(data_produtos)
-    
+
+    #
+    meta, dias_corridos, dias_totais_mes, real_acumulado, real_projetado, real_percent, projetado_percent, fig1, fig2 = periodo(month, anoAtual, dfProdutos)
+
     # DATA ATUAL FORMATADA
     now = dt.now()
     date_time = now.strftime("%B %d, %Y   %H:%M:%S")

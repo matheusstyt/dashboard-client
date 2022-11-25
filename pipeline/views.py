@@ -62,7 +62,11 @@ def PipelineView(request):
     if(mesAtual is None):
         month = today.month
         mesAtual = 'November'
+    
     pipeline = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    dados_pipeline = pd.DataFrame(list(PipelineVendas.objects.all().values().filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)))
+    dados_pipeline = dados_pipeline[['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_envio_Proposta', 'RevisaoRecente', 
+    'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS']]
     
     # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
     produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
@@ -76,7 +80,7 @@ def PipelineView(request):
         data_produtos = data_produtos.append({'Produto' : produto, 'TotalPrevisto': df['TotalPrevisto'].sum(), 'FaturadoMesAtual' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
     print(data_produtos)
     # fim produtos
-    
+
     n_faturados = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__isnull=True)
     
     formPipeline = PipelineForm()
@@ -90,9 +94,11 @@ def PipelineView(request):
             return redirect('/pipeline')
     lista = [
         "*",
+        'ID',
         "Cliente",
         "UF",
         "Fase",
+        "Código da proposta",
         "Descrição/Proposta",
         "OMIE",
         "NF_ Emitidas",
@@ -106,6 +112,7 @@ def PipelineView(request):
         "Serviços",
         "Total previsto",
         "Faturado ",
+        "Data do Faturamento",
         "Entrega",
         "Pagamento",
         "Contato",
@@ -113,6 +120,7 @@ def PipelineView(request):
         "*"
     ]
     context = {
+    'dados_pipeline' : dados_pipeline,
     'dados' : pipeline, 
     'lista': lista, 
     'formPipeline': formPipeline,
@@ -123,7 +131,7 @@ def PipelineView(request):
     }
     return render(request, 'pipeline/index.html', context)
 def pipeline_delete(request, id):
-    Pipeline = get_object_or_404(PipelineVendas, pk=id)
+    Pipeline = get_object_or_404(PipelineVendas, id=id)
     Pipeline.delete()
     return redirect('/pipeline') 
 

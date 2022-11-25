@@ -1,5 +1,5 @@
 {% extends 'based.html' %}
-
+{% load django_template_maths %}
 {% block title  %}DASHBOARD - PIPELINE{% endblock  %}
 
 
@@ -40,11 +40,8 @@
                         {% endfor %}
                     </select>
                     <select name="faturados_option" id="filter" class="col-3  form-control">
-                        <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{anoAtual}}">{{anoAtual}}</option>
-                        {% for ano in lista_ano %}
-                        <option value="True">Sim</option>
-                        <option value="False">Não</option>
-                        {% endfor %}
+                        <option value="False">Não faturado</option>
+                        <option value="True">Faturado</option>
                     </select>
                     <button class="btn btn-primary my-2 my-sm-0" type="submit">Filtrar</button>
 
@@ -72,109 +69,45 @@
             {% for item in lista %}
                 <th>{{item}}</th> 
             {% endfor %}
-        </tr>
-        
-        
-        {% for item in dados %} 
-            {% if item.Fase == 'Aprovado' %}
-                <tr class="pipe-table-tr" style="background-color: #86EA71; border-right: 1px solid #318C1E;" onmouseover="this.style.backgroundColor='#6FC35E'" onmouseout="this.style.backgroundColor='#86EA71'">
-                        
-                    <td>
-                        <a id="edit" href="/pipeline/editPipeline/{{item.id}}"><span><i class="fas fa-edit"></i></span></a>
-                    </td>
-                    <td>{{item.Cliente}}</td>    
-                    <td>{{item.UF}}</td>   
-                    <td>{{item.Fase}}</td>   
-                    <td>{{item.Descricao}}</td>   
-                    <td>{{item.OMIE}}</td>   
-                    <td>{{item.NF_Emitidas}}</td>     
-                    <td>{{item.Qtd_Coletor}}</td>    
-                    <td>{{item.Data_envio_Proposta}}</td>   
-                    <td>{{item.RevisaoRecente}}</td>   
-                    <td>{{item.Data_doPC}}</td>   
-                    <td>{{item.Recorrencia}}</td>   
-                    <td>{{item.Perpetua}}</td> 
-                    <td>{{item.Hardware}}</td>   
-                    <td>{{item.Servicos}}</td>   
-                    <td>{{item.TotalPrevisto}}</td>   
-                    <td>{{item.FaturadoMesAtual}}</td>   
-                    <td>{{item.Entrega}}</td>     
-                    <td>{{item.Pagamento}}</td>   
-                    <td>{{item.Contato}}</td>   
-                    <td>{{item.OBS}}</td>      
-                    <td>
-                        <a id="delete" href="/pipeline/deletePipeline/{{item.id}}"><span><i class="fas fa-trash"></i></span></a> 
+        </tr> 
+        {% for row.id, row in dados_pipeline.iterrows %}
+            {% if row.Fase == 'Aprovado' %}
 
-                    </td>      
+                <tr class="pipe-table-tr" style=" background-color: #86EA71; " onmouseover="this.style.backgroundColor='#45C647'" onmouseout="this.style.backgroundColor='#86EA71'">
+                    <td style="border: 1px solid #58A52F;"><a id="edit" href="/pipeline/editPipeline/{{row.id}}"><span><i class="fas fa-edit"></i></span></a></td>
+                    {% for cell in row %}
+                        <td style="border: 1px solid #58A52F;">
+                            {{cell}}
+                        </td>
+                    {% endfor %}
+                    <td><a id="delete" href="/pipeline/deletePipeline/{{row.id}}"><span><i class="fas fa-trash"></i></span></a></td>      
                 </tr>
-            {% elif item.Fase == 'Aprovado' or item.Fase == 'Reprovado preço' %}
-            <tr class="pipe-table-tr" style="background-color: #F14A4A; border-right: 1px solid #BE2626; color: #ffff;" onmouseover="this.style.backgroundColor='#E62525'" onmouseout="this.style.backgroundColor='#F14A4A'">                            
-                <td>
-                    <a id="edit" href="/pipeline/editPipeline/{{item.id}}"><span><i class="fas fa-edit"></i></span></a>
-                </td>
-                <td>{{item.Cliente}}</td>    
-                <td>{{item.UF}}</td>   
-                <td>{{item.Fase}}</td>   
-                <td>{{item.Descricao}}</td>   
-                <td>{{item.OMIE}}</td>   
-                <td>{{item.NF_Emitidas}}</td>     
-                <td>{{item.Qtd_Coletor}}</td>    
-                <td>{{item.Data_envio_Proposta}}</td>   
-                <td>{{item.RevisaoRecente}}</td>   
-                <td>{{item.Data_doPC}}</td>   
-                <td>{{item.Recorrencia}}</td>   
-                <td>{{item.Perpetua}}</td> 
-                <td>{{item.Hardware}}</td>   
-                <td>{{item.Servicos}}</td>   
-                <td>{{item.TotalPrevisto}}</td>   
-                <td>{{item.FaturadoMesAtual}}</td>   
-                <td>{{item.Entrega}}</td>     
-                <td>{{item.Pagamento}}</td>   
-                <td>{{item.Contato}}</td>   
-                <td>{{item.OBS}}</td>      
-                <td>
-                    <a id="delete" href="/pipeline/deletePipeline/{{item.id}}"><span><i class="fas fa-trash"></i></span></a> 
+            {% elif row.Fase == 'Suspensa' or row.Fase == 'Reprovado preço' %}
+                
+                <tr class="pipe-table-tr" style="background-color: #F14A4A; border-right: 1px solid #BE2626; color: #ffff;" onmouseover="this.style.backgroundColor='#E62525'" onmouseout="this.style.backgroundColor='#F14A4A'">                            
+                    
+                    <td style="border: 1px solid #D53A3A;"><a id="edit" href="/pipeline/editPipeline/{{row.id}}"><span><i class="fas fa-edit"></i></span></a></td>
+                    {% for cell in row %}
+                    
+                        <td style="border: 1px solid #D53A3A;">
+                            {{cell}}
+                        </td>
+                    {% endfor %}
+                    <td><a id="delete" href="/pipeline/deletePipeline/{{row.id}}"><span><i class="fas fa-trash"></i></span></a></td>      
 
-                </td>      
-            </tr>
+                </tr>        
             {% else %}
-           
-                <tr class="pipe-table-tr">
-                            
-                    <td>
-                        <a id="edit" href="/pipeline/editPipeline/{{item.id}}"><span><i class="fas fa-edit"></i></span></a>
-                    </td>
-                    <td>{{item.Cliente}}</td>    
-                    <td>{{item.UF}}</td>   
-                    <td>{{item.Fase}}</td>   
-                    <td>{{item.Descricao}}</td>   
-                    <td>{{item.OMIE}}</td>   
-                    <td>{{item.NF_Emitidas}}</td>     
-                    <td>{{item.Qtd_Coletor}}</td>    
-                    <td>{{item.Data_envio_Proposta}}</td>   
-                    <td>{{item.RevisaoRecente}}</td>   
-                    <td>{{item.Data_doPC}}</td>   
-                    <td>{{item.Recorrencia}}</td>   
-                    <td>{{item.Perpetua}}</td> 
-                    <td>{{item.Hardware}}</td>   
-                    <td>{{item.Servicos}}</td>   
-                    <td>{{item.TotalPrevisto}}</td>   
-                    <td>{{item.FaturadoMesAtual}}</td>   
-                    <td>{{item.Entrega}}</td>     
-                    <td>{{item.Pagamento}}</td>   
-                    <td>{{item.Contato}}</td>   
-                    <td>{{item.OBS}}</td>      
-                    <td>
-                        <a id="delete" href="/pipeline/deletePipeline/{{item.id}}"><span><i class="fas fa-trash"></i></span></a> 
-
-                    </td>      
+                <tr class="pipe-table-tr">   
+                    <td><a id="edit" href="/pipeline/editPipeline/{{row.id}}"><span><i class="fas fa-edit"></i></span></a></td>
+                    {% for cell in row %}
+                        <td>
+                            {{cell}}
+                        </td>
+                    {% endfor %}
+                    <td><a id="delete" href="/pipeline/deletePipeline/{{row.id}}"><span><i class="fas fa-trash"></i></span></a></td>      
                 </tr>
             {% endif %}
-            
         {% endfor %}
-        
-            
-
     </table>
     <style>
         .form-flex{
@@ -311,5 +244,7 @@
         }
     </style>
 </div>
+<div class ="bar-footer">
 
+</div>
 {% endblock  %}

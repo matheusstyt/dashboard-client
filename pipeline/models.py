@@ -45,7 +45,8 @@ class PipelineVendas(models.Model):
         ('Reprovado preço', 'Reprovado preço'),    
     )
     Fase = models.CharField(choices=OP2, max_length=20, blank=False, null=False)
-    OMIE = models.CharField(max_length=100, blank=True, null=True)  
+    OMIE = models.CharField(max_length=100, blank=True, null=True) 
+    idProposta = models.IntegerField() 
     Descricao = models.CharField(max_length=100, blank=True, null=True) 
     NF_Emitidas = models.CharField(max_length=100, blank=True, null=True)  
     Qtd_Coletor = models.IntegerField(blank=True, null=True) 

@@ -399,30 +399,28 @@ novo layout */
     font-weight:100;
 }
 /* PIPELINE FEITO EM CSS HEHE */
-.pipeline-d .lado-p p{
-  margin-top: 5.5vmax;   
-  z-index: 3;
-  color:bisque;
-  font-size: 3vmax
+.lado-e h2, .lado-d h2{
+    z-index: 3;
+    margin-top: -3.7vmax;
+    font-family: 'Arial';
+    text-shadow: 0px 1px #fff;
+    background-color: transparent;
+    border: none;
 }
-.pipeline-detalhes{
-  display: inline-block;
-  background-color: rgb(228, 230, 240);
-  border-left: 1px solid rgb(192, 192, 192);
-  width: 64%;
-  height: 100%;
-  flex-flow: wrap row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+.pipeline-c .lado-e h2{
+    margin-left: -3.3vmax;
+}
+.pipeline-c .lado-d h2{
+    margin-left: 1vmax;  
 }
 .caixa-grafico-pipeline{
-  display: block;
-  width: 35%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    display: block;
+    width: 45%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
+
 .pipeline-a, .pipeline-b, .pipeline-c, .pipeline-d{
   background-color: transparent;
   display: flex;
@@ -441,43 +439,43 @@ novo layout */
   background-color: transparent;
 }
 .pipeline-a .lado-e{
-  width: 33.2%;
-  border-left: 2.5vmax solid transparent;
+  width: 29.2%;
+  border-left: 3.3vmax solid transparent;
   border-top: 4.3vmax solid rgb(244, 72, 72);
 }
 .pipeline-a .lado-d{
-  width: 33.2%;
-  border-right: 2.5vmax solid transparent;
+  width: 29.2%;
+  border-right: 3.3vmax solid transparent;
   border-top: 4.3vmax solid rgb(81, 179, 249);
 }
 .pipeline-b .lado-e{
-  width: 21%;
-  border-left: 2.4vmax solid transparent;
+  width: 18.5%;
+  border-left: 3vmax solid transparent;
   border-top: 4.3vmax solid rgb(239, 47, 47);
 }
 .pipeline-b .lado-d{
-  width: 21%;
-  border-right: 2.4vmax solid transparent;
+  width: 18.5%;
+  border-right: 3vmax solid transparent;
   border-top: 4.3vmax solid rgb(53, 81, 237);
 }
 .pipeline-c .lado-e{
-  width:10.4%;
-  border-left: 2.2vmax solid transparent;
+  width: 9%;
+  border-left: 2.7vmax solid transparent;
   border-top: 4.3vmax solid rgb(220, 22, 22);
 }
 .pipeline-c .lado-d{
-  width:10.4%;
-  border-right: 2.2vmax solid transparent;
+  width: 9%;
+  border-right: 2.7vmax solid transparent;
   border-top: 4.3vmax solid rgb(16, 38, 159);
 }
 .pipeline-d .lado-e{
   width: 0%;
-  border-left: 2.1vmax solid transparent;
+  border-left: 2.6vmax solid transparent;
   border-top: 4.3vmax solid rgb(220, 22, 22);
 }
 .pipeline-d .lado-d{
   width: 0%;
-  border-right: 2.1vmax solid transparent;
+  border-right: 2.6vmax solid transparent;
   border-top: 4.3vmax solid rgb(16, 38, 159);
 }
 .lado-p h2{
@@ -489,13 +487,17 @@ novo layout */
   text-shadow: 2px 1px #fff;
   border: none;
 }
-
+.pipeline-c .lado-p h2{
+  margin-top: -5.5vmax;
+  z-index: 3;
+}
 
 .pipeline-c .lado-direito h2{
 margin-left: 0.7vmax;
 }
 .pipeline-c .lado-esquerdo h2{
-  margin-left: -5vmax;
+  background-color: #495057;
+  margin-left: 0vmax;
 }
 .pipeline-b .lado-direito h2, .pipeline-a .lado-direito h2{
   text-align: left;
@@ -504,22 +506,6 @@ margin-left: 0.7vmax;
 .pipeline-a .lado-esquerdo h2{
   text-align: right;
   margin-right: 0.7vmax;
-  background-color: bisque;
-}   
-#total-p-d-e,  #total-p-d-d{
-  font-family: 'Consolas';
-  font-size: 1.3vmax;
-  margin-top: -3vmax;
-  background-color: transparent;
-  color: rgb(8, 8, 53);   
-  font-weight:900 ;
-  text-shadow: 2px 1px #fff;
-}
-#total-p-d-e{
-  margin-left: -7vmax;
-}
-#total-p-d-d{
-  margin-left: 1.5vmax;
 }
 
 /* FIM PIPELINE FEITO EM CSS  */

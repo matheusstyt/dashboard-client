@@ -15,15 +15,9 @@ from .models import Placar_Licensas
 from .models import Licencas_Faltando
 from django.shortcuts import render, redirect, get_object_or_404
 
-def tempoFaturamento(mes, ano):
+def tempoFaturamento(mes, ano, df):
     # TRATAMENTO DO DATAFRAME
-    faturamentos = Faturamento.objects.all().order_by('data_faturamento').filter(data_faturamento__month=mes).filter(data_faturamento__year=ano)
-    faturamentos_data = [
-        {   'faturamento_dia': i.faturamento_dia,
-            'data_faturamento': i.data_faturamento,
-        } for i in faturamentos
-    ]
-    df = pd.DataFrame(faturamentos_data)
+
     # META
     meta = get_object_or_404(Meta_Valor, pk=2)
     meta = float(meta.meta) 
@@ -32,9 +26,11 @@ def tempoFaturamento(mes, ano):
     # DIAS CORRIDOS
     # ULTIMO DIA df['data_faturamento'].iloc[-1]
     # PRIMEIRO DIA df['data_faturamento'].iloc[0]
+ 
     try:
         dias_corridos = df[df.columns[0]].count()
-        df_faturamento_dia = df['faturamento_dia'].astype('int64')
+        df_faturamento_dia = df['TotalPrevisto'].astype('int64')
+        print(df_faturamento_dia)
         # DIAS TOTAIS DO MÊS
         monthRange = calendar.monthrange(today.year,today.month)
         dias_totais_mes = monthRange[1]
@@ -176,12 +172,15 @@ class plt:
         return gantt_ploty
 
 def grafico_faturamento(df, meta, real_projetado):
+    # ORDENANDO O DATAFRAME PELA DATA
+    df = df.sort_values(by='Data_doPC')
+
     # CALCULO DE ACUMULADO POR DIA
     percent_dia = []
     line_projetado = []
     acumulado_total = 0
     real_acumulado_por_dia = []
-    for item in df['faturamento_dia']:
+    for item in df['TotalPrevisto']:
         acumulado_total = acumulado_total + int(item)
         real_acumulado_por_dia.append(acumulado_total)
         # ADICIONA META NUM ARRAY
@@ -211,11 +210,12 @@ def grafico_faturamento(df, meta, real_projetado):
         )
     )
     fig = go.Figure(layout=layout) 
+    # BARRA DE PROJETADO
+    #fig.add_trace(go.Line(x = df['Data_doPC'], y = line_projetado,line_color='Green', line_dash='solid', name = 'Projetado'))
     
-    fig.add_trace(go.Line(x = df['data_faturamento'], y = line_projetado,line_color='Green', line_dash='solid', name = 'Projetado'))
-    fig.add_trace(go.Line(x = df['data_faturamento'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
-    fig.add_trace(go.Line(x = df['data_faturamento'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
-    fig.add_trace(go.Bar(x = df['data_faturamento'], y = df['faturamento_dia'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.8))
+    fig.add_trace(go.Line(x = df['Data_doPC'], y = percent_dia,line_color='Red', line_dash='solid', name = 'Meta'))
+    fig.add_trace(go.Line(x = df['Data_doPC'], y = real_acumulado_por_dia, line_color='Blue', name = 'Acumulado / dia'))
+    fig.add_trace(go.Bar(x = df['Data_doPC'], y = df['TotalPrevisto'], name = 'Real / dia', marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)', marker_line_width=1.5, opacity=0.8))
     # fig.add_trace(go.Scatter(x=percent_dia, y=df['faturamento_dia'],
     #             mode='markers',
     #             name='markers'))

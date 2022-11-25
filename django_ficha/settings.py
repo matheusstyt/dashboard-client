@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
     'pipeline',
-    'produtos'
+    'produtos',
+    'django_template_maths',
 ]
 CHANNEL_LAYERS = {
     'default': {
