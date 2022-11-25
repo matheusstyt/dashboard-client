@@ -19,7 +19,7 @@ class PipelineVendas(models.Model):
         ('RN', 'Rio Grande do Norte'),
         ('PB', 'Paraíba'),
         ('PE', 'Pernambuco'),
-        ('AL', 'Alagoas'),
+        ('AL', 'Alagoas'), 
         ('SE', 'Sergipe'),
         ('BA', 'Bahia'),
         ('MG', 'Minas Gerais'),
@@ -40,11 +40,13 @@ class PipelineVendas(models.Model):
         ('Inicio', 'Inicio'),
         ('Negociação', 'Negociação'),
         ('Compras', 'Compras'),
-        ('Aprovado', 'Aprovado'),   
+        ('Aprovado', 'Aprovado'),
+        ('Suspensa', 'Suspensa'), 
+        ('Reprovado preço', 'Reprovado preço'),    
     )
-    Fase = models.CharField(choices=OP2, max_length=10, blank=False, null=False)
-    Descricao = models.CharField(max_length=100, blank=True, null=True) 
+    Fase = models.CharField(choices=OP2, max_length=20, blank=False, null=False)
     OMIE = models.CharField(max_length=100, blank=True, null=True)  
+    Descricao = models.CharField(max_length=100, blank=True, null=True) 
     NF_Emitidas = models.CharField(max_length=100, blank=True, null=True)  
     Qtd_Coletor = models.IntegerField(blank=True, null=True) 
     Data_envio_Proposta = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
@@ -56,6 +58,7 @@ class PipelineVendas(models.Model):
     Servicos = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     TotalPrevisto = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     FaturadoMesAtual = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    Data_Faturamento = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     OP3 = (
         ('Realizada', 'Realizada'),
         ('Pendente', 'Pendente'),

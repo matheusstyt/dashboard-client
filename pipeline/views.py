@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import PipelineVendas
+import pandas as pd
 from .forms import PipelineForm
 from datetime import date
 import calendar
@@ -34,30 +35,7 @@ def switch_mes(mes):
             print("Uai")
 def PipelineView(request):
     today = date.today()
-    lista = [
-        "*",
-        "Cliente",
-        "UF",
-        "Fase",
-        "Descrição/Proposta",
-        "OMIE",
-        "NF_ Emitidas",
-        "Coletor QTDA",
-        "Data_ envio Proposta",
-        "Revisão + Recente",
-        "Data do P.C",
-        "Recorrencia",
-        "Perpetua",
-        "Hardware",
-        "Serviços",
-        "TOTAL PREVISTO",
-        "FATURADO NOVEMBRO",
-        "ENTREGA",
-        "Pagamento",
-        "Contato",
-        "Observação",
-        "*"
-    ]
+    
     # GERANDO LISTA DE MES
     lista_mes = []
     for i in range(1, 13):
@@ -85,16 +63,55 @@ def PipelineView(request):
         month = today.month
         mesAtual = 'November'
     pipeline = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    
+    # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
+    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    dfProdutos = pd.DataFrame(produtos)
+    dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento']
+    lista_produto = dfProdutos.Descricao.unique()
+    data_produtos = pd.DataFrame(columns=['Produto', 'TotalPrevisto', 'FaturadoMesAtual'])
+    # LOOP DOS VALORES ÚNICOS DA COLUNA DESCRICAO, CRIA UM DATAFRAME CONTENDO OS PRODUTOS NO LOOP ATUAL E ADICIONA NO DATAFRAME data_produtos
+    for produto in lista_produto:
+        df = dfProdutos[dfProdutos['Descricao'] == produto]
+        data_produtos = data_produtos.append({'Produto' : produto, 'TotalPrevisto': df['TotalPrevisto'].sum(), 'FaturadoMesAtual' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
+    print(data_produtos)
+    # fim produtos
+    
+    n_faturados = PipelineVendas.objects.order_by('Cliente').filter(Data_envio_Proposta__isnull=True)
+    
     formPipeline = PipelineForm()
     # tratamento para enviar para o banco
-    print(str(pipeline))
+
     if request.method == 'POST':
         formPipelineAdd = PipelineForm(request.POST)
         # planejado = formP.save(commit=False)
         if (formPipelineAdd.is_valid()):
             formPipelineAdd.save()
             return redirect('/pipeline')
-
+    lista = [
+        "*",
+        "Cliente",
+        "UF",
+        "Fase",
+        "Descrição/Proposta",
+        "OMIE",
+        "NF_ Emitidas",
+        "Coletor QTDA",
+        "Data de envio da Proposta",
+        "Revisão + Recente",
+        "Data do P.C",
+        "Recorrencia",
+        "Perpetua",
+        "Hardware",
+        "Serviços",
+        "Total previsto",
+        "Faturado ",
+        "Entrega",
+        "Pagamento",
+        "Contato",
+        "Observação",
+        "*"
+    ]
     context = {
     'dados' : pipeline, 
     'lista': lista, 

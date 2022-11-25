@@ -62,42 +62,6 @@ def switch_mes(mes):
         case _:
             print("Uai")
 def dashboard(request):
-    # PIPELINE DADOS 
-
-    pipeline_header = ['Cliente', 'Fase', 'Recorrencia' , 'Perpetua', 'Hardware', 'Serviços']
-    pipeline = PipelineVendas.objects.all()
-
-    total_a = 0
-    count_a = 0
-
-    total_b = 0
-    count_b = 0
-
-    total_c = 0
-    count_c = 0
-
-    total_d = 0
-    count_d = 0
-
-    for x in pipeline:
-        if x.Fase == 'Inicio':
-            total_a += x.TotalPrevisto
-            count_a += 1
-        if x.Fase == 'Negociação':
-            total_b += x.TotalPrevisto
-            count_b += 1
-        if x.Fase == 'Compras':
-            total_c += x.TotalPrevisto
-            count_c += 1
-        if x.Fase == 'Aprovado':
-            total_d += x.TotalPrevisto
-            count_d += 1
-
-    planejados = Planejado.objects.all()
-    cursos = Curso.objects.all()
-    concluidos = Concluido.objects.all()
-
-
     # GERANDO LISTA DE MES
     today = date.today()
     lista_mes = []
@@ -127,7 +91,54 @@ def dashboard(request):
         mesAtual = 'November'
 
     meta, dias_corridos, dias_totais_mes, real_acumulado, real_projetado, real_percent, projetado_percent, fig1, fig2 = periodo(month, anoAtual)
+    
+    # PIPELINE DADOS 
+    pipeline_header = ['Cliente', 'Fase', 'Recorrencia' , 'Perpetua', 'Hardware', 'Serviços']
+    pipeline = PipelineVendas.objects.all().filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    total_a = 0
+    count_a = 0
 
+    total_b = 0
+    count_b = 0
+
+    total_c = 0
+    count_c = 0
+
+    total_d = 0
+    count_d = 0
+
+    for x in pipeline:
+        if x.Fase == 'Inicio':
+            total_a += x.TotalPrevisto
+            count_a += 1
+        if x.Fase == 'Negociação':
+            total_b += x.TotalPrevisto
+            count_b += 1
+        if x.Fase == 'Compras':
+            total_c += x.TotalPrevisto
+            count_c += 1
+        if x.Fase == 'Aprovado':
+            total_d += x.TotalPrevisto
+            count_d += 1
+
+    planejados = Planejado.objects.all()
+    cursos = Curso.objects.all()
+    concluidos = Concluido.objects.all()
+    # SECÇÃO PRODUTOS MAP
+        
+    # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
+    produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
+    dfProdutos = pd.DataFrame(produtos)
+    dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento']
+    lista_produto = dfProdutos.Descricao.unique()
+    data_produtos = pd.DataFrame(columns=['Produto', 'TotalPrevisto', 'FaturadoMesAtual'])
+    # LOOP DOS VALORES ÚNICOS DA COLUNA DESCRICAO, CRIA UM DATAFRAME CONTENDO OS PRODUTOS NO LOOP ATUAL E ADICIONA NO DATAFRAME data_produtos
+    for produto in lista_produto:
+        df = dfProdutos[dfProdutos['Descricao'] == produto]
+        data_produtos = data_produtos.append({'Produto' : produto, 'TotalPrevisto': df['TotalPrevisto'].sum(), 'FaturadoMesAtual' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
+    print(data_produtos)
+    
+    # DATA ATUAL FORMATADA
     now = dt.now()
     date_time = now.strftime("%B %d, %Y   %H:%M:%S")
 
