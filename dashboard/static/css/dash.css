@@ -178,11 +178,10 @@ novo layout */
 .comercial-q{
     width: 60%;
     height: 100%;
-    
     background-color: rgb(185, 185, 222);}
 .meio-q{
-    width: 40%;
-    background-color: rgb(245, 252, 254);
+    width: 39%;
+    background-color: rgb(133, 208, 228);
     border-left: 00.15em solid rgba(101, 158, 250, 0.2);
 }
 .implantacao-m{
@@ -195,7 +194,7 @@ novo layout */
     
     overflow: hidden;
 }
-.modulo h2{
+.modulo h2, .meio-q h2{
     font-size:1.2vmax;
     text-align: center; 
     color: rgb(11, 6, 59);
@@ -400,28 +399,30 @@ novo layout */
     font-weight:100;
 }
 /* PIPELINE FEITO EM CSS HEHE */
-.lado-e h2, .lado-d h2{
-    z-index: 3;
-    margin-top: -3.7vmax;
-    font-family: 'Arial';
-    text-shadow: 0px 1px #fff;
-    background-color: transparent;
-    border: none;
+.pipeline-d .lado-p p{
+  margin-top: 5.5vmax;   
+  z-index: 3;
+  color:bisque;
+  font-size: 3vmax
 }
-.pipeline-c .lado-e h2{
-    margin-left: -3.3vmax;
-}
-.pipeline-c .lado-d h2{
-    margin-left: 1vmax;  
+.pipeline-detalhes{
+  display: inline-block;
+  background-color: rgb(228, 230, 240);
+  border-left: 1px solid rgb(192, 192, 192);
+  width: 64%;
+  height: 100%;
+  flex-flow: wrap row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 .caixa-grafico-pipeline{
-    display: block;
-    width: 45%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  display: block;
+  width: 35%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-
 .pipeline-a, .pipeline-b, .pipeline-c, .pipeline-d{
   background-color: transparent;
   display: flex;
@@ -440,43 +441,43 @@ novo layout */
   background-color: transparent;
 }
 .pipeline-a .lado-e{
-  width: 29.2%;
-  border-left: 3.3vmax solid transparent;
+  width: 33.2%;
+  border-left: 2.5vmax solid transparent;
   border-top: 4.3vmax solid rgb(244, 72, 72);
 }
 .pipeline-a .lado-d{
-  width: 29.2%;
-  border-right: 3.3vmax solid transparent;
+  width: 33.2%;
+  border-right: 2.5vmax solid transparent;
   border-top: 4.3vmax solid rgb(81, 179, 249);
 }
 .pipeline-b .lado-e{
-  width: 18.5%;
-  border-left: 3vmax solid transparent;
+  width: 21%;
+  border-left: 2.4vmax solid transparent;
   border-top: 4.3vmax solid rgb(239, 47, 47);
 }
 .pipeline-b .lado-d{
-  width: 18.5%;
-  border-right: 3vmax solid transparent;
+  width: 21%;
+  border-right: 2.4vmax solid transparent;
   border-top: 4.3vmax solid rgb(53, 81, 237);
 }
 .pipeline-c .lado-e{
-  width: 9%;
-  border-left: 2.7vmax solid transparent;
+  width:10.4%;
+  border-left: 2.2vmax solid transparent;
   border-top: 4.3vmax solid rgb(220, 22, 22);
 }
 .pipeline-c .lado-d{
-  width: 9%;
-  border-right: 2.7vmax solid transparent;
+  width:10.4%;
+  border-right: 2.2vmax solid transparent;
   border-top: 4.3vmax solid rgb(16, 38, 159);
 }
 .pipeline-d .lado-e{
   width: 0%;
-  border-left: 2.6vmax solid transparent;
+  border-left: 2.1vmax solid transparent;
   border-top: 4.3vmax solid rgb(220, 22, 22);
 }
 .pipeline-d .lado-d{
   width: 0%;
-  border-right: 2.6vmax solid transparent;
+  border-right: 2.1vmax solid transparent;
   border-top: 4.3vmax solid rgb(16, 38, 159);
 }
 .lado-p h2{
@@ -488,17 +489,13 @@ novo layout */
   text-shadow: 2px 1px #fff;
   border: none;
 }
-.pipeline-c .lado-p h2{
-  margin-top: -5.5vmax;
-  z-index: 3;
-}
+
 
 .pipeline-c .lado-direito h2{
 margin-left: 0.7vmax;
 }
 .pipeline-c .lado-esquerdo h2{
-  background-color: #495057;
-  margin-left: 0vmax;
+  margin-left: -5vmax;
 }
 .pipeline-b .lado-direito h2, .pipeline-a .lado-direito h2{
   text-align: left;
@@ -507,6 +504,22 @@ margin-left: 0.7vmax;
 .pipeline-a .lado-esquerdo h2{
   text-align: right;
   margin-right: 0.7vmax;
+  background-color: bisque;
+}   
+#total-p-d-e,  #total-p-d-d{
+  font-family: 'Consolas';
+  font-size: 1.3vmax;
+  margin-top: -3vmax;
+  background-color: transparent;
+  color: rgb(8, 8, 53);   
+  font-weight:900 ;
+  text-shadow: 2px 1px #fff;
+}
+#total-p-d-e{
+  margin-left: -7vmax;
+}
+#total-p-d-d{
+  margin-left: 1.5vmax;
 }
 
 /* FIM PIPELINE FEITO EM CSS  */
@@ -555,23 +568,20 @@ margin-left: 0.7vmax;
   text-align: center; 
 }
 table{
-    background-color: rgba(229, 229, 229, 1);
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    font-size: 1vmax;
-    text-align: left;
-    border: none;
+  height: auto;
+  background-color: rgb(239, 239, 239);
+}
+table tr th{
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.9vmax;
+}
+table tr td{
+  padding:0.5em 0;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+  text-align: center;
+  font-size: 0.9vmax;
 
-}
-th{
-    background-color: rgba(0, 0, 0, 0.1)
-}
-table tr{
-    padding: 0;
-    text-align: left;    
-    font-size: 0.9vmax;
-    border-bottom: 1px solid rgb(161, 161, 161);
 }
 tr:hover{
    background-color: rgba(4, 0, 72, 0.2)

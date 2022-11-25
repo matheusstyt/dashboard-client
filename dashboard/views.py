@@ -125,17 +125,18 @@ def dashboard(request):
     cursos = Curso.objects.all()
     concluidos = Concluido.objects.all()
     # SECÇÃO PRODUTOS MAP
-        
+
     # TRATAMENTO DOS PRODUTOS DA TABELA COM OS FILTOS DE MES / ANO
     produtos = PipelineVendas.objects.values_list('Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento').filter(Data_envio_Proposta__month=month).filter(Data_envio_Proposta__year=anoAtual)
     dfProdutos = pd.DataFrame(produtos)
     dfProdutos.columns = ['Cliente', 'Descricao', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento']
     lista_produto = dfProdutos.Descricao.unique()
-    data_produtos = pd.DataFrame(columns=['Produto', 'TotalPrevisto', 'FaturadoMesAtual'])
+    data_produtos = pd.DataFrame(columns=['Produto', 'T. Previsto', 'Faturado'])
     # LOOP DOS VALORES ÚNICOS DA COLUNA DESCRICAO, CRIA UM DATAFRAME CONTENDO OS PRODUTOS NO LOOP ATUAL E ADICIONA NO DATAFRAME data_produtos
     for produto in lista_produto:
         df = dfProdutos[dfProdutos['Descricao'] == produto]
-        data_produtos = data_produtos.append({'Produto' : produto, 'TotalPrevisto': df['TotalPrevisto'].sum(), 'FaturadoMesAtual' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
+        data_produtos = data_produtos.append({'Produto' : produto, 'T. Previsto': df['TotalPrevisto'].sum(), 'Faturado' : df['FaturadoMesAtual'].sum()}, ignore_index=True)
+        data_produtos = data_produtos.dropna()
     print(data_produtos)
     
     # DATA ATUAL FORMATADA
@@ -143,6 +144,7 @@ def dashboard(request):
     date_time = now.strftime("%B %d, %Y   %H:%M:%S")
 
     context = {
+        'data_produtos' : data_produtos,
         'lista_ano' : lista_ano,
         'lista_mes' : lista_mes,
         'mesAtual' : mesAtual,
