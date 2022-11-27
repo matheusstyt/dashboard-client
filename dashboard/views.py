@@ -34,33 +34,30 @@ from .forms import Licencas_FaltandoForm
 from .graphic import plt
 from .graphic import tempoFaturamento as periodo
 def switch_mes(mes):
-    match mes:
-        case "January":
-            return 1
-        case "February":
-            return 2
-        case "March":
-            return 3
-        case "April":
-            return 4
-        case "May":
-            return 5
-        case "June":
-            return 6
-        case "July":
-            return 7
-        case "August":
-            return 8
-        case "September":
-            return 9
-        case "October":
-            return 10
-        case "November":
-            return 11
-        case "December":
-            return 12
-        case _:
-            print("Uai")
+    if mes == "January":
+        return 1
+    elif mes == "February":
+        return 2
+    elif mes == "March":
+        return 3
+    elif mes == "April":
+        return 4
+    elif mes == "May":
+        return 5
+    elif mes == "June":
+        return 6
+    elif mes == "July":
+        return 7
+    elif mes == "August":
+        return 8
+    elif mes == "September":
+        return 9
+    elif mes == "October":
+        return 10
+    elif mes == "November":
+        return 11
+    elif mes == "December":
+        return 12
 def dashboard(request):
     # GERANDO LISTA DE MES
     today = date.today()
@@ -172,9 +169,10 @@ def dashboard(request):
         'fig1' : fig1, 
         'fig2': plt.grafico_2(), 
         'fig3' : fig2, 
-        'fig4' : plt.grafico_4(), 
-        'df1': plt.glpi_suporte(), 
-        'df2': plt.suporte()}
+        #'fig4' : plt.grafico_4(), 
+        #'df1': plt.glpi_suporte(), 
+        #'df2': plt.suporte()
+        }
    
     return render(request, 'dashboard/index.html', context)
 def comercial(request):

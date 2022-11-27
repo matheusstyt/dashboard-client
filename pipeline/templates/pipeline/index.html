@@ -26,22 +26,26 @@
             <h3 id="h3_fd">Pipeline de Vendas </h3>
             <div class="caixa-filtro " >
                 <form action="" class="form-flex" >
-                    <p>Filtrar por:</p>
+                    <p class="col-2">Filtrar por:</p>
                     <select name="filter_mes" id="filter" class="col-3  form-control">
                         <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{mesAtual}}">{{mesAtual}}</option>
                         {% for mes in lista_mes %}
                         <option value="{{mes}}">{{mes}}</option>
                         {% endfor %}
                     </select>
-                    <select name="filter_ano" id="filter" class="col-3  form-control">
+                    <select name="filter_ano" id="filter" class="col-2    form-control">
                         <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{anoAtual}}">{{anoAtual}}</option>
                         {% for ano in lista_ano %}
                         <option value="{{ano}}">{{ano}}</option>
                         {% endfor %}
                     </select>
-                    <select name="faturados_option" id="filter" class="col-3  form-control">
-                        <option value="true">Faturados</option>
-                        <option value="false">Não Faturados</option>
+                    
+                    <p class="col-2" for="faturados_option">Exibir não faturados:</p>
+                    <select name="faturados_option" id="filter" class="col-2  form-control">
+                        <option style="background-color: rgba(200, 206, 206, 0.7)" value="{{faturadoAtual}}">{{faturadoAtual}}</option>
+                        {% for item in lista_fatu %}
+                        <option value="{{item}}">{{item}}</option>
+                        {% endfor %}
                     </select>
                     <button class="btn btn-primary my-2 my-sm-0" type="submit">Filtrar</button>
 
@@ -117,10 +121,11 @@
             width: 100%;
         }
         .form-flex select{
-            margin: 0 1em
+            margin: 0 1em;
+    
         }
         .caixa-filtro{
-            width:35em;
+            
             display:flex;
             align-items: space-around;
         }
@@ -162,7 +167,7 @@
         
         }
         #h3_fd{
-            font-size: 1.6vmax;
+            font-size: 1.2vmax;
             margin: 0;
         }
 
