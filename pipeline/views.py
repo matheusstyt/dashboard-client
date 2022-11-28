@@ -86,10 +86,11 @@ def PipelineView(request):
         dados_pipeline = pd.concat([dados_pipeline, dados_none])
         if option == 'Sim':
             option = 'Sim'
-            for index1, row3 in dados_pipeline.iterrows():
-                if row3['FaturadoMesAtual'] != None:
-                    print(index1)
-                    dados_pipeline.drop(dados_pipeline.index[index1], inplace=True)
+            # delete all rows with column 'Age' has value 30 to 40
+            indexAge = dados_pipeline[ (dados_pipeline['FaturadoMesAtual'] == None) ].index
+            dados_pipeline.drop(indexAge , inplace=True)
+
+                   
     except:
         dados_pipeline = pd.DataFrame(columns=['id', 'Cliente', 'UF', 'Fase', 'OMIE', 'idProposta', 'Descricao', 'NF_Emitidas', 'Qtd_Coletor','Data_envio_Proposta', 'RevisaoRecente', 
         'Data_doPC', 'Recorrencia', 'Perpetua', 'Hardware', 'Servicos', 'TotalPrevisto', 'FaturadoMesAtual', 'Data_Faturamento', 'Entrega', 'Pagamento', 'Contato', 'OBS'])
